@@ -24,19 +24,25 @@ class Piece {
 
 	Piece(Board board, PlayerColor color)
 	boolean isValid(Position to)
+	-boolean checkIsEnemy(Position to) check destination is ennemy in case the destination is not empty
+	-boolean checkDestination(Position to) check destination is ennemy in case the destination is not empty
 	boolean checkMoves(Position to)
-	boolean checkCollision(Position to)
+	boolean checkFreePath(Position to)	//check du chemin intermédiaire sans la destination
 	const Move[] possibleMoves
+
+	getLine(): int
+	getColumn(): int
+	getColor(): PlayerColor
 }
 
 class Pion extends Piece {
 	const Position[] relativeValidMoves: [(0,1)]
-	boolean checkMoves(Position to)//check en plus move particulier
+	boolean checkMoves(Position to)//check en plus: move de 2 si ligne == 2, move diag si peu manger.
 
 }
 
 class Knight extends Piece {
-	boolean checkCollision(Position to) //support fly over mode + check destination is ennemy if destination is not empty
+	boolean checkCollision(Position to) //support fly over mode + 
 }
 
 class Position {
@@ -48,6 +54,7 @@ class Board {
 	Piece[8][8] pieces
 	getPiece(int x, int y): Piece
 	collision(Point from, Point to)
+	isEmpty(int x, int y): boolean
 }
 
 class Move {
