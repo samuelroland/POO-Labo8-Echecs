@@ -1,18 +1,15 @@
 package engine;
 
 public class Move {
-	int x;
-	int y;
-	int factor;
-	// TODO: find a way to reduce the amount of valid moves
+	Point directionVecteur;
+	int max;
 
-	Move(int x, int y, int factor) {
-		this.x = x;
-		this.y = y;
-		this.factor = factor;
+	Move(Point directionVecteur, int max) {
+		this.directionVecteur = directionVecteur;
+		this.max = max;
 	}
 
-	public boolean equals(Move other) {
-		
+	public boolean corresponds(Point from, Point to) {
+		return false;
 	}
 }

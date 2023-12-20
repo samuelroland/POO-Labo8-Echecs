@@ -24,18 +24,19 @@ class Piece {
 
 	Piece(Board board, PlayerColor color)
 	boolean isValid(Position to)
-	-boolean checkIsEnemy(Position to) check destination is ennemy in case the destination is not empty
-	-boolean checkDestination(Position to) check destination is ennemy in case the destination is not empty
+	boolean checkDestination(Position to) check destination is ennemy in case the destination is not empty
 	boolean checkMoves(Position to)
 	boolean checkFreePath(Position to)	//check du chemin intermédiaire sans la destination
 	const Move[] possibleMoves
+	
+	-boolean checkIsEnemy(Position to) check destination is ennemy in case the destination is not empty
 
 	getLine(): int
 	getColumn(): int
 	getColor(): PlayerColor
 }
 
-class Pion extends Piece {
+class Pawn extends Piece {
 	const Position[] relativeValidMoves: [(0,1)]
 	boolean checkMoves(Position to)//check en plus: move de 2 si ligne == 2, move diag si peu manger.
 
@@ -92,3 +93,6 @@ cangohorizontal(), cangovertical() utilisé et redéfinit dans les sous classes 
 
 global moves: enum MoveDirection[] = {HORIZ, VERT, DIAG}
 precisesMove: {FORWARD}
+
+
+idée de Camille: faire que le roi hérite de la reine, tout est pareil sauf le max a 1 et la gestion du roque.

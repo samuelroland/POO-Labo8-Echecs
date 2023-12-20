@@ -1,20 +1,56 @@
 package engine;
 
 import chess.PieceType;
+import chess.PlayerColor;
 
 abstract public class Piece {
 	PieceType type;
-	Position position;
-	int max;
-	static final Move[] relativeValidMoves = new Move[] {};
+	Point point;
+	PlayerColor color;
+	Board board;
+	static final Move[] validMoves = new Move[] {};
 
-	boolean isValid(Position end) {
-		Move triedMove = new Move(end.x - position.x, end.y + position.y, 1);
-		for (var move : relativeValidMoves) {
-			if (move.equals(triedMove))
+	Piece(Board board, PlayerColor color) {
+		this.board = board;
+		this.color = color;
+	}
+
+	boolean isValid(Point to) {
+		checkMoves(to);
+
+		return false;
+	}
+
+	boolean checkMoves(Point to) {
+		for (var move : validMoves) {
+			if (move.corresponds(point, to))
 				return true;
 		}
 
 		return false;
+	}
+
+	boolean checkDestination(Point to) {
+		return false;
+	}
+
+	boolean checkFreePath(Point to) {
+		return false;
+	}
+
+	private boolean checkIsEnemy(Point to) {
+		return false;
+	}
+
+	int getLine() {
+		return color == PlayerColor.WHITE ? point.y : 8 - point.y;
+	}
+
+	int getColumn() {
+		return color == PlayerColor.WHITE ? point.x : 8 - point.x;
+	}
+
+	PlayerColor getColor() {
+		return color;
 	}
 }
