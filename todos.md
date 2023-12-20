@@ -20,14 +20,23 @@ direction LR
 class Piece {
 	PieceType type
 	Position position
-	Position[] validMoves()
-	boolean isValid(Position end)
-	const Move[] relativeValidMoves
+	PlayerColor color
+
+	Piece(Board board, PlayerColor color)
+	boolean isValid(Position to)
+	boolean checkMoves(Position to)
+	boolean checkCollision(Position to)
+	const Move[] possibleMoves
 }
 
 class Pion extends Piece {
 	const Position[] relativeValidMoves: [(0,1)]
-	-boolean isValid(Position end)
+	boolean checkMoves(Position to)//check en plus move particulier
+
+}
+
+class Knight extends Piece {
+	boolean checkCollision(Position to) //support fly over mode + check destination is ennemy if destination is not empty
 }
 
 class Position {
@@ -35,9 +44,17 @@ class Position {
 	int y
 }
 
+class Board {
+	Piece[8][8] pieces
+	getPiece(int x, int y): Piece
+	collision(Point from, Point to)
+}
+
 class Move {
-	Position relativeDirection;
-	int max;
+	Position directionVecteur
+	int max
+
+	corresponds(Point from, Point to)
 }
 
 class ChessController {
@@ -58,3 +75,13 @@ Liste des validations du ChessController:
    1. Si pas de cas particulier alors le 
 
 TODO: continue la réflexion
+
+
+idées:
+
+canFlyOver() return true slt si cheval. permet de factoriser dans le controlleur.
+
+cangohorizontal(), cangovertical() utilisé et redéfinit dans les sous classes de Piece. permet à Piece.isValid() de tester ça.
+
+global moves: enum MoveDirection[] = {HORIZ, VERT, DIAG}
+precisesMove: {FORWARD}
