@@ -11,4 +11,6 @@ public class Pawn extends Piece {
 	Pawn(Board board, PlayerColor color) {
 		super(board, color);
 	}
+
+
 }

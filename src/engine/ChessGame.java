@@ -25,7 +25,7 @@ public class ChessGame implements ChessController {
     public void newGame() {
         view.displayMessage("Start new game"); // TODO
 
-        //WHITE
+        // BLANC
         view.putPiece(PieceType.ROOK, PlayerColor.WHITE, 0, 0);
         view.putPiece(PieceType.KNIGHT, PlayerColor.WHITE, 1, 0);
         view.putPiece(PieceType.BISHOP, PlayerColor.WHITE,  2, 0);
@@ -38,7 +38,7 @@ public class ChessGame implements ChessController {
             view.putPiece(PieceType.PAWN, PlayerColor.WHITE, i, 1);
         }
 
-        // BLACK
+        // NOIR
         view.putPiece(PieceType.ROOK, PlayerColor.BLACK,  0,7);
         view.putPiece(PieceType.KNIGHT, PlayerColor.BLACK,  1,7);
         view.putPiece(PieceType.BISHOP, PlayerColor.BLACK,  2,7);

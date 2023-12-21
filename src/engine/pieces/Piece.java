@@ -33,10 +33,12 @@ abstract public class Piece {
 		return false;
 	}
 
+	// différent pion s'il y a personne devant il avance sinon sur la diagonale avec pion inverse
 	boolean checkDestination(Point to) {
 		return false;
 	}
 
+	// différent cavalier parce qu'il peut sauter par dessus
 	boolean checkFreePath(Point to) {
 		return false;
 	}
