@@ -25,5 +25,6 @@ public class ChessGame implements ChessController {
   public void newGame() {
     view.displayMessage("new game (TO REMOVE)"); // TODO
     view.putPiece(PieceType.KING, PlayerColor.BLACK, 3, 4); // TODO exemple uniquement
+    
   }
 }

@@ -1,5 +1,7 @@
 package engine;
 
+import engine.pieces.Piece;
+
 public class Board {
 	Piece[][] pieces = new Piece[8][8];
 

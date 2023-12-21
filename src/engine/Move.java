@@ -4,7 +4,7 @@ public class Move {
 	Point directionVecteur;
 	int max;
 
-	Move(Point directionVecteur, int max) {
+	public Move(Point directionVecteur, int max) {
 		this.directionVecteur = directionVecteur;
 		this.max = max;
 	}

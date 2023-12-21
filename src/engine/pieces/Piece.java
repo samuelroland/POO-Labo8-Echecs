@@ -1,7 +1,10 @@
-package engine;
+package engine.pieces;
 
 import chess.PieceType;
 import chess.PlayerColor;
+import engine.Board;
+import engine.Move;
+import engine.Point;
 
 abstract public class Piece {
 	PieceType type;
@@ -43,11 +46,11 @@ abstract public class Piece {
 	}
 
 	int getLine() {
-		return color == PlayerColor.WHITE ? point.y : 8 - point.y;
+		return color == PlayerColor.WHITE ? point.getCoordY() : 8 - point.getCoordY();
 	}
 
 	int getColumn() {
-		return color == PlayerColor.WHITE ? point.x : 8 - point.x;
+		return color == PlayerColor.WHITE ? point.getCoordX() : 8 - point.getCoordX();
 	}
 
 	PlayerColor getColor() {
