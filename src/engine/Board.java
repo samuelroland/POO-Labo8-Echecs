@@ -1,20 +1,35 @@
 package engine;
 
+import java.security.InvalidParameterException;
+
 import engine.pieces.Piece;
 
 public class Board {
-	Piece[][] pieces = new Piece[8][8];
+	private Piece[][] pieces;
 
-	Piece getPiece(int x, int y) {
+	Board(Piece[][] pieces) {
+		if (pieces.length != 8)
+			throw new InvalidParameterException();
+		for (int i = 0; i < 8; i++) {
+			if (pieces[i].length != 8)
+				throw new InvalidParameterException();
+		}
+
+		this.pieces = pieces;
+	}
+
+	// TODO
+	void movePieces(Point from, Point to) {
+		// params okay ??
+		// how can we do multiple pieces moves ?
+	}
+
+	public Piece getPiece(int x, int y) {
 		// TODO: check boundaries
 		return pieces[x][y];
 	}
 
-	boolean collision(Point from, Point to) {
-		return false;
-	}
-
-	boolean isEmpty(int x, int y) {
+	public boolean isEmpty(int x, int y) {
 		return getPiece(x, y) == null;
 	}
 }
