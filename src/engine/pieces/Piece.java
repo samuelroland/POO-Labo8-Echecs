@@ -51,7 +51,7 @@ abstract public class Piece {
 		// TODO Si Roi, vérifier si en échec ici, si c'est le cas retourner false.
 
 		// Si la case est occupée et que c'est une pièce de même couleur, on ne peut pas bouger.
-		if(!board.isEmpty(to) && board.getPiece(to).getColor() == this.color){
+		if(!board.isEmpty(to) && !checkIsEnemy(to)){
 			return false;
 		}
 
@@ -100,7 +100,7 @@ abstract public class Piece {
     }
 
     private boolean checkIsEnemy(Point to) {
-        return false;
+        return board.getPiece(to).getColor() != this.color;
     }
 
     public int getLine() {
