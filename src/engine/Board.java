@@ -29,7 +29,15 @@ public class Board {
 		return pieces[x][y];
 	}
 
+	public Piece getPiece(Point p){
+		return getPiece(p.getCoordX(), p.getCoordY());
+	}
+
 	public boolean isEmpty(int x, int y) {
 		return getPiece(x, y) == null;
+	}
+
+	public boolean isEmpty(Point p){
+		return isEmpty(p.getCoordX(), p.getCoordY());
 	}
 }
