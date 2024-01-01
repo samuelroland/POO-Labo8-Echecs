@@ -114,3 +114,22 @@ Conditions pour qu'un roque marche
 - les cases traversées par le roi ne doivent pas être menacées par une pièce adverse (2 cases à droite ou à gauche, donc en cas de grand roque la case à coté de la tour peut être menacée)
 - que le roi ne se mette pas en échecs en roquant (règle générale)
 
+
+## Brainstorm move spéciaux
+
+class PawnFirstMove extends Move {
+	public boolean corresponds(Point from, Point to) {
+		if (super.corresponds(from, to))
+			return true;
+
+		// Permet à un pion de faire un saut de 2 au tout début
+		if (== 1) {
+			return true;
+		}
+	}
+}
+
+new PawnFirstMove(new Point(0,2), 1);
+
+## A noter dans le rapport
+- notre validation si le chemin est libre ne fonctionne que pour 

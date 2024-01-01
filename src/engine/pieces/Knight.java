@@ -20,4 +20,10 @@ public class Knight extends Piece {
 	public Knight(Board board, PlayerColor color, Point point) {
 		super(board, color, point, PieceType.KNIGHT);
 	}
+
+	boolean checkFreePath(Point to) {
+		// Le cavalier peut passer par dessus n'importe quelle pièce
+		return true;
+	}
+
 }

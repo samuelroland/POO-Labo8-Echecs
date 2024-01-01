@@ -67,9 +67,6 @@ abstract public class Piece {
         // Sinon, la pièce ne peut pas se déplacer donc retourner false.
         // Cas spécial pour le cavalier: si les cases ne sont pas vides, il peut quand même se déplacer, donc retourner true.
 
-        if (this.type == PieceType.KNIGHT)    // TODO On nous a dit d'éviter if(type pièce)...
-            return true;
-
         // TODO mettre cette méthode dans la classe Move?
         // Génération d'une liste contenant les points intermédiaires entre from et to qu'on veut checker.
 

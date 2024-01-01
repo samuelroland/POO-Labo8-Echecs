@@ -46,8 +46,10 @@ public class ChessGame implements ChessController {
 		view.displayMessage("Start new game"); // TODO
 		Piece[][] pieces = new Piece[8][8];
 
+		board = new Board(pieces);
+
 		// BLANC
-		pieces[0][0] = new Rook(board, PlayerColor.WHITE, new Point(0, 0));
+		// TODO: board.addPiece(new Rook(board, PlayerColor.WHITE, new Point(0, 0)));
 		pieces[1][0] = new Knight(board, PlayerColor.WHITE, new Point(1, 0));
 		pieces[2][0] = new Bishop(board, PlayerColor.WHITE, new Point(2, 0));
 		pieces[3][0] = new Queen(board, PlayerColor.WHITE, new Point(3, 0));
@@ -71,8 +73,6 @@ public class ChessGame implements ChessController {
 		for (int i = 0; i < 8; i++) {
 			pieces[i][6] = new Pawn(board, PlayerColor.BLACK, new Point(i, 6));
 		}
-
-		board = new Board(pieces);
 
 		for (int i = 0; i < pieces.length; i++) {
 			for (int j = 0; j < pieces.length; j++) {
