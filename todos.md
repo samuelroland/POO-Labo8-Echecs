@@ -97,7 +97,13 @@ precisesMove: {FORWARD}
 
 idée de Camille: faire que le roi hérite de la reine, tout est pareil sauf le max a 1 et la gestion du roque.
 
+## Notes sur les règles des échecs
+Roque:
+- Un roque se fait en bougeant de 2 cases le roi à gauche ou à droite, on clique donc sur la position d'arrivée du roi.
+- Le petit roque est du côté où de la tour la plus proche du roi.
 Conditions pour qu'un roque marche
-- il ne faut pas avoir ni la tour ni le roi qui a bougé concerné par le roque
-- le roi ne soit pas en échecs
-- les cases entre deux ne soient pas menacées par une pièce adverse
+- il ne faut pas avoir ni la tour ni le roi concernés par le roque qui ont bougé
+- le roi ne soit pas en échecs (règle générale)
+- les cases traversées par le roi ne doivent pas être menacées par une pièce adverse (2 cases à droite ou à gauche, donc en cas de grand roque la case à coté de la tour peut être menacée)
+- que le roi ne se mette pas en échecs en roquant (règle générale)
+
