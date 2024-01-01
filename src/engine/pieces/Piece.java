@@ -19,7 +19,13 @@ abstract public class Piece {
 	}
 
 	boolean isValid(Point to) {
-		checkMoves(to);
+		checkMoves(to); 		// Check si le move fait partie des moves basiques de la pièce
+		checkFreePath(to); 		// Vérifie s'il y a une pièce sur le chemin
+								// Si pièce sur le chemin, on est bloqué et ne peut pas avancer.
+		checkDestination(to);	// Vérifie si la destination est occupé ou pas
+								// Si occupé, il faut check si c'est un ennemi, dans ce cas on peut bouger.
+								// Sinon, on ne peut pas bouger
+		checkIsEnemy(to); 		// Si la pièce à la destination est un ennemi, alors on la mange.
 
 		return false;
 	}
