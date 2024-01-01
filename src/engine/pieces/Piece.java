@@ -48,14 +48,14 @@ abstract public class Piece {
     // pion inverse
     boolean checkDestination(Point to) {
 
-		// TODO Si Roi, vérifier si en échec ici, si c'est le cas retourner false.
+        // TODO Si Roi, vérifier si en échec ici, si c'est le cas retourner false.
 
-		// Si la case est occupée et que c'est une pièce de même couleur, on ne peut pas bouger.
-		if(!board.isEmpty(to) && !isEnemy(to)){
-			return false;
-		}
+        // Si la case est occupée et que c'est une pièce de même couleur, on ne peut pas bouger.
+        if (!board.isEmpty(to) && !isEnemy(to)) {
+            return false;
+        }
 
-		// TODO Pion: effectuer la promotion ici?
+        // TODO Pion: effectuer la promotion ici?
 
         return true;
     }
