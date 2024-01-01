@@ -97,4 +97,8 @@ precisesMove: {FORWARD}
 
 idée de Camille: faire que le roi hérite de la reine, tout est pareil sauf le max a 1 et la gestion du roque.
 
-faut-il supporter le fait qu'un petit roque ne soit pas possible après un grand roque??
+Questions:
+- faut-il supporter le fait qu'un petit roque ne soit pas possible après un grand roque?? #S
+- dans la méthode checkFreePath dans Pièce, j'ai besoin de créer une liste avec les points intermédiaires entre la position actuelle de la pièce et la position to. Je l'ai implémenté dans checkFreePath mais peut-être faudrait la mettre dans la classe Move? #V
+- dans checkDestination dans Pièce, y a-t-il un comportement différent pour le cavalier? #V
+- 
