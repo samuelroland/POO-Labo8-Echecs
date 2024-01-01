@@ -1,5 +1,6 @@
 package engine.pieces;
 
+import chess.PieceType;
 import chess.PlayerColor;
 import engine.Board;
 import engine.Move;
@@ -16,7 +17,7 @@ public class Knight extends Piece {
 			new Move(new Point(1, -2), 1),
 			new Move(new Point(-1, -2), 1) };
 
-	Knight(Board board, PlayerColor color) {
-		super(board, color);
+	public Knight(Board board, PlayerColor color, Point point) {
+		super(board, color, point, PieceType.KNIGHT);
 	}
 }

@@ -96,3 +96,5 @@ precisesMove: {FORWARD}
 
 
 idée de Camille: faire que le roi hérite de la reine, tout est pareil sauf le max a 1 et la gestion du roque.
+
+faut-il supporter le fait qu'un petit roque ne soit pas possible après un grand roque??

@@ -27,4 +27,9 @@ public class Move {
 
 		return equivalentDelta && underMax && sameSide;
 	}
+
+	boolean collision(Board board, Point from, Point to) {
+		return true;// TODO
+	}
+
 }
