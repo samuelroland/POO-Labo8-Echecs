@@ -102,3 +102,8 @@ Questions:
 - dans la méthode checkFreePath dans Pièce, j'ai besoin de créer une liste avec les points intermédiaires entre la position actuelle de la pièce et la position to. Je l'ai implémenté dans checkFreePath mais peut-être faudrait la mettre dans la classe Move? #V
 - dans checkDestination dans Pièce, y a-t-il un comportement différent pour le cavalier? #V
 - 
+
+Conditions pour qu'un roque marche
+- il ne faut pas avoir ni la tour ni le roi qui a bougé concerné par le roque
+- le roi ne soit pas en échecs
+- les cases entre deux ne soient pas menacées par une pièce adverse

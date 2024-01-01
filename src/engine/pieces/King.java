@@ -21,4 +21,20 @@ public class King extends Queen {
 			new Move(new Point(-1, 1), 1),
 			new Move(new Point(-1, -1), 1)
 	};
+
+	boolean checkMoves(Point to) {
+		if (super.checkMoves(to))
+			return true;
+
+		// Check petit roque
+		// TODO: check supposition choix tour
+		if (getLine() == 0 && !board.isEmpty(7, 0) && board.getPiece(7, 0).getType().equals(PieceType.ROOK)) {
+			return true;
+		}
+
+		// Check grand roque
+
+		return false;
+	}
+
 }
