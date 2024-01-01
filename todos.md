@@ -97,10 +97,17 @@ precisesMove: {FORWARD}
 
 idée de Camille: faire que le roi hérite de la reine, tout est pareil sauf le max a 1 et la gestion du roque.
 
+
+Questions:
+- dans la méthode checkFreePath dans Pièce, j'ai besoin de créer une liste avec les points intermédiaires entre la position actuelle de la pièce et la position to. Je l'ai implémenté dans checkFreePath mais peut-être faudrait la mettre dans la classe Move? #V
+- dans checkDestination dans Pièce, y a-t-il un comportement différent pour le cavalier? #V
+
+
 ## Notes sur les règles des échecs
 Roque:
 - Un roque se fait en bougeant de 2 cases le roi à gauche ou à droite, on clique donc sur la position d'arrivée du roi.
 - Le petit roque est du côté où de la tour la plus proche du roi.
+
 Conditions pour qu'un roque marche
 - il ne faut pas avoir ni la tour ni le roi concernés par le roque qui ont bougé
 - le roi ne soit pas en échecs (règle générale)
