@@ -97,4 +97,7 @@ precisesMove: {FORWARD}
 
 idée de Camille: faire que le roi hérite de la reine, tout est pareil sauf le max a 1 et la gestion du roque.
 
-faut-il supporter le fait qu'un petit roque ne soit pas possible après un grand roque??
+Conditions pour qu'un roque marche
+- il ne faut pas avoir ni la tour ni le roi qui a bougé concerné par le roque
+- le roi ne soit pas en échecs
+- les cases entre deux ne soient pas menacées par une pièce adverse

@@ -19,7 +19,6 @@ public class ChessGame implements ChessController {
 
 	@Override
 	public boolean move(int fromX, int fromY, int toX, int toY) {
-		System.out.println(String.format("TO REMOVE : from (%d, %d) to (%d, %d)", fromX, fromY, toX, toY)); // TODO
 
 		// Aucune pièce à déplacer
 		if (board.isEmpty(fromX, fromY))
@@ -27,10 +26,13 @@ public class ChessGame implements ChessController {
 
 		var depart = new Point(fromX, fromY);
 		var destination = new Point(toX, toY);
+		var piece = board.getPiece(fromX, fromY);
+		System.out.println(String.format("Mouvement de %s de (%d, %d) à (%d, %d)",
+				piece.getType().name(), fromX, fromY, toX, toY));
 
 		// Si le mouvement est valide, alors on le fait
-		var piece = board.getPiece(fromX, fromY);
 		if (piece.isValid(destination)) {
+			// TODO: better move implementation for special moves and eating
 			board.movePieces(depart, destination);
 			view.removePiece(fromX, fromY);
 			view.putPiece(piece.getType(), piece.getColor(), toX, toY);
