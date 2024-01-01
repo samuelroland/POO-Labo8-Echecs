@@ -30,7 +30,7 @@ abstract public class Piece {
         checkDestination(to); // Vérifie si la destination est occupé ou pas
         // Si occupé, il faut check si c'est un ennemi, dans ce cas on peut bouger.
         // Sinon, on ne peut pas bouger
-        checkIsEnemy(to); // Si la pièce à la destination est un ennemi, alors on la mange.
+        isEnemy(to); // Si la pièce à la destination est un ennemi, alors on la mange.
 
         return true;
     }
@@ -51,7 +51,7 @@ abstract public class Piece {
 		// TODO Si Roi, vérifier si en échec ici, si c'est le cas retourner false.
 
 		// Si la case est occupée et que c'est une pièce de même couleur, on ne peut pas bouger.
-		if(!board.isEmpty(to) && !checkIsEnemy(to)){
+		if(!board.isEmpty(to) && !isEnemy(to)){
 			return false;
 		}
 
@@ -99,7 +99,7 @@ abstract public class Piece {
         return true;
     }
 
-    private boolean checkIsEnemy(Point to) {
+    private boolean isEnemy(Point to) {
         return board.getPiece(to).getColor() != this.color;
     }
 
