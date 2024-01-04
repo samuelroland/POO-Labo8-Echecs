@@ -111,17 +111,6 @@ public class Board {
         return pieces[x][y];
     }
 
-    public Board clone() {
-        Piece[][] pieces = new Piece[8][8];
-        Board clonedBoard = new Board(pieces);
-        for (int x = 0; x < pieces.length; x++) {
-            for (int y = 0; y < pieces[x].length; y++) {
-                clonedBoard.pieces[x][y] = this.pieces[x][y];
-            }
-        }
-        return clonedBoard;
-    }
-
     public Piece getPiece(Point p) {
         return getPiece(p.getCoordX(), p.getCoordY());
     }
@@ -132,5 +121,16 @@ public class Board {
 
     public boolean isEmpty(Point p) {
         return isEmpty(p.getCoordX(), p.getCoordY());
+    }
+
+    public Board clone() {
+        Piece[][] pieces = new Piece[8][8];
+        Board clonedBoard = new Board(pieces);
+        for (int x = 0; x < pieces.length; x++) {
+            for (int y = 0; y < pieces[x].length; y++) {
+                clonedBoard.pieces[x][y] = this.pieces[x][y];
+            }
+        }
+        return clonedBoard;
     }
 }
