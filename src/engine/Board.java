@@ -31,6 +31,14 @@ public class Board {
         // how can we do multiple pieces moves ?
     }
 
+    public void removePiece(int x, int y) {
+        pieces[x][y] = null;
+    }
+
+    public void removePiece(Point p) {
+        removePiece(p.getCoordX(), p.getCoordY());
+    }
+
     // Est-ce qu'un des 2 rois sont en échecs ?
     // Est normalé appelé sur une copie temporaire du board
     // Utile pour si une pièce mettrait son roi en échecs ou que
