@@ -3,7 +3,7 @@ package engine.pieces;
 import chess.PieceType;
 import chess.PlayerColor;
 import engine.Board;
-import engine.Move;
+import engine.moves.Move;
 import engine.Point;
 
 public class Queen extends Piece {
