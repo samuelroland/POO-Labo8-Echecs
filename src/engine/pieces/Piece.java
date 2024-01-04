@@ -11,7 +11,9 @@ import java.util.List;
 
 abstract public class Piece {
     PieceType type; // okay to be defined by subclasses only ?
-    Point point;
+
+    //TODO j'ai du le mettre en public pour y avoir accès dans le ChessGame
+    public Point point;
     PlayerColor color;
     Board board;
     static final Move[] validMoves = new Move[]{};

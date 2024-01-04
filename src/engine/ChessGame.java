@@ -11,6 +11,8 @@ public class ChessGame implements ChessController {
 	private ChessView view;
 	private Board board;
 
+	private Piece[][] pieces;
+
 	@Override
 	public void start(ChessView view) {
 		this.view = view;
@@ -41,6 +43,9 @@ public class ChessGame implements ChessController {
 		return false; // TODO
 	}
 
+
+
+
 	@Override
 	public void newGame() {
 		view.displayMessage("Start new game"); // TODO
@@ -49,8 +54,18 @@ public class ChessGame implements ChessController {
 		board = new Board(pieces);
 
 		// BLANC
-		// TODO: board.addPiece(new Rook(board, PlayerColor.WHITE, new Point(0, 0)));
-		pieces[1][0] = new Knight(board, PlayerColor.WHITE, new Point(1, 0));
+		board.addPiece(new Rook(board, PlayerColor.WHITE, new Point(0, 0)));
+		board.addPiece(new Knight(board, PlayerColor.WHITE, new Point(1, 0)));
+		board.addPiece(new Bishop(board, PlayerColor.WHITE, new Point(2, 0)));
+		board.addPiece(new Queen(board, PlayerColor.WHITE, new Point(3, 0)));
+		board.addPiece(new King(board, PlayerColor.WHITE, new Point(4, 0)));
+		board.addPiece(new Bishop(board, PlayerColor.WHITE, new Point(5, 0)));
+		board.addPiece(new Knight(board, PlayerColor.WHITE, new Point(6, 0)));
+		board.addPiece(new Rook(board, PlayerColor.WHITE, new Point(7, 0)));
+		for (int i = 0; i < 8; i++) {
+			board.addPiece(new Pawn(board, PlayerColor.WHITE, new Point(i, 1)));
+		}
+		/*pieces[1][0] = new Knight(board, PlayerColor.WHITE, new Point(1, 0));
 		pieces[2][0] = new Bishop(board, PlayerColor.WHITE, new Point(2, 0));
 		pieces[3][0] = new Queen(board, PlayerColor.WHITE, new Point(3, 0));
 		pieces[4][0] = new King(board, PlayerColor.WHITE, new Point(4, 0));
@@ -59,10 +74,21 @@ public class ChessGame implements ChessController {
 		pieces[7][0] = new Rook(board, PlayerColor.WHITE, new Point(7, 0));
 		for (int i = 0; i < 8; i++) {
 			pieces[i][1] = new Pawn(board, PlayerColor.WHITE, new Point(i, 1));
-		}
+		}*/
 
 		// NOIR
-		pieces[0][7] = new Rook(board, PlayerColor.BLACK, new Point(0, 7));
+		board.addPiece(new Rook(board, PlayerColor.BLACK, new Point(0, 7)));
+		board.addPiece(new Knight(board, PlayerColor.BLACK, new Point(1, 7)));
+		board.addPiece(new Bishop(board, PlayerColor.BLACK, new Point(2, 7)));
+		board.addPiece(new Queen(board, PlayerColor.BLACK, new Point(3, 7)));
+		board.addPiece(new King(board, PlayerColor.BLACK, new Point(4, 7)));
+		board.addPiece(new Bishop(board, PlayerColor.BLACK, new Point(5, 7)));
+		board.addPiece(new Knight(board, PlayerColor.BLACK, new Point(6, 7)));
+		board.addPiece(new Rook(board, PlayerColor.BLACK, new Point(7, 7)));
+		for (int i = 0; i < 8; i++) {
+			board.addPiece(new Pawn(board, PlayerColor.BLACK, new Point(i, 6)));
+		}
+		/*pieces[0][7] = new Rook(board, PlayerColor.BLACK, new Point(0, 7));
 		pieces[1][7] = new Knight(board, PlayerColor.BLACK, new Point(1, 7));
 		pieces[2][7] = new Bishop(board, PlayerColor.BLACK, new Point(2, 7));
 		pieces[3][7] = new Queen(board, PlayerColor.BLACK, new Point(3, 7));
@@ -72,7 +98,7 @@ public class ChessGame implements ChessController {
 		pieces[7][7] = new Rook(board, PlayerColor.BLACK, new Point(7, 7));
 		for (int i = 0; i < 8; i++) {
 			pieces[i][6] = new Pawn(board, PlayerColor.BLACK, new Point(i, 6));
-		}
+		}*/
 
 		for (int i = 0; i < pieces.length; i++) {
 			for (int j = 0; j < pieces.length; j++) {

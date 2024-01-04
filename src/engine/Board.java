@@ -24,6 +24,12 @@ public class Board {
         // how can we do multiple pieces moves ?
     }
 
+    public void addPiece(Piece piece) {
+        int x = piece.point.getCoordX();
+        int y = piece.point.getCoordY();
+        pieces[x][y] = piece;
+    }
+
     public Piece getPiece(int x, int y) {
         // TODO: check boundaries
         return pieces[x][y];
