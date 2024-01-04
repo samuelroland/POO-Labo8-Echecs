@@ -15,12 +15,22 @@ public class Move {
 		int deltaY = to.y - from.y;
 		int absDeltaY = Math.abs(to.y - from.y);
 
-		// If deltas are equivalent, meaning they are equal or with the same multiplier
-		boolean equivalentDelta = absDeltaX % directionVector.x == 0 && absDeltaY % directionVector.y == 0
-				&& absDeltaX / directionVector.x == absDeltaY / directionVector.y;
+		// TODO: doit-on refactoriser ces calculs de math un peu difficile à comprendre?
 
-		// The multiplier is under the max multiplier
-		boolean underMax = (absDeltaX / directionVector.x) <= max;
+		// If deltas are equivalent, meaning they are equal or with the same multiplier
+		boolean equivalentDelta = true;
+		boolean underMax = true;
+		if (directionVector.x != 0) {
+			equivalentDelta = absDeltaX % directionVector.x == 0;
+			// The multiplier is under the max multiplier
+			underMax = (absDeltaX / directionVector.x) <= max;
+		}
+
+		if (directionVector.y != 0)
+			equivalentDelta = equivalentDelta && absDeltaY % directionVector.y == 0;
+
+		if (directionVector.x != 0 && directionVector.y != 0)
+			equivalentDelta = equivalentDelta && (absDeltaX / directionVector.x == absDeltaY / directionVector.y);
 
 		// We are on the same sides ()
 		boolean sameSide = deltaX * directionVector.x > 0 && deltaY * directionVector.y > 0;
