@@ -96,7 +96,7 @@ abstract public class Piece {
         return true;
     }
 
-    private boolean isEnemy(Point to) {
+    public boolean isEnemy(Point to) {
         return board.getPiece(to).getColor() != this.color;
     }
 
@@ -114,5 +114,13 @@ abstract public class Piece {
 
     public PlayerColor getColor() {
         return color;
+    }
+
+    public Point getPoint (){
+        return point;
+    }
+
+    public void setPoint(Point p){
+        point = p;
     }
 }
