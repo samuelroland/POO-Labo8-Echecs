@@ -11,23 +11,25 @@ public class King extends Queen {
         super(board, color, point, PieceType.KING);
     }
 
-    static final Move[] validMoves = new Move[]{
-            new Move(new Point(0, 1), 1),
-            new Move(new Point(0, -1), 1),
-            new Move(new Point(1, 0), 1),
-            new Move(new Point(-1, 0), 1),
-            new Move(new Point(1, 1), 1),
-            new Move(new Point(1, -1), 1),
-            new Move(new Point(-1, 1), 1),
-            new Move(new Point(-1, -1), 1)
-    };
+    Move[] validMoves() {
+        return new Move[] {
+                new Move(new Point(0, 1), 1),
+                new Move(new Point(0, -1), 1),
+                new Move(new Point(1, 0), 1),
+                new Move(new Point(-1, 0), 1),
+                new Move(new Point(1, 1), 1),
+                new Move(new Point(1, -1), 1),
+                new Move(new Point(-1, 1), 1),
+                new Move(new Point(-1, -1), 1)
+        };
+    }
 
     boolean checkMoves(Point to) {
         if (super.checkMoves(to))
             return true;
 
         // Check petit roque
-        //Vérifie que le roi n'a pas bougé
+        // Vérifie que le roi n'a pas bougé
         if (!this.hasMoved() && getLine() == 0) {
             // Vérifier la tour
             Piece rook = board.getPiece(7, 0);
@@ -37,9 +39,12 @@ public class King extends Queen {
             }
         }
 
-        /*if (getLine() == 0 && !board.isEmpty(7, 0) && board.getPiece(7, 0).getType().equals(PieceType.ROOK)) {
-            return true;
-        }*/
+        /*
+         * if (getLine() == 0 && !board.isEmpty(7, 0) && board.getPiece(7,
+         * 0).getType().equals(PieceType.ROOK)) {
+         * return true;
+         * }
+         */
 
         // Check grand roque
         if (!this.hasMoved() && getLine() == 0) {

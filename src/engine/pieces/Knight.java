@@ -7,23 +7,25 @@ import engine.Move;
 import engine.Point;
 
 public class Knight extends Piece {
-	static final Move[] validMoves = new Move[] {
-			new Move(new Point(2, 1), 1),
-			new Move(new Point(2, -1), 1),
-			new Move(new Point(-2, -1), 1),
-			new Move(new Point(-2, 1), 1),
-			new Move(new Point(1, 2), 1),
-			new Move(new Point(-1, 2), 1),
-			new Move(new Point(1, -2), 1),
-			new Move(new Point(-1, -2), 1) };
+    Move[] validMoves() {
+        return new Move[] {
+                new Move(new Point(2, 1), 1),
+                new Move(new Point(2, -1), 1),
+                new Move(new Point(-2, -1), 1),
+                new Move(new Point(-2, 1), 1),
+                new Move(new Point(1, 2), 1),
+                new Move(new Point(-1, 2), 1),
+                new Move(new Point(1, -2), 1),
+                new Move(new Point(-1, -2), 1) };
+    };
 
-	public Knight(Board board, PlayerColor color, Point point) {
-		super(board, color, point, PieceType.KNIGHT);
-	}
+    public Knight(Board board, PlayerColor color, Point point) {
+        super(board, color, point, PieceType.KNIGHT);
+    }
 
-	boolean checkFreePath(Point to) {
-		// Le cavalier peut passer par dessus n'importe quelle pièce
-		return true;
-	}
+    boolean checkFreePath(Point to) {
+        // Le cavalier peut passer par dessus n'importe quelle pièce
+        return true;
+    }
 
 }
