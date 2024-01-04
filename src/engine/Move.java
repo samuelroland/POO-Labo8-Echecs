@@ -11,9 +11,9 @@ public class Move {
 
 	public boolean corresponds(Point from, Point to) {
 		int deltaX = to.x - from.x;
-		int absDeltaX = Math.abs(to.x - from.x);
+		int absDeltaX = Math.abs(deltaX);
 		int deltaY = to.y - from.y;
-		int absDeltaY = Math.abs(to.y - from.y);
+		int absDeltaY = Math.abs(deltaY);
 
 		// TODO: doit-on refactoriser ces calculs de math un peu difficile à comprendre?
 
