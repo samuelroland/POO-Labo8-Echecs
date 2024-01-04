@@ -133,3 +133,13 @@ new PawnFirstMove(new Point(0,2), 1);
 
 ## A noter dans le rapport
 - notre validation si le chemin est libre ne fonctionne que pour 
+
+
+
+New strategy:
+1. avoir des sous classes de Move pour les move particuliers qui font les changements sur le board
+1. isvalid-> getValidMove retourne le movement valide à effectuer (sur lequel appeler applyBoardChanges).
+1. Checkmoves() -> return Move.
+1. chessgame et board ne doivent psa connaitre de détails sur l'implémentation des mouveements, juste demander le mouvement valide à effectuer et sil existe alors demander à que les changements soient appliqués sur le board.
+1. check du roi en échecs dans piece dans getvalidmove après le check si toutes les autres conditions sont valides.
+
