@@ -35,7 +35,7 @@ public class ChessGame implements ChessController {
         // Si le mouvement est valide, alors on le fait
         var validMoveFound = piece.getValidMove(destination);
         if (validMoveFound != null) {
-            validMoveFound.applyboardchanges(board);
+            validMoveFound.applyBoardChanges(board);
 
             // TODO: better move implementation for special moves and eating
             // board.movePieces(depart, destination);
