@@ -38,6 +38,11 @@ public class Board {
     public void removePiece(Point p) {
         removePiece(p.getCoordX(), p.getCoordY());
     }
+    public void putPieceAt(Piece piece, Point p){
+        removePiece(piece.getPoint());
+        pieces[p.getCoordX()][p.getCoordY()] = piece;
+        piece.setPoint(p);
+    }
 
     // Est-ce qu'un des 2 rois sont en échecs ?
     // Est normalé appelé sur une copie temporaire du board
