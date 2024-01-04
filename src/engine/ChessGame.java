@@ -8,79 +8,93 @@ import engine.pieces.*;
 
 public class ChessGame implements ChessController {
 
-	private ChessView view;
-	private Board board;
+    private ChessView view;
+    private Board board;
 
-	@Override
-	public void start(ChessView view) {
-		this.view = view;
-		view.startView();
-	}
+    private Piece[][] pieces;
 
-	@Override
-	public boolean move(int fromX, int fromY, int toX, int toY) {
+    @Override
+    public void start(ChessView view) {
+        this.view = view;
+        view.startView();
+    }
 
-		// Aucune pièce à déplacer
-		if (board.isEmpty(fromX, fromY))
-			return false;
+    @Override
+    public boolean move(int fromX, int fromY, int toX, int toY) {
 
-		var depart = new Point(fromX, fromY);
-		var destination = new Point(toX, toY);
-		var piece = board.getPiece(fromX, fromY);
-		System.out.println(String.format("Mouvement de %s de (%d, %d) à (%d, %d)",
-				piece.getType().name(), fromX, fromY, toX, toY));
+        // Aucune pièce à déplacer
+        if (board.isEmpty(fromX, fromY))
+            return false;
 
-		// Si le mouvement est valide, alors on le fait
-		if (piece.isValid(destination)) {
-			// TODO: better move implementation for special moves and eating
-			board.movePieces(depart, destination);
-			view.removePiece(fromX, fromY);
-			view.putPiece(piece.getType(), piece.getColor(), toX, toY);
-			return true;
-		}
-		return false; // TODO
-	}
+        var depart = new Point(fromX, fromY);
+        var destination = new Point(toX, toY);
+        var piece = board.getPiece(fromX, fromY);
+        System.out.println(String.format("Mouvement de %s de (%d, %d) à (%d, %d)",
+                piece.getType().name(), fromX, fromY, toX, toY));
 
-	@Override
-	public void newGame() {
-		view.displayMessage("Start new game"); // TODO
-		Piece[][] pieces = new Piece[8][8];
+        // Si le mouvement est valide, alors on le fait
+        var validMoveFound = piece.getValidMove(destination);
+        if (validMoveFound != null) {
+            validMoveFound.applyBoardChanges(board);
 
-		board = new Board(pieces);
+            if (piece.getType().equals(PieceType.PAWN) && ((Pawn) piece).checkPromotion()) {
+                promotion();
+            }
 
-		// BLANC
-		// TODO: board.addPiece(new Rook(board, PlayerColor.WHITE, new Point(0, 0)));
-		pieces[1][0] = new Knight(board, PlayerColor.WHITE, new Point(1, 0));
-		pieces[2][0] = new Bishop(board, PlayerColor.WHITE, new Point(2, 0));
-		pieces[3][0] = new Queen(board, PlayerColor.WHITE, new Point(3, 0));
-		pieces[4][0] = new King(board, PlayerColor.WHITE, new Point(4, 0));
-		pieces[5][0] = new Bishop(board, PlayerColor.WHITE, new Point(5, 0));
-		pieces[6][0] = new Knight(board, PlayerColor.WHITE, new Point(6, 0));
-		pieces[7][0] = new Rook(board, PlayerColor.WHITE, new Point(7, 0));
-		for (int i = 0; i < 8; i++) {
-			pieces[i][1] = new Pawn(board, PlayerColor.WHITE, new Point(i, 1));
-		}
+            // TODO: better move implementation for special moves and eating
+            // board.movePieces(depart, destination);
+            // view.removePiece(fromX, fromY);
+            // view.putPiece(piece.getType(), piece.getColor(), toX, toY);
+            return true;
+        }
+        return false; // TODO
+    }
 
-		// NOIR
-		pieces[0][7] = new Rook(board, PlayerColor.BLACK, new Point(0, 7));
-		pieces[1][7] = new Knight(board, PlayerColor.BLACK, new Point(1, 7));
-		pieces[2][7] = new Bishop(board, PlayerColor.BLACK, new Point(2, 7));
-		pieces[3][7] = new Queen(board, PlayerColor.BLACK, new Point(3, 7));
-		pieces[4][7] = new King(board, PlayerColor.BLACK, new Point(4, 7));
-		pieces[5][7] = new Bishop(board, PlayerColor.BLACK, new Point(5, 7));
-		pieces[6][7] = new Knight(board, PlayerColor.BLACK, new Point(6, 7));
-		pieces[7][7] = new Rook(board, PlayerColor.BLACK, new Point(7, 7));
-		for (int i = 0; i < 8; i++) {
-			pieces[i][6] = new Pawn(board, PlayerColor.BLACK, new Point(i, 6));
-		}
+    //TODO
+    private void promotion(){
 
-		for (int i = 0; i < pieces.length; i++) {
-			for (int j = 0; j < pieces.length; j++) {
-				if (!board.isEmpty(i, j)) {
-					view.putPiece(pieces[i][j].getType(), pieces[i][j].getColor(), i, j);
-				}
-			}
-		}
+    }
 
-	}
+    @Override
+    public void newGame() {
+        view.displayMessage("Start new game"); // TODO
+        Piece[][] pieces = new Piece[8][8];
+
+        board = new Board(pieces);
+
+        // BLANC
+        board.addPiece(new Rook(board, PlayerColor.WHITE, new Point(0, 0)));
+        board.addPiece(new Knight(board, PlayerColor.WHITE, new Point(1, 0)));
+        board.addPiece(new Bishop(board, PlayerColor.WHITE, new Point(2, 0)));
+        board.addPiece(new Queen(board, PlayerColor.WHITE, new Point(3, 0)));
+        board.addPiece(new King(board, PlayerColor.WHITE, new Point(4, 0)));
+        board.addPiece(new Bishop(board, PlayerColor.WHITE, new Point(5, 0)));
+        board.addPiece(new Knight(board, PlayerColor.WHITE, new Point(6, 0)));
+        board.addPiece(new Rook(board, PlayerColor.WHITE, new Point(7, 0)));
+        for (int i = 0; i < 8; i++) {
+            board.addPiece(new Pawn(board, PlayerColor.WHITE, new Point(i, 1)));
+        }
+
+        // NOIR
+        board.addPiece(new Rook(board, PlayerColor.BLACK, new Point(0, 7)));
+        board.addPiece(new Knight(board, PlayerColor.BLACK, new Point(1, 7)));
+        board.addPiece(new Bishop(board, PlayerColor.BLACK, new Point(2, 7)));
+        board.addPiece(new Queen(board, PlayerColor.BLACK, new Point(3, 7)));
+        board.addPiece(new King(board, PlayerColor.BLACK, new Point(4, 7)));
+        board.addPiece(new Bishop(board, PlayerColor.BLACK, new Point(5, 7)));
+        board.addPiece(new Knight(board, PlayerColor.BLACK, new Point(6, 7)));
+        board.addPiece(new Rook(board, PlayerColor.BLACK, new Point(7, 7)));
+        for (int i = 0; i < 8; i++) {
+            board.addPiece(new Pawn(board, PlayerColor.BLACK, new Point(i, 6)));
+        }
+
+        for (int i = 0; i < pieces.length; i++) {
+            for (int j = 0; j < pieces.length; j++) {
+                if (!board.isEmpty(i, j)) {
+                    view.putPiece(pieces[i][j].getType(), pieces[i][j].getColor(), i, j);
+                }
+            }
+        }
+
+    }
 }
