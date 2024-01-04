@@ -3,6 +3,7 @@ package engine.pieces;
 import chess.PieceType;
 import chess.PlayerColor;
 import engine.Board;
+import engine.moves.CastleMove;
 import engine.moves.Move;
 import engine.Point;
 
@@ -24,37 +25,32 @@ public class King extends Queen {
         };
     }
 
-    boolean checkMoves(Point to) {
-        if (super.checkMoves(to))
-            return true;
-
-        // Check petit roque
-        // Vérifie que le roi n'a pas bougé
-        if (!this.hasMoved() && getLine() == 0) {
-            // Vérifier la tour
-            Piece rook = board.getPiece(7, 0);
-            if (rook != null && rook.getType() == PieceType.ROOK && !rook.hasMoved()) {
-                // Vérifier cases entre le roi et la tour sont libres
-                return board.isEmpty(5, 0) && board.isEmpty(6, 0);
-            }
+    Move checkMoves(Point to) {
+        Move foundMove = super.checkMoves(to);
+        if (foundMove != null) {
+            return foundMove;
         }
 
-        /*
-         * if (getLine() == 0 && !board.isEmpty(7, 0) && board.getPiece(7,
-         * 0).getType().equals(PieceType.ROOK)) {
-         * return true;
-         * }
-         */
+        // Check petit roque
+        if (!this.hasMoved() && getLine() == 0) {
+            Piece rook = board.getPiece(7, 0);
+            if (rook != null && rook.getType() == PieceType.ROOK && !rook.hasMoved()) {
+                if (board.isEmpty(5, 0) && board.isEmpty(6, 0)) {
+                    return new CastleMove(true);
+                }
+            }
+        }
 
         // Check grand roque
         if (!this.hasMoved() && getLine() == 0) {
             Piece rook = board.getPiece(0, 0);
             if (rook != null && rook.getType() == PieceType.ROOK && !rook.hasMoved()) {
-                return board.isEmpty(1, 0) && board.isEmpty(2, 0) && board.isEmpty(3, 0);
+                if (board.isEmpty(1, 0) && board.isEmpty(2, 0) && board.isEmpty(3, 0)) {
+                    return new CastleMove(false);
+                }
             }
         }
-
-        return false;
+        return null;
     }
 
 }

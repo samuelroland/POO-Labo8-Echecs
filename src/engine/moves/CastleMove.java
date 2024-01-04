@@ -1,0 +1,35 @@
+package engine.moves;
+
+import engine.Board;
+import engine.Point;
+import engine.pieces.Piece;
+
+public class CastleMove extends Move {
+    private boolean isKingside; // true pour petit roque, false pour grand roque
+
+    public CastleMove(boolean isKingside) {
+        super(new Point(0, 0), 0);
+        this.isKingside = isKingside;
+    }
+
+    //TODO : écrire
+    @Override
+    public boolean corresponds(Point from, Point to) {
+        return false;
+    }
+
+    public void applyBoardChanges(Board board, Piece piece) {
+        int kingRow = piece.getLine();
+        int kingCol = 4;
+
+        if (isKingside) {
+            // Petit roque
+            board.movePieces(new Point(kingCol, kingRow), new Point(6, kingRow));
+            board.movePieces(new Point(7, kingRow), new Point(5, kingRow));
+        } else {
+            // Grand roque
+            board.movePieces(new Point(kingCol, kingRow), new Point(2, kingRow));
+            board.movePieces(new Point(0, kingRow), new Point(3, kingRow));
+        }
+    }
+}

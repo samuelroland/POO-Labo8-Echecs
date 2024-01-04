@@ -41,6 +41,11 @@ public class Move {
 		return equivalentDelta && underMax && sameSide;
 	}
 
+	//TODO
+	public void applyBoardChanges(Board board) {
+
+	}
+
 	boolean collision(Board board, Point from, Point to) {
 		return true;// TODO
 	}

@@ -22,7 +22,7 @@ public class Board {
         this.pieces = pieces;
     }
 
-    void movePieces(Point from, Point to) {
+    public void movePieces(Point from, Point to) {
         if (isEmpty(from) || from.equals(to))
             return;
         pieces[to.getCoordX()][to.getCoordY()] = getPiece(from);
@@ -101,6 +101,17 @@ public class Board {
     public Piece getPiece(int x, int y) {
         // TODO: check boundaries
         return pieces[x][y];
+    }
+
+    public Board clone() {
+        Piece[][] pieces = new Piece[8][8];
+        Board clonedBoard = new Board(pieces);
+        for (int x = 0; x < pieces.length; x++) {
+            for (int y = 0; y < pieces[x].length; y++) {
+                clonedBoard.pieces[x][y] = this.pieces[x][y];
+            }
+        }
+        return clonedBoard;
     }
 
     public Piece getPiece(Point p) {
