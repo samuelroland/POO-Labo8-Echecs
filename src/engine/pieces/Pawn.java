@@ -37,4 +37,9 @@ public class Pawn extends Piece {
         // but valid)
         return true;
     }
+
+    //Verification de la promotion
+    public boolean checkPromotion() {
+        return getLine() == 7;
+    }
 }
