@@ -37,6 +37,10 @@ public class ChessGame implements ChessController {
         if (validMoveFound != null) {
             validMoveFound.applyBoardChanges(board);
 
+            if (piece.getType().equals(PieceType.PAWN) && ((Pawn) piece).checkPromotion()) {
+                promotion();
+            }
+
             // TODO: better move implementation for special moves and eating
             // board.movePieces(depart, destination);
             // view.removePiece(fromX, fromY);
@@ -44,6 +48,11 @@ public class ChessGame implements ChessController {
             return true;
         }
         return false; // TODO
+    }
+
+    //TODO
+    private void promotion(){
+
     }
 
     @Override
