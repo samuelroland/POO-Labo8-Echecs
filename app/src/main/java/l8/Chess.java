@@ -14,7 +14,7 @@ public class Chess {
         ChessController controller = new l8.engine.ChessGame();
 
         // 2. Création de la vue
-        if (args.length > 0 && args[0] == "-c") {// mode Console
+        if (args.length > 0 && args[0].equals("-c")) {// mode Console
             ConsoleView view = new ConsoleView(controller);
             // 3 . Lancement du programme.
             controller.start(view);
