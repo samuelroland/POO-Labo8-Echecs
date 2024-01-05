@@ -1,7 +1,9 @@
 package engine.moves;
 
+import chess.ChessView;
 import engine.Board;
 import engine.Point;
+import engine.pieces.Piece;
 
 public class Move {
     Point directionVector;
@@ -42,10 +44,10 @@ public class Move {
         return equivalentDelta && underMax && sameSide;
     }
 
-	//TODO
-	public void applyBoardChanges(Board board) {
-
-	}
+    public void applyBoardChanges(Board board, Piece piece, Point to) {
+        System.out.println("Applying board changes in Move");
+        board.movePieces(piece.getPoint(), to);
+    }
 
     boolean collision(Board board, Point from, Point to) {
         return true;// TODO
