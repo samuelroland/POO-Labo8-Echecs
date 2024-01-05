@@ -39,14 +39,17 @@ abstract public class Piece {
             }
             // TODO: check le roi pas en échecs
 
-            // Check si après le mouvement, notre roi est en échecs (celui de la pièce qui bouge)
+            // Check si après le mouvement, notre roi est en échecs
+            // (celui de la pièce qui bouge)
             var boardCopy = board.clone();
-            boardCopy.movePieces(depart, destination);
+            boardCopy.movePieces(point, to);
             boardCopy.lookIfKingsInCheck();
-            if (boardCopy.kingIsInCheck(piece.getColor()))
-                return false;
+            if (boardCopy.kingIsInCheck(getColor())) {
+                System.out.println("le roi sera en échecs avec ce coup");
+                return null;
+            }
         }
-        System.out.println("isValid " + result);
+        System.out.println("getValidMove " + result);
         return foundMove;
     }
 
