@@ -27,29 +27,15 @@ public class King extends Queen {
         };
     }
 
-    Move checkMoves(Point to) {
-        return super.checkMoves(to);
-
-
-        /*// Check petit roque
-        if (!this.hasMoved() && getLine() == 0) {
-            Piece rook = board.getPiece(7, 0);
-            if (rook != null && rook.getType() == PieceType.ROOK && !rook.hasMoved()) {
-                if (board.isEmpty(5, 0) && board.isEmpty(6, 0)) {
-                    return new CastleMove(true);
-                }
-            }
+    public Move checkMoves(Point to) {
+        Move basicMove = super.checkMoves(to);
+        if (basicMove != null) {
+            setHasMoved(true);
+            System.out.println("BasicMove");
+            return basicMove;
         }
 
-        // Check grand roque
-        if (!this.hasMoved() && getLine() == 0) {
-            Piece rook = board.getPiece(0, 0);
-            if (rook != null && rook.getType() == PieceType.ROOK && !rook.hasMoved()) {
-                if (board.isEmpty(1, 0) && board.isEmpty(2, 0) && board.isEmpty(3, 0)) {
-                    return new CastleMove(false);
-                }
-            }
-        }*/
+        return null;
     }
 
 }

@@ -30,25 +30,28 @@ public class CastleMove extends Move {
         Point kingEndPos;
         Point rookStartPos;
         Point rookEndPos;
+        if (!piece.hasMoved()) {
+            if (isKingside) {
+                // Petit roque
+                kingEndPos = new Point(6, kingRow);
+                rookStartPos = new Point(7, kingRow);
+                rookEndPos = new Point(5, kingRow);
+                System.out.println("Applying board changes in PETIT ROQUE " + kingRow);
+            } else {
+                // Grand roque
+                kingEndPos = new Point(2, kingRow);
+                rookStartPos = new Point(0, kingRow);
+                rookEndPos = new Point(3, kingRow);
+                System.out.println("Applying board changes in GRAND ROQUE " + kingRow);
+            }
 
-        if (isKingside) {
-            // Petit roque
-            kingEndPos = new Point(6, kingRow);
-            rookStartPos = new Point(7, kingRow);
-            rookEndPos = new Point(5, kingRow);
-        } else {
-            // Grand roque
-            kingEndPos = new Point(2, kingRow);
-            rookStartPos = new Point(0, kingRow);
-            rookEndPos = new Point(3, kingRow);
+            board.movePieces(kingStartPos, kingEndPos);
+            board.movePieces(rookStartPos, rookEndPos);
+
+            Piece king = board.getPiece(kingEndPos.x(), kingEndPos.y());
+            Piece rook = board.getPiece(rookEndPos.x(), rookEndPos.y());
+            if (king != null) king.setHasMoved(true);
+            if (rook != null) rook.setHasMoved(true);
         }
-
-        board.movePieces(kingStartPos, kingEndPos);
-        board.movePieces(rookStartPos, rookEndPos);
-
-        Piece king = board.getPiece(kingEndPos.x(), kingEndPos.y());
-        Piece rook = board.getPiece(rookEndPos.x(), rookEndPos.y());
-        if (king != null) king.setHasMoved(true);
-        if (rook != null) rook.setHasMoved(true);
     }
 }
