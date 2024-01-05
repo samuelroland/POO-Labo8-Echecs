@@ -15,15 +15,23 @@ public class Move {
     }
 
     public boolean corresponds(PlayerColor color, Point from, Point to) {
-        Point vector = color == PlayerColor.WHITE ? directionVector
-                : new Point(-1 * directionVector.x(), -1 * directionVector.y());
+
+        Point vector = color == PlayerColor.WHITE
+                ? directionVector
+                : directionVector.getMultiplied(-1);
+
         for (int i = 1; i <= max; i++) {
-            if (from.x() + vector.x() == to.x() && from.y() + vector.y() == to.y()) {
+            if (from.getAdded(vector.getMultiplied(i)).equals(to)) {
+                System.out.println("Move.corresponds true");
                 return true;
             }
         }
-
+        System.out.println("Move.corresponds false");
         return false;
+    }
+
+    public String toString() {
+        return "vect" + directionVector + " * " + max;
     }
 
     public void applyBoardChanges(Board board, Piece piece, Point to) {
