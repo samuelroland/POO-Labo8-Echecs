@@ -35,8 +35,9 @@ abstract public class Piece {
             // Sinon, on ne peut pas bouger
             // Vérifie si la destination est occupé ou pas
             // Si la pièce à la destination est un ennemi, alors on la mange.
-            if (checkDestination(to)) {
-                result = true;
+            if (!checkDestination(to)) {
+                System.out.println("checkDestination fails..");
+                return null;
             }
             // TODO: check le roi pas en échecs
 
@@ -52,9 +53,11 @@ abstract public class Piece {
 
             // Le mouvement est valide, il sera effectué donc on sauve sa future position
             futurePosition = to;
+            System.out.println("getValidMove false");
+            return foundMove;
         }
-        System.out.println("getValidMove " + result);
-        return foundMove;
+        System.out.println("getValidMove false");
+        return null;
     }
 
     abstract Move[] validMoves();
@@ -77,9 +80,6 @@ abstract public class Piece {
     // différent pion s'il y a personne devant il avance sinon sur la diagonale avec
     // pion inverse
     boolean checkDestination(Point to) {
-
-        // TODO Si Roi, vérifier si en échec ici, si c'est le cas retourner false.
-
         // Si la case est occupée et que c'est une pièce de même couleur, on ne peut pas
         // bouger.
         if (!board.isEmpty(to) && !isEnemy(to)) {
@@ -136,7 +136,8 @@ abstract public class Piece {
         return true;
     }
 
-    private boolean isEnemy(Point to) {
+    boolean isEnemy(Point to) {
+        System.out.println("isEnemy " + (board.getPiece(to).getColor() != this.color));
         return board.getPiece(to).getColor() != this.color;
     }
 

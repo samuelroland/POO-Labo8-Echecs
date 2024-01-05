@@ -26,7 +26,7 @@ public class ChessGame implements ChessController {
 
         var destination = new Point(toX, toY);
         var piece = board.getPiece(fromX, fromY);
-        System.out.println(String.format("Mouvement de %s de (%d, %d) à (%d, %d)",
+        System.out.println(String.format("\n >>>> Mouvement de %s de (%d, %d) à (%d, %d)",
                 piece.getType().name(), fromX, fromY, toX, toY));
 
         // Si le mouvement est valide, alors on le fait
