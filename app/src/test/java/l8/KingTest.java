@@ -39,4 +39,5 @@ public class KingTest {
 
         assertInstanceOf(CastleMove.class, king.checkMoves(new Point(2, 0)));
     }
+
 }
