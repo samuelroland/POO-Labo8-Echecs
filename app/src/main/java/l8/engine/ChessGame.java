@@ -72,13 +72,7 @@ public class ChessGame implements ChessController {
         board.putPieceAt(newPiece, to);
     }
 
-    @Override
-    public void newGame() {
-        view.displayMessage("Start new game"); // TODO
-        Piece[][] pieces = new Piece[8][8];
-
-        board = new Board(pieces);
-
+    static public void setupDefaultBoard(Board board) {
         // BLANC
         board.addPiece(new Rook(board, PlayerColor.WHITE, new Point(0, 0)));
         board.addPiece(new Knight(board, PlayerColor.WHITE, new Point(1, 0)));
@@ -104,6 +98,16 @@ public class ChessGame implements ChessController {
         for (int i = 0; i < 8; i++) {
             board.addPiece(new Pawn(board, PlayerColor.BLACK, new Point(i, 6)));
         }
+    }
+
+    @Override
+    public void newGame() {
+        view.displayMessage("Start new game"); // TODO
+        Piece[][] pieces = new Piece[8][8];
+
+        board = new Board(pieces);
+
+        setupDefaultBoard(board);
 
         updateView();
     }
