@@ -38,9 +38,10 @@ public class Board {
     public void removePiece(Point p) {
         removePiece(p.x(), p.y());
     }
-    public void putPieceAt(Piece piece, Point p){
+
+    public void putPieceAt(Piece piece, Point p) {
         removePiece(piece.getPoint());
-        pieces[p.getCoordX()][p.getCoordY()] = piece;
+        pieces[p.x()][p.y()] = piece;
         piece.setPoint(p);
     }
 

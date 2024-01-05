@@ -14,10 +14,9 @@ public class Pawn extends Piece {
     };
 
     // Les mouvements particuliers pour manger en diagonale devant
-    private static Move eatingDiagRight = new Move(new Point(1, 1), 1);
-    private static Move eatingDiagLeft = new Move(new Point(-1, 1), 1);
-    private static EnPassant enPassantRight = new EnPassant(new Point(1, 1), 1);
-    private static EnPassant enPassantLeft = new EnPassant(new Point(-1, 1), 1);
+    private static Move[] frontDiagMoves = new Move[] {
+            new Move(new Point(1, 1), 1), new Move(new Point(-1, 1), 1),
+    };
 
     public Pawn(Board board, PlayerColor color, Point point) {
         super(board, color, point, PieceType.PAWN);
@@ -36,23 +35,19 @@ public class Pawn extends Piece {
         }
         // TODO check is enemy dans move?
         // Permet à un pion de manger une pièce de l'autre couleur en diagonale
-        if (eatingDiagRight.corresponds(color, point, to)&& isEnemy(to)) {
-        System.out.println("Checkmoves in Pawn true with diag eating");
-            return eatingDiagRight;
-        }
-        if (eatingDiagLeft.corresponds(color, point, to) && isEnemy(to)) {
-        System.out.println("Checkmoves in Pawn true with diag eating");
+        for (Move diagMove : frontDiagMoves) {
+            if (diagMove.corresponds(color, point, to)) {
 
-            return eatingDiagLeft;
-        }
+                // Peut le manger
+                if (isEnemy(to)) {
+                    return diagMove;
+                }
 
-        // Permet à un pion d'effectuer le mouvement en passant
-        if(enPassantRight.corresponds(color, point, to)){
-            System.out.println("Checkmoves in Pawn true with en passant right");
-            return enPassantRight;
-        }
-        if (enPassantLeft.corresponds(color, point, to)){
-
+                // Fait de la prise en passant
+                // if ()
+                // System.out.println("Checkmoves in Pawn true with en passant right");
+                // return new EnPassant();
+            }
         }
 
         System.out.println("Checkmoves in Pawn false");
@@ -60,12 +55,14 @@ public class Pawn extends Piece {
     }
 
     boolean checkDestination(Point to) {
-        //On veut garder le check que l'autre pièce est bien un ennemi
-        if (!super.checkDestination(to)) return false;
+        // On veut garder le check que l'autre pièce est bien un ennemi
+        if (!super.checkDestination(to))
+            return false;
 
         // Par contre, même si c'est un ennemi on veut invalider le mouvement tout droit
         // car les pions ne peuvent pas manger une pièce en face
-        // Note: Les mouvements sur une case vide, ainsi que les mouvements pour manger en diagonales
+        // Note: Les mouvements sur une case vide, ainsi que les mouvements pour manger
+        // en diagonales
         // ne seront ainsi pas annulés
         if (!board.isEmpty(to) && to.x() - point.x() == 0) {
             return false;
