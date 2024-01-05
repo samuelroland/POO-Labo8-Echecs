@@ -57,7 +57,7 @@ abstract public class Piece {
 
     Move checkMoves(Point to) {
         for (var move : validMoves()) {
-            if (move.corresponds(point, to)) {
+            if (move.corresponds(color, point, to)) {
                 System.out.println("checkMoves true");
                 return move;
             }
@@ -101,8 +101,8 @@ abstract public class Piece {
         // 1. Détermination de la direction du déplacement (pour savoir comment
         // incrémenter les points dans le vecteur)
         // Détermination du vecteur de déplacement
-        int deltaX = to.getCoordX() - point.getCoordX();
-        int deltaY = to.getCoordY() - point.getCoordY();
+        int deltaX = to.x() - point.x();
+        int deltaY = to.y() - point.y();
 
         int directionX = Integer.compare(deltaX, 0);
         // équivaut: int directionX = deltaX == 0 ? 0 : deltaX > 0 ? 1 : -1;
@@ -112,8 +112,8 @@ abstract public class Piece {
         List<Point> intermediatePoints = new ArrayList<>();
 
         for (int i = 1; i < Math.max(Math.abs(deltaX), Math.abs(deltaY)); i++) {
-            int intermediateX = point.getCoordX() + i * directionX;
-            int intermediateY = point.getCoordY() + i * directionY;
+            int intermediateX = point.x() + i * directionX;
+            int intermediateY = point.y() + i * directionY;
             intermediatePoints.add(new Point(intermediateX, intermediateY));
         }
 
@@ -136,14 +136,14 @@ abstract public class Piece {
     // le 0 étant en la première ligne en bas pour les blancs)
     // en considérant que les blancs sont toujours en bas
     public int getLine() {
-        return color == PlayerColor.WHITE ? point.getCoordY() : 7 - point.getCoordY();
+        return color == PlayerColor.WHITE ? point.y() : 7 - point.y();
     }
 
     // Recevoir le numéro de colonne relatif à la couleur (de 0 à 7,
     // le 0 étant la colonne tout à gauche pour les blancs)
     // en considérant que les blancs sont toujours en bas
     public int getColumn() {
-        return color == PlayerColor.WHITE ? point.getCoordX() : 7 - point.getCoordX();
+        return color == PlayerColor.WHITE ? point.x() : 7 - point.x();
     }
 
     public PieceType getType() {

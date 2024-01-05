@@ -1,5 +1,6 @@
 package engine.moves;
 
+import chess.PlayerColor;
 import engine.Board;
 import engine.Point;
 import engine.pieces.Piece;
@@ -14,7 +15,7 @@ public class CastleMove extends Move {
 
     // TODO : écrire
     @Override
-    public boolean corresponds(Point from, Point to) {
+    public boolean corresponds(PlayerColor color, Point from, Point to) {
         return false;
     }
 

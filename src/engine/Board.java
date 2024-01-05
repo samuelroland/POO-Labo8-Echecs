@@ -25,8 +25,8 @@ public class Board {
     public void movePieces(Point from, Point to) {
         if (isEmpty(from) || from.equals(to))
             return;
-        pieces[to.getCoordX()][to.getCoordY()] = getPiece(from);
-        pieces[from.getCoordX()][from.getCoordY()] = null;
+        pieces[to.x()][to.y()] = getPiece(from);
+        pieces[from.x()][from.y()] = null;
 
         // how can we do multiple pieces moves ?
     }
@@ -36,7 +36,7 @@ public class Board {
     }
 
     public void removePiece(Point p) {
-        removePiece(p.getCoordX(), p.getCoordY());
+        removePiece(p.x(), p.y());
     }
 
     // Est-ce qu'un des 2 rois sont en échecs ?
@@ -103,7 +103,7 @@ public class Board {
     void addPiece(Piece piece) {
         if (piece == null)
             return;
-        pieces[piece.getPoint().getCoordX()][piece.getPoint().getCoordY()] = piece;
+        pieces[piece.getPoint().x()][piece.getPoint().y()] = piece;
     }
 
     public Piece getPiece(int x, int y) {
@@ -112,7 +112,7 @@ public class Board {
     }
 
     public Piece getPiece(Point p) {
-        return getPiece(p.getCoordX(), p.getCoordY());
+        return getPiece(p.x(), p.y());
     }
 
     public boolean isEmpty(int x, int y) {
@@ -120,7 +120,7 @@ public class Board {
     }
 
     public boolean isEmpty(Point p) {
-        return isEmpty(p.getCoordX(), p.getCoordY());
+        return isEmpty(p.x(), p.y());
     }
 
     public Board clone() {

@@ -21,7 +21,7 @@ public class Pawn extends Piece {
             return basicMove;
         // Permet à un pion de faire un saut de 2 au tout début
         var newPawnFirstMove = new Move(new Point(0, 2), 1);
-        if (getLine() == 1 && newPawnFirstMove.corresponds(point, to)) {
+        if (getLine() == 1 && newPawnFirstMove.corresponds(color, point, to)) {
             System.out.println("Checkmoves in Pawn true");
             return newPawnFirstMove;
         }

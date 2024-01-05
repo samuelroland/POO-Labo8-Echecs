@@ -13,7 +13,6 @@ public class Move {
         this.max = max;
     }
 
-    public boolean corresponds(Point from, Point to) {
         int deltaX = to.getCoordX() - from.getCoordX();
         int absDeltaX = Math.abs(deltaX);
         int deltaY = to.getCoordY() - from.getCoordY();
@@ -28,6 +27,7 @@ public class Move {
             equivalentDelta = absDeltaX % directionVector.getCoordX() == 0;
             // The multiplier is under the max multiplier
             underMax = (absDeltaX / directionVector.getCoordX()) <= max;
+    public boolean corresponds(PlayerColor color, Point from, Point to) {
         }
 
         if (directionVector.getCoordY() != 0)
