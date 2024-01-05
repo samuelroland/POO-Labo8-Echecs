@@ -129,12 +129,18 @@ abstract public class Piece {
         return board.getPiece(to).getColor() != this.color;
     }
 
+    // Recevoir le numéro de ligne relatif à la couleur (de 0 à 7
+    // le 0 étant en la première ligne en bas pour les blancs)
+    // en considérant que les blancs sont toujours en bas
     public int getLine() {
-        return color == PlayerColor.WHITE ? point.getCoordY() : 8 - point.getCoordY();
+        return color == PlayerColor.WHITE ? point.getCoordY() : 7 - point.getCoordY();
     }
 
+    // Recevoir le numéro de colonne relatif à la couleur (de 0 à 7,
+    // le 0 étant la colonne tout à gauche pour les blancs)
+    // en considérant que les blancs sont toujours en bas
     public int getColumn() {
-        return color == PlayerColor.WHITE ? point.getCoordX() : 8 - point.getCoordX();
+        return color == PlayerColor.WHITE ? point.getCoordX() : 7 - point.getCoordX();
     }
 
     public PieceType getType() {
