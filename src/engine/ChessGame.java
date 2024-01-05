@@ -11,7 +11,6 @@ public class ChessGame implements ChessController {
     private ChessView view;
     private Board board;
 
-
     @Override
     public void start(ChessView view) {
         this.view = view;
@@ -25,7 +24,6 @@ public class ChessGame implements ChessController {
         if (board.isEmpty(fromX, fromY))
             return false;
 
-        var depart = new Point(fromX, fromY);
         var destination = new Point(toX, toY);
         var piece = board.getPiece(fromX, fromY);
         System.out.println(String.format("Mouvement de %s de (%d, %d) à (%d, %d)",
@@ -34,23 +32,23 @@ public class ChessGame implements ChessController {
         // Si le mouvement est valide, alors on le fait
         var validMoveFound = piece.getValidMove(destination);
         if (validMoveFound != null) {
-            validMoveFound.applyBoardChanges(board);
+            validMoveFound.applyBoardChanges(board, piece, destination);
 
             if (piece.getType().equals(PieceType.PAWN) && ((Pawn) piece).checkPromotion()) {
                 promotion();
             }
 
-            // TODO: better move implementation for special moves and eating
-            // board.movePieces(depart, destination);
-            // view.removePiece(fromX, fromY);
-            // view.putPiece(piece.getType(), piece.getColor(), toX, toY);
+            // Regénérer la vue pour qu'elles y affichent la dernière version
+            // du board avec tous les derniers mouvements
+            updateView();
+
             return true;
         }
         return false; // TODO
     }
 
-    //TODO
-    private void promotion(){
+    // TODO
+    private void promotion() {
 
     }
 
@@ -87,13 +85,20 @@ public class ChessGame implements ChessController {
             board.addPiece(new Pawn(board, PlayerColor.BLACK, new Point(i, 6)));
         }
 
-        for (int i = 0; i < pieces.length; i++) {
-            for (int j = 0; j < pieces.length; j++) {
+        updateView();
+    }
+
+    public void updateView() {
+        // TODO: magic values of 8 ??
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
                 if (!board.isEmpty(i, j)) {
-                    view.putPiece(pieces[i][j].getType(), pieces[i][j].getColor(), i, j);
+                    Piece p = board.getPiece(i, j);
+                    view.putPiece(p.getType(), p.getColor(), i, j);
+                } else {
+                    view.removePiece(i, j);
                 }
             }
         }
-
     }
 }
