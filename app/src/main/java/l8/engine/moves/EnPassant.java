@@ -1,10 +1,11 @@
-package engine.moves;
 
-import chess.PieceType;
-import engine.Board;
-import engine.Point;
-import engine.pieces.Pawn;
-import engine.pieces.Piece;
+package l8.engine.moves;
+
+import l8.chess.PieceType;
+import l8.engine.Board;
+import l8.engine.Point;
+import l8.engine.pieces.Pawn;
+import l8.engine.pieces.Piece;
 
 import java.util.ArrayList;
 
@@ -19,40 +20,38 @@ public class EnPassant extends Move{
         super(directionVecteur, max);
     }
 
-    @Override
+
     public boolean corresponds(Board board, Point from, Point to) {
         Piece attacker = board.getPiece(from);
-        if(attacker.getType() != PieceType.PAWN ) {
-            return false;
-        }
 
         //Comme dans classe Piece
         // Determination of direction vector
-        int deltaX = to.getCoordX() - from.getCoordX();
-        int deltaY = to.getCoordY() - from.getCoordY();
+        int deltaX = to.x() - from.x();
+        int deltaY = to.y() - from.y();
 
         int directionX = Integer.compare(deltaX, 0);
         int directionY = Integer.compare(deltaY, 0);
 
-        Point pointRight = new Point(attacker.getPoint().getCoordX() + directionX, attacker.getPoint().getCoordY() + directionY);
+        Point pointRight = new Point(attacker.getPoint().x() + directionX, attacker.getPoint().y() + directionY);
 
 
-        if(!board.isEmpty(pointRight) && board.getPiece(pointRight).getType() == PieceType.PAWN && attacker.isEnemy(pointRight)){
+        /*if(!board.isEmpty(pointRight) && board.getPiece(pointRight).getType() == PieceType.PAWN && attacker.isEnemy(pointRight)){
             enPassantAt.add(pointRight);
             canEatRight = true;
         }
         if(!board.isEmpty(pointLeft) && board.getPiece(pointLeft).getType() == PieceType.PAWN && attacker.isEnemy(pointLeft)){
             enPassantAt.add(pointLeft);
             canEatLeft = true;
-        }
+        }*/
         return true;
     }
 
     @Override
-    public void applyBoardChanges(Board board, Point to){
+    public void applyBoardChanges(Board board, Piece p, Point to){
         board.removePiece(attacker.getPoint());
         board.putPieceAt(attacker, to);
         board.removePiece(victim.getPoint());
         victim.setPoint(null);
     }
 }
+

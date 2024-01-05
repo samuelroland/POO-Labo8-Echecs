@@ -3,6 +3,7 @@ package l8.engine.pieces;
 import l8.chess.PieceType;
 import l8.chess.PlayerColor;
 import l8.engine.Board;
+import l8.engine.moves.EnPassant;
 import l8.engine.moves.Move;
 import l8.engine.Point;
 
@@ -15,6 +16,8 @@ public class Pawn extends Piece {
     // Les mouvements particuliers pour manger en diagonale devant
     private static Move eatingDiagRight = new Move(new Point(1, 1), 1);
     private static Move eatingDiagLeft = new Move(new Point(-1, 1), 1);
+    private static EnPassant enPassantRight = new EnPassant(new Point(1, 1), 1);
+    private static EnPassant enPassantLeft = new EnPassant(new Point(-1, 1), 1);
 
     public Pawn(Board board, PlayerColor color, Point point) {
         super(board, color, point, PieceType.PAWN);
@@ -31,7 +34,7 @@ public class Pawn extends Piece {
             System.out.println("Checkmoves in Pawn true");
             return newPawnFirstMove;
         }
-
+        // TODO check is enemy dans move?
         // Permet à un pion de manger une pièce de l'autre couleur en diagonale
         if (eatingDiagRight.corresponds(color, point, to)&& isEnemy(to)) {
         System.out.println("Checkmoves in Pawn true with diag eating");
@@ -41,6 +44,15 @@ public class Pawn extends Piece {
         System.out.println("Checkmoves in Pawn true with diag eating");
 
             return eatingDiagLeft;
+        }
+
+        // Permet à un pion d'effectuer le mouvement en passant
+        if(enPassantRight.corresponds(color, point, to)){
+            System.out.println("Checkmoves in Pawn true with en passant right");
+            return enPassantRight;
+        }
+        if (enPassantLeft.corresponds(color, point, to)){
+
         }
 
         System.out.println("Checkmoves in Pawn false");
