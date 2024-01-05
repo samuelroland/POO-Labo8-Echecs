@@ -80,12 +80,12 @@ public class Board {
 
                 if (p.getColor().equals(PlayerColor.WHITE)) {
                     // Est-ce que cette pièce blanche menace le roi noir ?
-                    if (p.isValid(blackKingPos)) {
+                    if (p.getValidMove(blackKingPos) != null) {
                         blackKingInCheck = true;
                     }
                 } else {
                     // Est-ce que cette pièce noire menace le roi blanc ?
-                    if (p.isValid(whiteKingPos)) {
+                    if (p.getValidMove(whiteKingPos) != null) {
                         whiteKingInCheck = true;
                     }
                 }

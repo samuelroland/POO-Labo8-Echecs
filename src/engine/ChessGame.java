@@ -11,7 +11,6 @@ public class ChessGame implements ChessController {
     private ChessView view;
     private Board board;
 
-    private Piece[][] pieces;
 
     @Override
     public void start(ChessView view) {
