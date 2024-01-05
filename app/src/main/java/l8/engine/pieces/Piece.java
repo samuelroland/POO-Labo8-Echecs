@@ -14,6 +14,7 @@ abstract public class Piece {
     Point point;
     PlayerColor color;
     Board board;
+    private Point futurePosition;
 
     public Piece(Board board, PlayerColor color, Point point, PieceType type) {
         this.board = board;
@@ -48,12 +49,19 @@ abstract public class Piece {
                 System.out.println("le roi sera en échecs avec ce coup");
                 return null;
             }
+
+            // Le mouvement est valide, il sera effectué donc on sauve sa future position
+            futurePosition = to;
         }
         System.out.println("getValidMove " + result);
         return foundMove;
     }
 
     abstract Move[] validMoves();
+
+    public void commitNewPosition() {
+        point = futurePosition;
+    }
 
     Move checkMoves(Point to) {
         for (var move : validMoves()) {

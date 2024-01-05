@@ -26,7 +26,7 @@ public class Move {
                 return true;
             }
         }
-        System.out.println("Move.corresponds false");
+        System.out.println("Move.corresponds false " + this + color + from + to);
         return false;
     }
 
@@ -37,6 +37,7 @@ public class Move {
     public void applyBoardChanges(Board board, Piece piece, Point to) {
         System.out.println("Applying board changes in Move");
         board.movePieces(piece.getPoint(), to);
+        piece.commitNewPosition();
     }
 
     boolean collision(Board board, Point from, Point to) {

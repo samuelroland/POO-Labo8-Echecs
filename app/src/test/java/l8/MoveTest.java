@@ -113,6 +113,16 @@ class MoveTest {
                             new Point(7, 7),
                     },
                     PlayerColor.WHITE),
+
+            new MoveCase("Knight like move",
+                    new Move(new Point(1, 2), 1),
+                    new Point(6, 0),
+                    new Point[] {
+                            new Point(7, 2),
+                    },
+                    new Point[] {
+                    },
+                    PlayerColor.WHITE),
     };
 
     @Test
