@@ -1,4 +1,4 @@
-package engine;
+package l8.engine;
 
 public class Point {
     int x;
@@ -28,5 +28,13 @@ public class Point {
     // celles d'un vecteur donné
     public Point getAdded(Point vector) {
         return new Point(x + vector.x, y + vector.y);
+    }
+
+    public boolean equals(Point b) {
+        return x == b.x && y == b.y;
+    }
+
+    public String toString() {
+        return "(" + x + ", " + y + ")";
     }
 }

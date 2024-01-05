@@ -1,10 +1,10 @@
-package engine;
+package l8.engine;
 
 import java.security.InvalidParameterException;
 
-import chess.PieceType;
-import chess.PlayerColor;
-import engine.pieces.Piece;
+import l8.chess.PieceType;
+import l8.chess.PlayerColor;
+import l8.engine.pieces.Piece;
 
 public class Board {
     private Piece[][] pieces;

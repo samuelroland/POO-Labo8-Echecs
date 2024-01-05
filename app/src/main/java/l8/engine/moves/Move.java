@@ -1,9 +1,9 @@
-package engine.moves;
+package l8.engine.moves;
 
-import chess.PlayerColor;
-import engine.Board;
-import engine.Point;
-import engine.pieces.Piece;
+import l8.chess.PlayerColor;
+import l8.engine.Board;
+import l8.engine.Point;
+import l8.engine.pieces.Piece;
 
 public class Move {
     Point directionVector;

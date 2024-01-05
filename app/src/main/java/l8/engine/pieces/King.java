@@ -1,11 +1,11 @@
-package engine.pieces;
+package l8.engine.pieces;
 
-import chess.PieceType;
-import chess.PlayerColor;
-import engine.Board;
-import engine.moves.CastleMove;
-import engine.moves.Move;
-import engine.Point;
+import l8.chess.PieceType;
+import l8.chess.PlayerColor;
+import l8.engine.Board;
+import l8.engine.moves.CastleMove;
+import l8.engine.moves.Move;
+import l8.engine.Point;
 
 public class King extends Queen {
     public King(Board board, PlayerColor color, Point point) {
