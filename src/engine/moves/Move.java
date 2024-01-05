@@ -1,5 +1,6 @@
 package engine.moves;
 
+import chess.PlayerColor;
 import engine.Board;
 import engine.Point;
 import engine.pieces.Piece;
@@ -13,34 +14,16 @@ public class Move {
         this.max = max;
     }
 
-        int deltaX = to.getCoordX() - from.getCoordX();
-        int absDeltaX = Math.abs(deltaX);
-        int deltaY = to.getCoordY() - from.getCoordY();
-        int absDeltaY = Math.abs(deltaY);
-
-        // TODO: doit-on refactoriser ces calculs de math un peu difficile à comprendre?
-
-        // If deltas are equivalent, meaning they are equal or with the same multiplier
-        boolean equivalentDelta = true;
-        boolean underMax = true;
-        if (directionVector.getCoordX() != 0) {
-            equivalentDelta = absDeltaX % directionVector.getCoordX() == 0;
-            // The multiplier is under the max multiplier
-            underMax = (absDeltaX / directionVector.getCoordX()) <= max;
     public boolean corresponds(PlayerColor color, Point from, Point to) {
+        Point vector = color == PlayerColor.WHITE ? directionVector
+                : new Point(-1 * directionVector.x(), -1 * directionVector.y());
+        for (int i = 1; i <= max; i++) {
+            if (from.x() + vector.x() == to.x() && from.y() + vector.y() == to.y()) {
+                return true;
+            }
         }
 
-        if (directionVector.getCoordY() != 0)
-            equivalentDelta = equivalentDelta && absDeltaY % directionVector.getCoordY() == 0;
-
-        if (directionVector.getCoordX() != 0 && directionVector.getCoordY() != 0)
-            equivalentDelta = equivalentDelta
-                    && (absDeltaX / directionVector.getCoordX() == absDeltaY / directionVector.getCoordY());
-
-        // We are on the same sides ()
-        boolean sameSide = deltaX * directionVector.getCoordX() > 0 && deltaY * directionVector.getCoordY() > 0;
-
-        return equivalentDelta && underMax && sameSide;
+        return false;
     }
 
     public void applyBoardChanges(Board board, Piece piece, Point to) {
