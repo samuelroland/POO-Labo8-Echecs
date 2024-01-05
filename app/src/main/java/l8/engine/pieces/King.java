@@ -21,17 +21,17 @@ public class King extends Queen {
                 new Move(new Point(1, 1), 1),
                 new Move(new Point(1, -1), 1),
                 new Move(new Point(-1, 1), 1),
-                new Move(new Point(-1, -1), 1)
+                new Move(new Point(-1, -1), 1),
+                new CastleMove(true),
+                new CastleMove(false)
         };
     }
 
     Move checkMoves(Point to) {
-        Move foundMove = super.checkMoves(to);
-        if (foundMove != null) {
-            return foundMove;
-        }
+        return super.checkMoves(to);
 
-        // Check petit roque
+
+        /*// Check petit roque
         if (!this.hasMoved() && getLine() == 0) {
             Piece rook = board.getPiece(7, 0);
             if (rook != null && rook.getType() == PieceType.ROOK && !rook.hasMoved()) {
@@ -49,8 +49,7 @@ public class King extends Queen {
                     return new CastleMove(false);
                 }
             }
-        }
-        return null;
+        }*/
     }
 
 }

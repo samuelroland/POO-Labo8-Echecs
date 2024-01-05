@@ -1,5 +1,6 @@
 package l8.engine.moves;
 
+import l8.chess.PieceType;
 import l8.chess.PlayerColor;
 import l8.engine.Board;
 import l8.engine.Point;
@@ -9,14 +10,15 @@ public class CastleMove extends Move {
     private boolean isKingside; // true pour petit roque, false pour grand roque
 
     public CastleMove(boolean isKingside) {
-        super(new Point(0, 0), 0);
+        super(new Point(isKingside ? 2 : -2, 0),1);
         this.isKingside = isKingside;
     }
 
     // TODO : écrire
     @Override
     public boolean corresponds(PlayerColor color, Point from, Point to) {
-        return false;
+        Point expectedKingDestination = isKingside ? new Point(6, from.y()) : new Point(2, from.y());
+        return to.equals(expectedKingDestination);
     }
 
     public void applyBoardChanges(Board board, Piece piece, Point to) {
@@ -24,15 +26,29 @@ public class CastleMove extends Move {
         int kingRow = piece.getLine();
         int kingCol = 4;
 
-        // TODO: refactor to variables like KingPosition and RookPosition
+        Point kingStartPos = new Point(kingCol, kingRow);
+        Point kingEndPos;
+        Point rookStartPos;
+        Point rookEndPos;
+
         if (isKingside) {
             // Petit roque
-            board.movePieces(new Point(kingCol, kingRow), new Point(6, kingRow));
-            board.movePieces(new Point(7, kingRow), new Point(5, kingRow));
+            kingEndPos = new Point(6, kingRow);
+            rookStartPos = new Point(7, kingRow);
+            rookEndPos = new Point(5, kingRow);
         } else {
             // Grand roque
-            board.movePieces(new Point(kingCol, kingRow), new Point(2, kingRow));
-            board.movePieces(new Point(0, kingRow), new Point(3, kingRow));
+            kingEndPos = new Point(2, kingRow);
+            rookStartPos = new Point(0, kingRow);
+            rookEndPos = new Point(3, kingRow);
         }
+
+        board.movePieces(kingStartPos, kingEndPos);
+        board.movePieces(rookStartPos, rookEndPos);
+
+        Piece king = board.getPiece(kingEndPos.x(), kingEndPos.y());
+        Piece rook = board.getPiece(rookEndPos.x(), rookEndPos.y());
+        if (king != null) king.setHasMoved(true);
+        if (rook != null) rook.setHasMoved(true);
     }
 }
