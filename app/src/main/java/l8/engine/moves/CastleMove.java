@@ -17,8 +17,8 @@ public class CastleMove extends Move {
     // TODO : écrire
     @Override
     public boolean corresponds(PlayerColor color, Point from, Point to) {
-        Point expectedKingDestination = isKingside ? new Point(6, from.y()) : new Point(2, from.y());
-        return to.equals(expectedKingDestination);
+        Point destination = isKingside ? new Point(6, from.y()) : new Point(2, from.y());
+        return to.equals(destination);
     }
 
     public void applyBoardChanges(Board board, Piece piece, Point to) {
@@ -30,6 +30,7 @@ public class CastleMove extends Move {
         Point kingEndPos;
         Point rookStartPos;
         Point rookEndPos;
+        // TODO probleme avec le hasMoved --> si je le mets le roi ne fera pas de roque si une pièce bouge et si je le mets pas si le roi/tour bouge je peux faire le roque
         if (!piece.hasMoved()) {
             if (isKingside) {
                 // Petit roque
