@@ -1,4 +1,4 @@
-package chess;
+package l8.chess;
 
 /**
  * Regroupe les méthodes appelées par la vue.

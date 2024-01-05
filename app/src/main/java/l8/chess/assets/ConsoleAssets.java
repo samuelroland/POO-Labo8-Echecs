@@ -1,8 +1,8 @@
-package chess.assets;
+package l8.chess.assets;
 
-import chess.PieceType;
-import chess.PlayerColor;
-import chess.views.console.ConsoleView;
+import l8.chess.PieceType;
+import l8.chess.PlayerColor;
+import l8.chess.views.console.ConsoleView;
 
 public class ConsoleAssets {
 

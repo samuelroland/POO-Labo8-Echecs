@@ -1,4 +1,4 @@
-package chess;
+package l8.chess;
 
 /**
  * Méthodes fournies par les vues.

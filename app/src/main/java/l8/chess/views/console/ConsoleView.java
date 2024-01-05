@@ -1,11 +1,11 @@
-package chess.views.console;
+package l8.chess.views.console;
 
-import chess.ChessController;
-import chess.PieceType;
-import chess.PlayerColor;
-import chess.assets.ConsoleAssets;
-import chess.views.BaseView;
-import chess.views.DrawableResource;
+import l8.chess.ChessController;
+import l8.chess.PieceType;
+import l8.chess.PlayerColor;
+import l8.chess.assets.ConsoleAssets;
+import l8.chess.views.BaseView;
+import l8.chess.views.DrawableResource;
 
 import java.util.Scanner;
 import java.util.regex.Pattern;

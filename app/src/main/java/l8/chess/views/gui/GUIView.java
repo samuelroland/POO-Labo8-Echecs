@@ -1,11 +1,11 @@
-package chess.views.gui;
+package l8.chess.views.gui;
 
-import chess.ChessController;
-import chess.PieceType;
-import chess.PlayerColor;
-import chess.assets.GuiAssets;
-import chess.views.BaseView;
-import chess.views.DrawableResource;
+import l8.chess.ChessController;
+import l8.chess.PieceType;
+import l8.chess.PlayerColor;
+import l8.chess.assets.GuiAssets;
+import l8.chess.views.BaseView;
+import l8.chess.views.DrawableResource;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;

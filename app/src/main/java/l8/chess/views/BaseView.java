@@ -1,9 +1,9 @@
-package chess.views;
+package l8.chess.views;
 
-import chess.ChessController;
-import chess.ChessView;
-import chess.PieceType;
-import chess.PlayerColor;
+import l8.chess.ChessController;
+import l8.chess.ChessView;
+import l8.chess.PieceType;
+import l8.chess.PlayerColor;
 
 import java.util.HashMap;
 

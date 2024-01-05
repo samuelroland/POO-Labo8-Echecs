@@ -1,8 +1,8 @@
-package chess.assets;
+package l8.chess.assets;
 
-import chess.PieceType;
-import chess.PlayerColor;
-import chess.views.gui.GUIView;
+import l8.chess.PieceType;
+import l8.chess.PlayerColor;
+import l8.chess.views.gui.GUIView;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -35,6 +35,6 @@ public class GuiAssets {
   }
 
   private static BufferedImage assetsImage(String imageName) throws IOException {
-    return ImageIO.read(GuiAssets.class.getResource("images/" + imageName));
+    return ImageIO.read(GuiAssets.class.getResource("/images/" + imageName));
   }
 }
