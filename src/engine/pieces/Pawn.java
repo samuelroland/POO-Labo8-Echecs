@@ -16,15 +16,17 @@ public class Pawn extends Piece {
     }
 
     Move checkMoves(Point to) {
-        if (super.checkMoves(to) != null)
-            return true;
-
+        var basicMove = super.checkMoves(to);
+        if (basicMove != null)
+            return basicMove;
         // Permet à un pion de faire un saut de 2 au tout début
         var newPawnFirstMove = new Move(new Point(0, 2), 1);
         if (getLine() == 1 && newPawnFirstMove.corresponds(point, to)) {
-            return true;
+            System.out.println("Checkmoves in Pawn true");
+            return newPawnFirstMove;
         }
-        return false;
+        System.out.println("Checkmoves in Pawn false");
+        return null;
     }
 
     boolean checkDestination(Point to) {
@@ -38,7 +40,7 @@ public class Pawn extends Piece {
         return true;
     }
 
-    //Verification de la promotion
+    // Verification de la promotion
     public boolean checkPromotion() {
         return getLine() == 7;
     }

@@ -1,6 +1,5 @@
 package engine.moves;
 
-import chess.ChessView;
 import engine.Board;
 import engine.Point;
 import engine.pieces.Piece;
