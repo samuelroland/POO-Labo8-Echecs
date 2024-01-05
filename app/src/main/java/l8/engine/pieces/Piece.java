@@ -41,13 +41,11 @@ abstract public class Piece {
             }
             // TODO: check le roi pas en échecs
 
-            // Check si après le mouvement, notre roi est en échecs
-            // (celui de la pièce qui bouge)
-            var boardCopy = board.clone();
-            boardCopy.movePieces(point, to);
-            boardCopy.lookIfKingsInCheck();
-            if (boardCopy.kingIsInCheck(getColor())) {
-                System.out.println("le roi sera en échecs avec ce coup");
+            // Check si cela met notre roi est en échecs
+            // (cela inclus de le fait de sortir de l'échec,
+            // après le mouvement il ne doit plus être en échec)
+            // le mouvement n'est pas valide
+            if (ourKingIsInCheckAfterPieceMove(to)) {
                 return null;
             }
 
@@ -139,6 +137,19 @@ abstract public class Piece {
     boolean isEnemy(Point to) {
         System.out.println("isEnemy " + (board.getPiece(to).getColor() != this.color));
         return board.getPiece(to).getColor() != this.color;
+    }
+
+    // Check si après le mouvement donné, notre roi sera en échecs
+    // (celui de la pièce qui bouge)
+    boolean ourKingIsInCheckAfterPieceMove(Point to) {
+        var boardCopy = board.clone();
+        boardCopy.movePieces(point, to);
+        boardCopy.lookIfKingsInCheck();
+        if (boardCopy.kingIsInCheck(getColor())) {
+            System.out.println("le roi sera en échecs avec ce coup");
+            return true;
+        }
+        return false;
     }
 
     // Recevoir le numéro de ligne relatif à la couleur (de 0 à 7
