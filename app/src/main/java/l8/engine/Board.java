@@ -86,11 +86,15 @@ public class Board {
 
                 if (p.getColor().equals(PlayerColor.WHITE)) {
                     // Est-ce que cette pièce blanche menace le roi noir ?
+                    System.out.println(
+                            ">> Looking if " + p.getType() + " on " + p.getPoint() + " is threatening the black king");
                     if (p.getValidMove(blackKingPos) != null) {
                         blackKingInCheck = true;
                     }
                 } else {
                     // Est-ce que cette pièce noire menace le roi blanc ?
+                    System.out.println(
+                            ">> Looking if " + p.getType() + " on " + p.getPoint() + " is threatening the white king");
                     if (p.getValidMove(whiteKingPos) != null) {
                         whiteKingInCheck = true;
                     }
@@ -103,6 +107,8 @@ public class Board {
     // lookIfKingsInCheck() doit être appelé d'abord, les valeurs retournées
     // viennent de ce dernier calcul
     public boolean kingIsInCheck(PlayerColor kingColor) {
+        if (blackKingInCheck || whiteKingInCheck) 
+        System.out.println(">> A king is in check !!");
         return (kingColor.equals(PlayerColor.BLACK)) ? blackKingInCheck : whiteKingInCheck;
     }
 

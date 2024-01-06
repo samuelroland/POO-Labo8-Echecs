@@ -4,6 +4,8 @@ import l8.chess.ChessController;
 import l8.chess.ChessView;
 import l8.chess.PieceType;
 import l8.chess.PlayerColor;
+import l8.chess.PromotionChoice;
+import l8.chess.ChessView.UserChoice;
 import l8.engine.pieces.*;
 
 public class ChessGame implements ChessController {
@@ -34,8 +36,16 @@ public class ChessGame implements ChessController {
         if (validMoveFound != null) {
             validMoveFound.applyBoardChanges(board, piece, destination);
 
+            // Le mouvement a été fait, peut-être que c'est un pion sur la dernière ligne
+            // il faut gérer la promotion de pion.
             if (piece.getType().equals(PieceType.PAWN) && ((Pawn) piece).checkPromotion()) {
-                promotion();
+                promotion(destination, piece.getColor());
+            }
+
+            // Afficher un message en cas d'échec
+            // TODO: not working because 2 boolean are not replicated in the real board
+            if (board.kingIsInCheck(PlayerColor.WHITE) || board.kingIsInCheck(PlayerColor.BLACK)) {
+                view.displayMessage("Check !");
             }
 
             // Regénérer la vue pour qu'elles y affichent la dernière version
@@ -47,18 +57,28 @@ public class ChessGame implements ChessController {
         return false; // TODO
     }
 
-    // TODO
-    private void promotion() {
+    private void promotion(Point to, PlayerColor color) {
+        PromotionChoice answer = view.askUser("Promotion de pions",
+                "Par quelle pièce souhaitez-vous promouvoir ce pion ?",
+                new PromotionChoice[] {
+                        new PromotionChoice(PieceType.ROOK),
+                        new PromotionChoice(PieceType.KNIGHT),
+                        new PromotionChoice(PieceType.BISHOP),
+                        new PromotionChoice(PieceType.QUEEN)
+                });
 
+        Piece newPiece = switch (answer.type) {
+            case PieceType.ROOK -> new Rook(board, color, to);
+            case PieceType.KNIGHT -> new Knight(board, color, to);
+            case PieceType.BISHOP -> new Bishop(board, color, to);
+            case PieceType.QUEEN -> new Queen(board, color, to);
+            default -> null;
+        };
+
+        board.putPieceAt(newPiece, to);
     }
 
-    @Override
-    public void newGame() {
-        view.displayMessage("Start new game"); // TODO
-        Piece[][] pieces = new Piece[8][8];
-
-        board = new Board(pieces);
-
+    static public void setupDefaultBoard(Board board) {
         // BLANC
         board.addPiece(new Rook(board, PlayerColor.WHITE, new Point(0, 0)));
         board.addPiece(new Knight(board, PlayerColor.WHITE, new Point(1, 0)));
@@ -84,6 +104,16 @@ public class ChessGame implements ChessController {
         for (int i = 0; i < 8; i++) {
             board.addPiece(new Pawn(board, PlayerColor.BLACK, new Point(i, 6)));
         }
+    }
+
+    @Override
+    public void newGame() {
+        view.displayMessage("Start new game"); // TODO
+        Piece[][] pieces = new Piece[8][8];
+
+        board = new Board(pieces);
+
+        setupDefaultBoard(board);
 
         updateView();
     }

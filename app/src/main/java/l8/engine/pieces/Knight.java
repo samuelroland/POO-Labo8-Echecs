@@ -23,7 +23,7 @@ public class Knight extends Piece {
         super(board, color, point, PieceType.KNIGHT);
     }
 
-    boolean checkFreePath(Point to) {
+    public boolean checkFreePath(Point to) {
         // Le cavalier peut passer par dessus n'importe quelle pièce
         return true;
     }

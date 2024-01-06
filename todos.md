@@ -143,3 +143,17 @@ New strategy:
 1. chessgame et board ne doivent psa connaitre de détails sur l'implémentation des mouveements, juste demander le mouvement valide à effectuer et sil existe alors demander à que les changements soient appliqués sur le board.
 1. check du roi en échecs dans piece dans getvalidmove après le check si toutes les autres conditions sont valides.
 
+
+## Final TODOs
+- [ ] #c fin petit grand roque
+- [ ] #v fin prise en passant
+- [x] #s fin promotion de pions
+- [ ] #s messages de mise en échecs
+- [ ] #s todo check lié au roi en échec
+- [ ] # mode console
+- [ ] #? impl turn
+- [ ] #? tests manuels globaux
+- [ ] #? rapport explications de conception
+- [ ] #? rapport avec la liste des tests
+- [ ] #? diagramme de classes
+- [ ] #? évtl arrêter le jeu quand échecs et mat
