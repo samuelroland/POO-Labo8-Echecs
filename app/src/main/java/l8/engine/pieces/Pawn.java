@@ -11,10 +11,10 @@ public class Pawn extends Piece {
 
     Move[] validMoves() {
         return new Move[] { new Move(new Point(0, 1), 1) };
-    };
+    }
 
     // Les mouvements particuliers pour manger en diagonale devant
-    private static Move[] frontDiagMoves = new Move[] {
+    private static final Move[] frontDiagMoves = new Move[] {
             new Move(new Point(1, 1), 1), new Move(new Point(-1, 1), 1),
     };
 
@@ -24,29 +24,44 @@ public class Pawn extends Piece {
 
     Move checkMoves(Point to) {
         var basicMove = super.checkMoves(to);
-        if (basicMove != null)
+        if (basicMove != null){
+            System.out.println("Checkmoves in Pawn basic move");
             return basicMove;
+        }
 
         // Permet à un pion de faire un saut de 2 au tout début
         var newPawnFirstMove = new Move(new Point(0, 2), 1);
         if (getLine() == 1 && newPawnFirstMove.corresponds(color, point, to)) {
-            System.out.println("Checkmoves in Pawn true");
+            System.out.println("Checkmoves in Pawn first move");
             return newPawnFirstMove;
         }
-        // TODO check is enemy dans move?
+
         // Permet à un pion de manger une pièce de l'autre couleur en diagonale
         for (Move diagMove : frontDiagMoves) {
             if (diagMove.corresponds(color, point, to)) {
 
                 // Peut le manger
                 if (isEnemy(to)) {
+                    System.out.println("Checkmoves in Pawn diag move");
                     return diagMove;
                 }
 
                 // Fait de la prise en passant
-                // if ()
-                // System.out.println("Checkmoves in Pawn true with en passant right");
-                // return new EnPassant();
+                // Direction vector determination
+                int deltaX = to.x() - point.x();
+                int deltaY = to.y() - point.y();
+
+                int directionX = Integer.compare(deltaX, 0);
+                int directionY = Integer.compare(deltaY, 0);
+
+                // Victim's supposed location
+                Point victimsPoint = new Point(point.x() + directionX, point.y() + directionY);
+
+                if(!board.isEmpty(victimsPoint) && board.getPiece(victimsPoint).getType() == PieceType.PAWN && this.isEnemy(victimsPoint)){
+                    Pawn victim = (Pawn) board.getPiece(victimsPoint);
+                    System.out.println("Checkmoves in Pawn en passant move");
+                    return new EnPassant(diagMove.getDirectionVector(), 1, this, (Pawn) board.getPiece(victimsPoint));
+                }
             }
         }
 
