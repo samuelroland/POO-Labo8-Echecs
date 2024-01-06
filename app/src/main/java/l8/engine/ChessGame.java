@@ -42,6 +42,12 @@ public class ChessGame implements ChessController {
                 promotion(destination, piece.getColor());
             }
 
+            // Afficher un message en cas d'échec
+            // TODO: not working because 2 boolean are not replicated in the real board
+            if (board.kingIsInCheck(PlayerColor.WHITE) || board.kingIsInCheck(PlayerColor.BLACK)) {
+                view.displayMessage("Check !");
+            }
+
             // Regénérer la vue pour qu'elles y affichent la dernière version
             // du board avec tous les derniers mouvements
             updateView();

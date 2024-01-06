@@ -46,6 +46,7 @@ abstract public class Piece {
             // après le mouvement il ne doit plus être en échec)
             // le mouvement n'est pas valide
             if (ourKingIsInCheckAfterPieceMove(to)) {
+                System.out.println("Mouvement invalide car le roi tjrs en échecs");
                 return null;
             }
 
@@ -92,7 +93,7 @@ abstract public class Piece {
     }
 
     // différent cavalier parce qu'il peut sauter par dessus
-    boolean checkFreePath(Point to) {
+    public boolean checkFreePath(Point to) {
         // Pour chaque case entre Point Piece.point et Point to, checker si la case est
         // vide.
         // Si les cases sont vides, la pièce peut se déplacer donc retourner true.
@@ -149,6 +150,9 @@ abstract public class Piece {
             System.out.println("le roi sera en échecs avec ce coup");
             return true;
         }
+        //Mettre à jour le status de l'autre roi dans le board réel
+        //TODO: ici si c'est vrm le bon endroit...
+        
         return false;
     }
 
@@ -177,6 +181,7 @@ abstract public class Piece {
     public void setPoint(Point p) {
         point = p;
     }
+
     public Point getPoint() {
         return point;
     }
