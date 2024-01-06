@@ -44,4 +44,6 @@ public class Move {
         return true;// TODO
     }
 
+    public Point getDirectionVector(){return directionVector;}
+
 }
