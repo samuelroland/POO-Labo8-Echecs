@@ -11,7 +11,7 @@ public class Board {
     private boolean blackKingInCheck = false;
     private boolean whiteKingInCheck = false;
 
-    Board(Piece[][] pieces) {
+    public Board(Piece[][] pieces) {
         if (pieces.length != 8)
             throw new InvalidParameterException();
         for (int i = 0; i < 8; i++) {
