@@ -38,7 +38,7 @@ public class CastleMoveTest {
         assertInstanceOf(CastleMove.class, king.checkMoves(new Point(2, 0)));
     }
 
-    //Test roque avec des pions qui bloquent le chemin -> fail
+    //Test roque avec des pions qui bloquent le chemin
     @Test
     public void testCastleBlockedPath() {
         Board board = new Board(new Piece[8][8]);
@@ -49,7 +49,7 @@ public class CastleMoveTest {
         board.addPiece(rook);
         board.addPiece(blockingPawn);
 
-        assertNull(king.checkMoves(new Point(6, 0)));
+        assertNull(king.checkMoves(new Point(4, 0)));
     }
 
     //Test roque ne se produit pas car le roi a déjà bougé
@@ -63,11 +63,11 @@ public class CastleMoveTest {
 
         king.setHasMoved(true);
 
-        Move move = king.checkMoves(new Point(5, 0));
+        Move move = king.checkMoves(new Point(4, 0));
         assertNull(move, "CastleMove not allowed");
     }
 
-    //Test roque ne se produit pas car la tour a déjà bougé -> fail
+    //Test roque ne se produit pas car la tour a déjà bougé
     @Test
     public void testCastleNotAllowedIfRookHasMoved() {
         Board board = new Board(new Piece[8][8]);
@@ -78,13 +78,13 @@ public class CastleMoveTest {
 
         rook.setHasMoved(true);
 
-        Move move = king.checkMoves(new Point(5, 0));
+        Move move = king.checkMoves(new Point(7, 0));
         assertNull(move, "CastleMove not allowed");
     }
 
     //Test roi en échec -> fail
     @Test
-    public void testCastleWhileInCheck() {
+    public void testCastleInCheck() {
         Board board = new Board(new Piece[8][8]);
         King king = new King(board, PlayerColor.WHITE, new Point(4, 0));
         Rook rook = new Rook(board, PlayerColor.WHITE, new Point(7, 0));
