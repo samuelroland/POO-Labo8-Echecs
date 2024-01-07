@@ -110,7 +110,7 @@ class EnPassantTest {
         board.movePieces(attacker.getPoint(), new Point(4, 5));
 
         assertNotNull(board.getPiece(new Point(4, 4)));
-    }ap
+    }
 
     // Cas où le pion a déjà bougé -> fail
 }

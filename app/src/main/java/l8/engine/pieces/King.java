@@ -37,7 +37,6 @@ public class King extends Queen {
         for (Move move : validMoves()) {
             if (move instanceof CastleMove && move.corresponds(color, point, to)) {
                 if (((CastleMove) move).canCastle(this.board, this)) {
-                    //setHasMoved(true);
                     return move;
                 }
             }
