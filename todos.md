@@ -145,7 +145,7 @@ New strategy:
 
 
 ## Final TODOs
-- [ ] #c fin petit grand roque
+- [x] #c fin petit grand roque
 - [ ] #v fin prise en passant
 - [x] #s fin promotion de pions
 - [ ] #s messages de mise en échecs
@@ -153,7 +153,7 @@ New strategy:
 - [ ] # mode console
 - [ ] #? impl turn
 - [ ] #? tests manuels globaux
-- [ ] #? rapport explications de conception
-- [ ] #? rapport avec la liste des tests
+- [x] #? rapport explications de conception
+- [x] #? rapport avec la liste des tests
 - [ ] #? diagramme de classes
 - [ ] #? évtl arrêter le jeu quand échecs et mat
