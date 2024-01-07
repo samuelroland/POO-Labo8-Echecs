@@ -1,0 +1,83 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{a4paper}
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Labo 8 - Echecs}
+\fancyhead[C]{POO}
+\fancyhead[R]{V.Cosmo, C. Koestli, S.Roland}
+\fancyfoot[C]{\thepage}
+
+\title{
+    \vspace{2cm}
+    \Huge{Laboratoire 8} \\
+    \Large{Echec}
+    \vspace{2cm}
+}
+\author{
+    Auteurs : \\
+    Cosmo de Oliveira Maria Vitória \\
+    Koestli Camille \\
+    Roland Samuel \\
+    \\
+    Professeur : \\
+    Donini Pier \\
+    \\
+    Assistant : \\
+    Decorvet Grégoire
+}
+\date{
+    Classe : A \\
+    \vspace{1cm}
+    Date : 10.01.2024
+}
+
+\begin{document}
+
+    \maketitle
+
+    \thispagestyle{empty} % No page number on the first page
+    \newpage
+
+    \maketitle
+
+    \section{Introduction}
+
+    L'objectif de ce laboratoire est de créer un jeu d'échecs, en respectant certaines règles de bases et sur un interface de jeu. Le jeu est conçu pour être joué en mode console ou avec une interface graphique utilisateur (GUI).
+
+    \section{Explication du Code}
+
+    \subsection{Structure Principale}
+
+    Nous avons construit notre jeu autour de plusieurs classes clés :
+
+    \begin{itemize}
+        \item \textbf{Chess}: La classe principale qui lance le jeu. Elle crée le contrôleur (\texttt{ChessController}) et la vue (\texttt{ChessView}), soit en mode console (\texttt{ConsoleView}) soit en mode GUI (\texttt{GUIView}).
+        \item \textbf{Board}: Classe qui représente le plateau de jeu. Il gère les pièces sur le plateau, leurs mouvements, et vérifie si un roi est en échec. Nous avons aussi choisir de traiter si le roi est en échec dans cette classe. Le jeu vérifie après chaque mouvement si un roi est en échec, ce qui est crucial pour respecter les règles des échecs.
+        \item \textbf{Piece}: Il s'agit d'une classe abstraite représentant les différentes pièces d'échecs. Chaque type de pièce est une sous-classe de \texttt{Piece}. Cette classe gère les mouvements valides, les collisions, et si une pièce a déjà été déplacée.
+        \item \textbf{Move}: Cette classe représente un mouvement sur le plateau. Il contient la logique pour vérifier si un mouvement est valide et pour appliquer les changements sur le plateau. Les mouvements spéciaux sont aussi pris en compte. Nous avons créé différentes sous-classes de \texttt{Move} afin d'y implémenter leur particularité.
+    \end{itemize}
+
+    \section{Tests réalisés}
+    Nous avons souhaité réaliser une série de tests qui permettent de vérifier que chaque élément du jeu fonctionne comme prévu. Les tests touchent différents éléments :
+
+    \begin{itemize}
+        \item \textbf{Tests des mouvements}: Ces tests vérifient la validité des mouvements des pièces sur le plateau. Ils contrôlent que chaque déplacement est conforme aux rèfles.
+        \item \textbf{Tests des conditions d'échec}: Ces tests vont contrôler si le jeu détecte correctement les situations d'échec, c'est-à-dire quand le roi est menacé et empêche tout autre mouvement.
+        \item \textbf{Tests du roque}: Ces tests permettent de contrôler que le grand et petit roque ne se produit que lorsque toutes les conditions sont remplies (ni le roi ni la tour n'ont bougé, les cases entre eux sont libres, etc.).
+        \item \textbf{Tests de la prise en passant}: Ces tests vérifient que ce mouvement se réalise lorsque le pion adverse a avancé de 2 cases depuis sa position de départ et se trouve à côté du pion attaquant.
+        \item \textbf{Tests de la collision}: Ces tests vérifient que les pièves ne peuvent pas se déplacer à travers d'autres pièces, sauf pour le cavalier.
+
+    \end{itemize}
+
+    \newpage
+    \section{Diagramme UML}
+    \newpage
+
+    \section{Conclusion}
+
+    En conclusion, notre objectif a été de créer un jeu d'échecs en essayant d'être le plus optimisé et complet possible, tout en intégrant les règles de bases. La construction de nos classes a été pensée pour permettre le plus de flexibilité possible. Par exemple, permettant l'ajout de nouvelles pièces inexistantes (comme un troubadour) ou de fonctionnalités supplémentaires. Nous avons essayé de garantir que notre implémentation puisse s'adapter au maximum à des modifications de règles.
+\end{document}
