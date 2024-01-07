@@ -52,7 +52,7 @@ public class CastleMoveTest {
         assertNull(king.checkMoves(new Point(6, 0)));
     }
 
-    //Test que le roque ne se produit pas car le roi a déjà bougé
+    //Test roque ne se produit pas car le roi a déjà bougé
     @Test
     public void testCastleNotAllowedIfKingHasMoved() {
         Board board = new Board(new Piece[8][8]);
@@ -67,7 +67,7 @@ public class CastleMoveTest {
         assertNull(move, "CastleMove not allowed");
     }
 
-    //Test que le roque ne se produit pas car la tour a déjà bougé -> fail
+    //Test roque ne se produit pas car la tour a déjà bougé -> fail
     @Test
     public void testCastleNotAllowedIfRookHasMoved() {
         Board board = new Board(new Piece[8][8]);
@@ -80,5 +80,20 @@ public class CastleMoveTest {
 
         Move move = king.checkMoves(new Point(5, 0));
         assertNull(move, "CastleMove not allowed");
+    }
+
+    //Test roi en échec -> fail
+    @Test
+    public void testCastleWhileInCheck() {
+        Board board = new Board(new Piece[8][8]);
+        King king = new King(board, PlayerColor.WHITE, new Point(4, 0));
+        Rook rook = new Rook(board, PlayerColor.WHITE, new Point(7, 0));
+        Queen enemyQueen = new Queen(board, PlayerColor.BLACK, new Point(4, 1));
+        board.addPiece(king);
+        board.addPiece(rook);
+        board.addPiece(enemyQueen);
+
+        // Le roi est en échec
+        assertNull(king.checkMoves(new Point(6, 0)), "Roi en echec");
     }
 }
