@@ -150,10 +150,10 @@ New strategy:
 - [x] #s fin promotion de pions
 - [ ] #s messages de mise en échecs
 - [ ] #s todo check lié au roi en échec
+- [x] #c impl turn
 - [ ] # mode console
-- [ ] #? impl turn
 - [ ] #? tests manuels globaux
-- [x] #? rapport explications de conception
-- [x] #? rapport avec la liste des tests
+- [x] #c rapport explications de conception
+- [x] #c rapport avec la liste des tests
 - [ ] #? diagramme de classes
 - [ ] #? évtl arrêter le jeu quand échecs et mat

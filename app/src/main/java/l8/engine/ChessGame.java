@@ -5,13 +5,21 @@ import l8.chess.ChessView;
 import l8.chess.PieceType;
 import l8.chess.PlayerColor;
 import l8.chess.PromotionChoice;
-import l8.chess.ChessView.UserChoice;
 import l8.engine.pieces.*;
 
 public class ChessGame implements ChessController {
 
     private ChessView view;
     private Board board;
+
+    private PlayerColor currentPlayer;
+
+    public ChessGame() {
+        Piece[][] pieces = new Piece[8][8];
+        this.board = new Board(pieces);
+        //Les blancs commencent
+        this.currentPlayer = PlayerColor.WHITE;
+    }
 
     @Override
     public void start(ChessView view) {
@@ -28,6 +36,12 @@ public class ChessGame implements ChessController {
 
         var destination = new Point(toX, toY);
         var piece = board.getPiece(fromX, fromY);
+
+        if (piece.getColor() != currentPlayer) {
+            System.out.println("Autre joueur");
+            return false;
+        }
+
         System.out.println(String.format("\n >>>> Mouvement de %s de (%d, %d) à (%d, %d)",
                 piece.getType().name(), fromX, fromY, toX, toY));
 
@@ -51,10 +65,16 @@ public class ChessGame implements ChessController {
             // Regénérer la vue pour qu'elles y affichent la dernière version
             // du board avec tous les derniers mouvements
             updateView();
+            nextPlayer();
 
             return true;
         }
+
         return false; // TODO
+    }
+
+    private void nextPlayer() {
+        currentPlayer = (currentPlayer == PlayerColor.WHITE) ? PlayerColor.BLACK : PlayerColor.WHITE;
     }
 
     private void promotion(Point to, PlayerColor color) {
