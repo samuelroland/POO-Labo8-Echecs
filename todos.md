@@ -155,5 +155,5 @@ New strategy:
 - [ ] #? tests manuels globaux
 - [x] #c rapport explications de conception
 - [x] #c rapport avec la liste des tests
-- [ ] #? diagramme de classes
+- [x] #c diagramme de classes
 - [ ] #? évtl arrêter le jeu quand échecs et mat
