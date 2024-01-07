@@ -186,15 +186,13 @@ abstract public class Piece {
         return point;
     }
 
-    // Méthode qui vérfie s'il y a eu un premier mouvement
-    private boolean hasMoved = false;
+    // Vérifier si une pièce a déjà bougé
+    boolean hasMoved = false;
 
     public boolean hasMoved() {
         return hasMoved;
     }
 
-    // Modifie bool s'il y a eu un premier mouvement
-    // TODO: a supprimer ?
     public void setHasMoved(boolean hasMoved) {
         this.hasMoved = hasMoved;
     }

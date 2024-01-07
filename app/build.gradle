@@ -51,8 +51,10 @@ test {
 	}
 }
 
+/*
 gradle.addListener new BuildAdapter() {
     void projectsEvaluated(Gradle gradle) {
         exec { commandLine 'clear' }
     }
 }
+*/

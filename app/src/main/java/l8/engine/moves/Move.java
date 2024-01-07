@@ -38,6 +38,7 @@ public class Move {
         System.out.println("Applying board changes in Move");
         board.movePieces(piece.getPoint(), to);
         piece.commitNewPosition();
+        piece.setHasMoved(true);
     }
 
     boolean collision(Board board, Point from, Point to) {
