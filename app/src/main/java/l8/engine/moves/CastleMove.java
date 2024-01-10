@@ -35,6 +35,12 @@ public class CastleMove extends Move {
             return false;
         }
 
+        Board clonedBoard = board.clone();
+        //Vérifie roi pas en échec
+        if (clonedBoard.kingIsInCheck(color)) {
+            return false;
+        }
+
         // Vérifie si tour a déjà bougé
         Point rookStart = new Point(isKingSide ? 7 : 0, king.getPoint().y());
         Piece rook = board.getPiece(rookStart);
@@ -50,8 +56,16 @@ public class CastleMove extends Move {
             }
         }
 
-        // Vérifie roi pas en échec
-        board.lookIfKingsInCheck();
-        return !board.kingIsInCheck(king.getColor());
+        // Vérifie cases où le roi passent ne sont pas attaquées
+
+        for (int x = king.getPoint().x(); x != to.x(); x += step) {
+            clonedBoard.movePieces(king.getPoint(), new Point(x, king.getPoint().y()));
+            clonedBoard.lookIfKingsInCheck();
+            if (clonedBoard.kingIsInCheck(color)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
