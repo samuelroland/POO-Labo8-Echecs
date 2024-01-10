@@ -24,7 +24,7 @@ public class Pawn extends Piece {
 
     Move checkMoves(Point to) {
         var basicMove = super.checkMoves(to);
-        if (basicMove != null){
+        if (basicMove != null) {
             System.out.println("Checkmoves in Pawn basic move");
             return basicMove;
         }
@@ -46,21 +46,15 @@ public class Pawn extends Piece {
                     return diagMove;
                 }
 
-                // Fait de la prise en passant
-                // Direction vector determination
-                int deltaX = to.x() - point.x();
-                int deltaY = to.y() - point.y();
+                Point victimPoint = new Point(to.x(), point.y());
+                System.out.println("victimPoint " + victimPoint);
 
-                int directionX = Integer.compare(deltaX, 0);
-                int directionY = Integer.compare(deltaY, 0);
-
-                // Victim's supposed location
-                Point victimsPoint = new Point(point.x() + directionX, point.y() + directionY);
-
-                if(!board.isEmpty(victimsPoint) && board.getPiece(victimsPoint).getType() == PieceType.PAWN && this.isEnemy(victimsPoint)){
-                    Pawn victim = (Pawn) board.getPiece(victimsPoint);
+                Piece potentialVictim = board.getPiece(victimPoint);
+                if (!board.isEmpty(victimPoint) && potentialVictim.getType() == PieceType.PAWN
+                        && this.isEnemy(victimPoint)) {
+                    Pawn victim = (Pawn) potentialVictim;
                     System.out.println("Checkmoves in Pawn en passant move");
-                    return new EnPassant(diagMove.getDirectionVector(), 1, this, (Pawn) board.getPiece(victimsPoint));
+                    return new EnPassant(diagMove.getDirectionVector(), 1, this, victim);
                 }
             }
         }
