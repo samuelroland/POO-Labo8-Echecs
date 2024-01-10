@@ -129,11 +129,11 @@ class MoveTest {
     void runCases() {
         for (MoveCase c : tests) {
             for (Point to : c.okayTos) {
-                assertTrue(c.m.corresponds(c.color, c.from, to),
+                assertTrue(c.m.corresponds(null, c.color, c.from, to),
                         "Move from:" + c.from + " -> to:" + to + " should correspond to move " + c.m);
             }
             for (Point to : c.koTos) {
-                assertFalse(c.m.corresponds(c.color, c.from, to),
+                assertFalse(c.m.corresponds(null, c.color, c.from, to),
                         "Move from:" + c.from + " -> to:" + to + " should NOT correspond to move " + c.m);
             }
         }
