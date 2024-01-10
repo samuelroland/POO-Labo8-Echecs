@@ -5,62 +5,23 @@ import l8.chess.PlayerColor;
 import l8.engine.Board;
 import l8.engine.moves.EnPassant;
 import l8.engine.moves.Move;
+import l8.engine.moves.PawnEatingMove;
+import l8.engine.moves.TwoSquaresMove;
 import l8.engine.Point;
 
 public class Pawn extends Piece {
 
     Move[] validMoves() {
-        return new Move[] { new Move(new Point(0, 1), 1) };
+        return new Move[] { new Move(new Point(0, 1), 1), new TwoSquaresMove(),
+                new EnPassant(true),
+                new EnPassant(false),
+                new PawnEatingMove(true),
+                new PawnEatingMove(false),
+        };
     }
-
-    // Les mouvements particuliers pour manger en diagonale devant
-    private static final Move[] frontDiagMoves = new Move[] {
-            new Move(new Point(1, 1), 1), new Move(new Point(-1, 1), 1),
-    };
 
     public Pawn(Board board, PlayerColor color, Point point) {
         super(board, color, point, PieceType.PAWN);
-    }
-
-    public Move checkMoves(Point to) {
-        var basicMove = super.checkMoves(to);
-        if (basicMove != null) {
-            System.out.println("Checkmoves in Pawn basic move");
-            return basicMove;
-        }
-
-        // Permet à un pion de faire un saut de 2 au tout début
-        var newPawnFirstMove = new Move(new Point(0, 2), 1);
-        if (getLine() == 1 && newPawnFirstMove.corresponds(board, color, point, to)) {
-            System.out.println("Checkmoves in Pawn first move");
-            return newPawnFirstMove;
-        }
-
-        // Permet à un pion de manger une pièce de l'autre couleur en diagonale
-        for (Move diagMove : frontDiagMoves) {
-            if (diagMove.corresponds(board, color, point, to)) {
-
-                // Peut le manger
-                if (isEnemy(to)) {
-                    System.out.println("Checkmoves in Pawn diag move");
-                    return diagMove;
-                }
-
-                Point victimPoint = new Point(to.x(), point.y());
-                System.out.println("victimPoint " + victimPoint);
-
-                Piece potentialVictim = board.getPiece(victimPoint);
-                if (!board.isEmpty(victimPoint) && potentialVictim.getType() == PieceType.PAWN
-                        && this.isEnemy(victimPoint)) {
-                    Pawn victim = (Pawn) potentialVictim;
-                    System.out.println("Checkmoves in Pawn en passant move");
-                    return new EnPassant(diagMove.getDirectionVector(), 1, this, victim);
-                }
-            }
-        }
-
-        System.out.println("Checkmoves in Pawn false");
-        return null;
     }
 
     boolean checkDestination(Point to) {

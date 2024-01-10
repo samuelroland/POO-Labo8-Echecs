@@ -85,7 +85,7 @@ abstract public class Piece {
     boolean checkDestination(Point to) {
         // Si la case est occupée et que c'est une pièce de même couleur, on ne peut pas
         // bouger.
-        if (!board.isEmpty(to) && !isEnemy(to)) {
+        if (!isEnemy(to)) {
             System.out.println("checkDestination false");
             return false;
         }
@@ -139,7 +139,7 @@ abstract public class Piece {
         return true;
     }
 
-    boolean isEnemy(Point to) {
+    public boolean isEnemy(Point to) {
         var enemy = board.getPiece(to);
         if (enemy == null) {
             return false;
