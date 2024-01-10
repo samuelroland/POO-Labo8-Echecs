@@ -136,8 +136,12 @@ abstract public class Piece {
     }
 
     boolean isEnemy(Point to) {
+        var enemy = board.getPiece(to);
+        if (enemy == null) {
+            return false;
+        }
         System.out.println("isEnemy " + (board.getPiece(to).getColor() != this.color));
-        return board.getPiece(to).getColor() != this.color;
+        return enemy.getColor() != this.color;
     }
 
     // Check si après le mouvement donné, notre roi sera en échecs
