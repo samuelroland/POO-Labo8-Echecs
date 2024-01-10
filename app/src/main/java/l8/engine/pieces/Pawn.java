@@ -22,7 +22,7 @@ public class Pawn extends Piece {
         super(board, color, point, PieceType.PAWN);
     }
 
-    Move checkMoves(Point to) {
+    public Move checkMoves(Point to) {
         var basicMove = super.checkMoves(to);
         if (basicMove != null) {
             System.out.println("Checkmoves in Pawn basic move");

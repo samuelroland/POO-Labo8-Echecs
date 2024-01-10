@@ -69,7 +69,7 @@ abstract public class Piece {
         point = futurePosition;
     }
 
-    Move checkMoves(Point to) {
+    public Move checkMoves(Point to) {
         for (var move : validMoves()) {
             if (move.corresponds(board, color, point, to)) {
                 System.out.println("checkMoves true");
