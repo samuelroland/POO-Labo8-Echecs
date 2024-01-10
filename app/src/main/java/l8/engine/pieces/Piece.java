@@ -16,6 +16,10 @@ abstract public class Piece {
     Board board;
     private Point futurePosition;
 
+    // Dernier mouvement, permet de savoir si on a bougé
+    // et check avance de 2 pour En passant.
+    Move lastMove = null;
+
     public Piece(Board board, PlayerColor color, Point point, PieceType type) {
         this.board = board;
         this.color = color;
@@ -154,9 +158,9 @@ abstract public class Piece {
             System.out.println("le roi sera en échecs avec ce coup");
             return true;
         }
-        //Mettre à jour le status de l'autre roi dans le board réel
-        //TODO: ici si c'est vrm le bon endroit...
-        
+        // Mettre à jour le status de l'autre roi dans le board réel
+        // TODO: ici si c'est vrm le bon endroit...
+
         return false;
     }
 
@@ -190,14 +194,11 @@ abstract public class Piece {
         return point;
     }
 
-    // Vérifier si une pièce a déjà bougé
-    boolean hasMoved = false;
-
-    public boolean hasMoved() {
-        return hasMoved;
+    public Move getLastMove() {
+        return lastMove;
     }
 
-    public void setHasMoved(boolean hasMoved) {
-        this.hasMoved = hasMoved;
+    public void setLastMove(Move lastMove) {
+        this.lastMove = lastMove;
     }
 }

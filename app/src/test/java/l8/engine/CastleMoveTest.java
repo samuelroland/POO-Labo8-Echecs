@@ -61,7 +61,7 @@ public class CastleMoveTest {
         board.addPiece(king);
         board.addPiece(rook);
 
-        king.setHasMoved(true);
+        king.setLastMove(new Move(new Point(1,1),1));   //un mouvement random juste pour simuler qu'il a bougé
 
         Move move = king.checkMoves(new Point(4, 0));
         assertNull(move, "CastleMove not allowed");
@@ -76,7 +76,7 @@ public class CastleMoveTest {
         board.addPiece(king);
         board.addPiece(rook);
 
-        rook.setHasMoved(true);
+        rook.setLastMove(new Move(new Point(1,1),1));   //un mouvement random juste pour simuler qu'il a bougé
 
         Move move = king.checkMoves(new Point(7, 0));
         assertNull(move, "CastleMove not allowed");

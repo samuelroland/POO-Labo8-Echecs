@@ -33,14 +33,14 @@ public class CastleMove extends Move {
 
     public boolean canCastle(Board board, Piece king) {
         // Vérifie si roi a déjà bougé
-        if (king.hasMoved()) {
+        if (king.getLastMove() != null) {
             return false;
         }
 
         // Vérifie si tour a déjà bougé
         Point rookStart = new Point(isKingSide ? 7 : 0, king.getPoint().y());
         Piece rook = board.getPiece(rookStart);
-        if (rook == null || rook.hasMoved()) {
+        if (rook == null || rook.getLastMove() != null) {
             return false;
         }
 

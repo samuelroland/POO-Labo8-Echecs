@@ -38,13 +38,15 @@ public class Move {
         System.out.println("Applying board changes in Move");
         board.movePieces(piece.getPoint(), to);
         piece.commitNewPosition();
-        piece.setHasMoved(true);
+        piece.setLastMove(this);
     }
 
     boolean collision(Board board, Point from, Point to) {
         return true;// TODO
     }
 
-    public Point getDirectionVector(){return directionVector;}
+    public Point getDirectionVector() {
+        return directionVector;
+    }
 
 }
