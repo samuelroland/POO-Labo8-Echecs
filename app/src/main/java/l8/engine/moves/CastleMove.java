@@ -1,5 +1,6 @@
 package l8.engine.moves;
 
+import l8.chess.PlayerColor;
 import l8.engine.Board;
 import l8.engine.Point;
 import l8.engine.pieces.Piece;
@@ -14,10 +15,6 @@ public class CastleMove extends Move {
 
     @Override
     public void applyBoardChanges(Board board, Piece king, Point to) {
-        if (!canCastle(board, king)) {
-            return;
-        }
-
         // Déplacement roi
         board.removePiece(king.getPoint());
         board.putPieceAt(king, to);
@@ -31,7 +28,8 @@ public class CastleMove extends Move {
         System.out.println("CastleMove done");
     }
 
-    public boolean canCastle(Board board, Piece king) {
+    public boolean corresponds(Board board, PlayerColor color, Point from, Point to) {
+        var king = board.getPiece(from);
         // Vérifie si roi a déjà bougé
         if (king.getLastMove() != null) {
             return false;
@@ -53,6 +51,7 @@ public class CastleMove extends Move {
         }
 
         // Vérifie roi pas en échec
+        board.lookIfKingsInCheck();
         return !board.kingIsInCheck(king.getColor());
     }
 }

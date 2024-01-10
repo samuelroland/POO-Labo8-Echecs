@@ -71,7 +71,7 @@ abstract public class Piece {
 
     Move checkMoves(Point to) {
         for (var move : validMoves()) {
-            if (move.corresponds(color, point, to)) {
+            if (move.corresponds(board, color, point, to)) {
                 System.out.println("checkMoves true");
                 return move;
             }

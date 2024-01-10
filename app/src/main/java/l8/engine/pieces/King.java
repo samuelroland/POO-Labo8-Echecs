@@ -13,7 +13,7 @@ public class King extends Queen {
     }
 
     Move[] validMoves() {
-        return new Move[]{
+        return new Move[] {
                 new Move(new Point(0, 1), 1),
                 new Move(new Point(0, -1), 1),
                 new Move(new Point(1, 0), 1),
@@ -22,26 +22,8 @@ public class King extends Queen {
                 new Move(new Point(1, -1), 1),
                 new Move(new Point(-1, 1), 1),
                 new Move(new Point(-1, -1), 1),
-                new CastleMove(true), //petit roque
+                new CastleMove(true), // petit roque
                 new CastleMove(false) // grand roque
         };
     }
-
-    public Move checkMoves(Point to) {
-
-        var basicMove = super.checkMoves(to);
-        if (basicMove != null) {
-            return basicMove;
-        }
-
-        for (Move move : validMoves()) {
-            if (move instanceof CastleMove && move.corresponds(color, point, to)) {
-                if (((CastleMove) move).canCastle(this.board, this)) {
-                    return move;
-                }
-            }
-        }
-        return null;
-    }
-
 }

@@ -14,7 +14,7 @@ public class Move {
         this.max = max;
     }
 
-    public boolean corresponds(PlayerColor color, Point from, Point to) {
+    public boolean corresponds(Board board, PlayerColor color, Point from, Point to) {
 
         Point vector = color == PlayerColor.WHITE
                 ? directionVector

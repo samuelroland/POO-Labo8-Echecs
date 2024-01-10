@@ -31,14 +31,14 @@ public class Pawn extends Piece {
 
         // Permet à un pion de faire un saut de 2 au tout début
         var newPawnFirstMove = new Move(new Point(0, 2), 1);
-        if (getLine() == 1 && newPawnFirstMove.corresponds(color, point, to)) {
+        if (getLine() == 1 && newPawnFirstMove.corresponds(board, color, point, to)) {
             System.out.println("Checkmoves in Pawn first move");
             return newPawnFirstMove;
         }
 
         // Permet à un pion de manger une pièce de l'autre couleur en diagonale
         for (Move diagMove : frontDiagMoves) {
-            if (diagMove.corresponds(color, point, to)) {
+            if (diagMove.corresponds(board, color, point, to)) {
 
                 // Peut le manger
                 if (isEnemy(to)) {
