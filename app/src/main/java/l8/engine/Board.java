@@ -101,14 +101,18 @@ public class Board {
                 }
             }
         }
+
+        if (!whiteKingInCheck && !blackKingInCheck) {
+            System.out.println("Aucun roi en échecs !");
+        }
     }
 
     // Est-ce que le roi de la couleur donnée est en échecs ?
     // lookIfKingsInCheck() doit être appelé d'abord, les valeurs retournées
     // viennent de ce dernier calcul
     public boolean kingIsInCheck(PlayerColor kingColor) {
-        if (blackKingInCheck || whiteKingInCheck) 
-        System.out.println(">> A king is in check !!");
+        if (blackKingInCheck || whiteKingInCheck)
+            System.out.println(">> A king is in check !!");
         return (kingColor.equals(PlayerColor.BLACK)) ? blackKingInCheck : whiteKingInCheck;
     }
 

@@ -6,7 +6,7 @@ import l8.engine.Point;
 import l8.engine.pieces.Pawn;
 import l8.engine.pieces.Piece;
 
-public class EnPassant extends Move{
+public class EnPassant extends Move {
     Pawn attacker;
     Pawn victim;
 
@@ -17,14 +17,11 @@ public class EnPassant extends Move{
     }
 
     @Override
-    public void applyBoardChanges(Board board, Piece p, Point to){
+    public void applyBoardChanges(Board board, Piece p, Point to) {
         // Attacker movement
-        board.removePiece(attacker.getPoint());
-        board.putPieceAt(attacker, to);
+        board.movePieces(attacker.getPoint(), to);
 
         // Victim's death
         board.removePiece(victim.getPoint());
-        victim.setPoint(null);
     }
 }
-
