@@ -15,16 +15,15 @@ public class CastleMove extends Move {
 
     @Override
     public void applyBoardChanges(Board board, Piece king, Point to) {
-        // Déplacement roi
-        board.removePiece(king.getPoint());
-        board.putPieceAt(king, to);
 
         // Déplacement tour en fonction du roque choisi
         Point rookStart = new Point(isKingSide ? 7 : 0, king.getPoint().y());
         Point rookEnd = new Point(isKingSide ? 5 : 3, king.getPoint().y());
-        Piece rook = board.getPiece(rookStart);
-        board.removePiece(rookStart);
-        board.putPieceAt(rook, rookEnd);
+        board.movePieces(rookStart, rookEnd);
+
+        // Déplacement roi
+        board.movePieces(king.getPoint(), to);
+
         System.out.println("CastleMove done");
     }
 

@@ -4,12 +4,17 @@ import java.security.InvalidParameterException;
 
 import l8.chess.PieceType;
 import l8.chess.PlayerColor;
+import l8.engine.moves.Move;
 import l8.engine.pieces.Piece;
 
 public class Board {
     private Piece[][] pieces;
     private boolean blackKingInCheck = false;
     private boolean whiteKingInCheck = false;
+
+    Move lastMove;
+    /* Reference to last moved piece */
+    Piece lastMovedPiece;
 
     public Board(Piece[][] pieces) {
         if (pieces.length != 8)
@@ -20,13 +25,21 @@ public class Board {
         }
 
         this.pieces = pieces;
+        this.lastMove = null;
+        this.lastMovedPiece = null;
     }
 
     public void movePieces(Point from, Point to) {
         if (isEmpty(from) || from.equals(to))
             return;
-        pieces[to.x()][to.y()] = getPiece(from);
+
+        Piece p = getPiece(from);
+
+        pieces[to.x()][to.y()] = p;
         pieces[from.x()][from.y()] = null;
+
+        lastMovedPiece = p;
+        lastMove = new Move(new Point(from.x() - to.x(), from.y() - to.y()), 1);
 
         // how can we do multiple pieces moves ?
     }
