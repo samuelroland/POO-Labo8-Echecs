@@ -20,9 +20,6 @@ class EnPassantTest {
     Pawn attacker;
     Pawn victim;
 
-    // faire setHasMovedTwo
-    // au lieu de passer vecteur, passer droie gauche dans enPassant
-
     EnPassantTest() {
         board = new Board(new Piece[8][8]);
 
@@ -40,22 +37,26 @@ class EnPassantTest {
         board.addPiece(victim);
     }
 
+    private void moveIfValid(Pawn pawn, Point to) {
+        Move move = pawn.getValidMove(to);
+        assertNotNull(move);
+
+        // If valid, let apply it
+        move.applyBoardChanges(board, pawn, to);
+        board.movePieces(pawn.getPoint(), to);
+        pawn.setPoint(to);
+    }
+
     @Test
     void testEnPassantRightWhiteAttacker() {
         setAttacker(PlayerColor.WHITE, new Point(3, 4));
         setVictim(PlayerColor.BLACK, new Point(4, 6));
 
-        Move victimMove2Forward = victim.getValidMove(new Point(4, 4));
-        assertNotNull(victimMove2Forward);
-        victimMove2Forward.applyBoardChanges(board, victim, new Point(4, 4));
-        board.movePieces(victim.getPoint(), new Point(4, 4));
-        victim.setPoint(new Point(4, 4));
+        // Move 2 cases forward
+        moveIfValid(victim, new Point(4, 4));
 
-        Move attackingMove = attacker.getValidMove(new Point(4, 5));
-        assertNotNull(attackingMove);
-        attackingMove.applyBoardChanges(board, attacker, new Point(4, 5));
-        board.movePieces(attacker.getPoint(), new Point(4, 5));
-        attacker.setPoint(new Point(4, 5));
+        // Attacker going behind victim
+        moveIfValid(attacker, new Point(4, 5));
 
         // Verifies victim was killed
         assertNull(board.getPiece(new Point(4, 4)));
@@ -67,10 +68,11 @@ class EnPassantTest {
         setAttacker(PlayerColor.WHITE, new Point(3, 4));
         setVictim(PlayerColor.BLACK, new Point(2, 6));
 
-        assertNotNull(victim.getValidMove(new Point(2, 4)));
-        board.movePieces(victim.getPoint(), new Point(2, 4));
-        assertNotNull(attacker.getValidMove(new Point(2, 5)));
-        board.movePieces(attacker.getPoint(), new Point(2, 5));
+        // Move 2 cases forward
+        moveIfValid(victim, new Point(2, 4));
+
+        // Attacker going behind victim
+        moveIfValid(attacker, new Point(2, 5));
 
         assertNull(board.getPiece(new Point(2, 4)));
     }
@@ -80,10 +82,11 @@ class EnPassantTest {
         setAttacker(PlayerColor.BLACK, new Point(4, 3));
         setVictim(PlayerColor.WHITE, new Point(5, 1));
 
-        assertNotNull(victim.getValidMove(new Point(5, 3)));
-        board.movePieces(victim.getPoint(), new Point(5, 3));
-        assertNotNull(attacker.getValidMove(new Point(5, 2)));
-        board.movePieces(attacker.getPoint(), new Point(5, 2));
+        // Move 2 cases forward
+        moveIfValid(victim, new Point(5, 3));
+
+        // Attacker going behind victim
+        moveIfValid(attacker, new Point(5, 2));
 
         assertNull(board.getPiece(new Point(5, 3)));
     }
@@ -93,10 +96,11 @@ class EnPassantTest {
         setAttacker(PlayerColor.BLACK, new Point(4, 3));
         setVictim(PlayerColor.WHITE, new Point(3, 1));
 
-        assertNotNull(victim.getValidMove(new Point(3, 3)));
-        board.movePieces(victim.getPoint(), new Point(3, 3));
-        assertNotNull(attacker.getValidMove(new Point(3, 2)));
-        board.movePieces(attacker.getPoint(), new Point(3, 2));
+        // Move 2 cases forward
+        moveIfValid(victim, new Point(3, 3));
+
+        // Attacker going behind victim
+        moveIfValid(attacker, new Point(3, 2));
 
         assertNull(board.getPiece(new Point(3, 3)));
     }
@@ -106,10 +110,11 @@ class EnPassantTest {
         setAttacker(PlayerColor.WHITE, new Point(3, 4));
         setVictim(PlayerColor.BLACK, new Point(4, 5));
 
-        assertNotNull(victim.getValidMove(new Point(4, 4)));
-        board.movePieces(victim.getPoint(), new Point(4, 4));
-        assertNotNull(attacker.getValidMove(new Point(4, 5)));
-        board.movePieces(attacker.getPoint(), new Point(4, 5));
+        // Move 2 cases forward
+        moveIfValid(victim, new Point(4, 4));
+
+        // Attacker going behind victim
+        assertNull(attacker.getValidMove(new Point(4, 5)));
 
         // Verifies "victim" is present
         assertNotNull(board.getPiece(new Point(4, 4)));
