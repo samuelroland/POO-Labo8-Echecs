@@ -17,20 +17,23 @@ public class EnPassant extends Move {
         if (!super.corresponds(board, color, from, to))
             return false;
 
-        Piece p = board.getPiece(from);
+        Piece attacker = board.getPiece(from);
         Point victimPoint = getVictimPosition(from, to);
+        Piece victim = board.getPiece(victimPoint);
 
-        if (!board.isEmpty(victimPoint)
-                && board.getPiece(victimPoint).getType() == PieceType.PAWN
-                && p.isEnemy(victimPoint)) {
+        if (!board.isEmpty(victimPoint) &&
+                attacker.isEnemy(victim) &&
+                victim.getType() == PieceType.PAWN &&
+                victim == board.getLastMovedPiece() &&
+                board.getLastMove().moveEquals(new TwoSquaresMove()) &&
+                victim == board.getLastMovedPiece()) {
             System.out.println("Checkmoves in Pawn en passant move");
             return true;
         }
-
         return false;
     }
 
-    // Récuper la position de la victime, sur la même colonne que la destination
+    // Récuperer la position de la victime, sur la même colonne que la destination
     // de l'attaquant et la même ligne que sa position de départ
     // -> on trouve la position en dessous à droite ou en dessous à gauche,
     // de la destination
