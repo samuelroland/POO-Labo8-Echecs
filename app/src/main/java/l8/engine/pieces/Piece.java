@@ -148,6 +148,14 @@ abstract public class Piece {
         return enemy.getColor() != this.color;
     }
 
+    public boolean isEnemy(Piece piece){
+        if (piece == null) {
+            return false;
+        }
+        System.out.println("isEnemy " + (piece.getColor() != this.color));
+        return piece.getColor() != this.color;
+    }
+
     // Check si après le mouvement donné, notre roi sera en échecs
     // (celui de la pièce qui bouge)
     boolean ourKingIsInCheckAfterPieceMove(Point to) {
