@@ -2,9 +2,6 @@
 package l8.engine;
 
 import l8.chess.PlayerColor;
-import l8.engine.Board;
-import l8.engine.Point;
-import l8.engine.moves.EnPassant;
 import l8.engine.moves.Move;
 import l8.engine.pieces.King;
 import l8.engine.pieces.Pawn;
@@ -19,12 +16,13 @@ class EnPassantTest {
     Board board;
     Pawn attacker;
     Pawn victim;
+    Pawn otherPawn;
 
     EnPassantTest() {
         board = new Board(new Piece[8][8]);
 
-        board.addPiece(new King(board, PlayerColor.WHITE, new Point(7, 0)));
-        board.addPiece(new King(board, PlayerColor.BLACK, new Point(0, 7)));
+        board.addPiece(new King(board, PlayerColor.WHITE, new Point(4, 0)));
+        board.addPiece(new King(board, PlayerColor.BLACK, new Point(4, 7)));
     }
 
     private void setAttacker(PlayerColor color, Point to) {
@@ -37,6 +35,11 @@ class EnPassantTest {
         board.addPiece(victim);
     }
 
+    private void setOtherPawn(PlayerColor color, Point to){
+        otherPawn = new Pawn(board, color, to);
+        board.addPiece(otherPawn);
+    }
+
     private void moveIfValid(Pawn pawn, Point to) {
         Move move = pawn.getValidMove(to);
         assertNotNull(move);
@@ -45,6 +48,8 @@ class EnPassantTest {
         move.applyBoardChanges(board, pawn, to);
         board.movePieces(pawn.getPoint(), to);
         pawn.setPoint(to);
+        board.setLastMovedPiece(pawn);
+        board.setLastMove(move);
     }
 
     @Test
@@ -84,9 +89,11 @@ class EnPassantTest {
 
         // Move 2 cases forward
         moveIfValid(victim, new Point(5, 3));
+        System.out.println("out of move if valid from victim");
 
         // Attacker going behind victim
         moveIfValid(attacker, new Point(5, 2));
+        System.out.println("out of move if valid from attacker");
 
         assertNull(board.getPiece(new Point(5, 3)));
     }
@@ -106,7 +113,7 @@ class EnPassantTest {
     }
 
     @Test
-    void testEnPassantVictimsLastMoveIsOneCase() {
+    void testEnPassantVictimLastMoveIsOneSquareMoveFails() {
         setAttacker(PlayerColor.WHITE, new Point(3, 4));
         setVictim(PlayerColor.BLACK, new Point(4, 5));
 
@@ -122,22 +129,17 @@ class EnPassantTest {
 
     // Cas où victime a bougé de deux avant le dernier tour -> fail
     @Test
-    void testEnPassantVictimMovedAfterTwoCaseMove() {
+    void testEnPassantTourHasPassedAfterVictimMovedTwoSquaresFails() {
         setAttacker(PlayerColor.WHITE, new Point(3, 3));
         setVictim(PlayerColor.BLACK, new Point(4, 5));
-        Pawn otherPawn = new Pawn(board, PlayerColor.BLACK, new Point(0, 6));
+        setOtherPawn(PlayerColor.BLACK, new Point(0, 6));
 
-        assertNotNull(victim.getValidMove(new Point(4, 4)));
-        board.movePieces(victim.getPoint(), new Point(4, 4));
-        assertNotNull(attacker.getValidMove(new Point(3, 4)));
-        board.movePieces(attacker.getPoint(), new Point(3, 4));
-        otherPawn.getValidMove(new Point(0, 4));
-        board.movePieces(otherPawn.getPoint(), new Point(0, 4));
-        assertNotNull(attacker.getValidMove(new Point(4, 5)));
-        board.movePieces(attacker.getPoint(), new Point(4, 5));
+        moveIfValid(victim, new Point(4, 4));
+        moveIfValid(attacker, new Point(3, 4));
+        moveIfValid(otherPawn, new Point(0, 4));
+
+        assertNull(attacker.getValidMove(new Point(4, 5)));
 
         assertNotNull(board.getPiece(new Point(4, 4)));
     }
-
-    // Cas où le pion a déjà bougé -> fail
 }
