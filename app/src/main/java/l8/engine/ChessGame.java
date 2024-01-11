@@ -67,6 +67,9 @@ public class ChessGame implements ChessController {
             updateView();
             nextPlayer();
 
+            board.setLastMovedPiece(piece);
+            board.setLastMove(validMoveFound);
+
             return true;
         }
 

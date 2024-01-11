@@ -12,7 +12,16 @@ public class Board {
     private boolean blackKingInCheck = false;
     private boolean whiteKingInCheck = false;
 
+    void setLastMove(Move lastMove) {
+        this.lastMove = lastMove;
+    }
+
+    void setLastMovedPiece(Piece lastMovedPiece) {
+        this.lastMovedPiece = lastMovedPiece;
+    }
+
     Move lastMove;
+
     /* Reference to last moved piece */
     Piece lastMovedPiece;
 
@@ -37,9 +46,6 @@ public class Board {
 
         pieces[to.x()][to.y()] = p;
         pieces[from.x()][from.y()] = null;
-
-        lastMovedPiece = p;
-        lastMove = new Move(new Point(from.x() - to.x(), from.y() - to.y()), 1);
 
         // how can we do multiple pieces moves ?
     }
@@ -161,5 +167,11 @@ public class Board {
             }
         }
         return clonedBoard;
+    }
+    public Move getLastMove() {
+        return lastMove;
+    }
+    public Piece getLastMovedPiece() {
+        return lastMovedPiece;
     }
 }
