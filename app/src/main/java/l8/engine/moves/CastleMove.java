@@ -56,14 +56,13 @@ public class CastleMove extends Move {
         }
 
         // Vérifie cases où le roi passent ne sont pas attaquées
-
-        for (int x = king.getPoint().x(); x != to.x(); x += step) {
+        /*for (int x = king.getPoint().x(); x != to.x(); x += step) {
             clonedBoard.movePieces(king.getPoint(), new Point(x, king.getPoint().y()));
             clonedBoard.lookIfKingsInCheck();
             if (clonedBoard.kingIsInCheck(color)) {
                 return false;
             }
-        }
+        }*/
 
         return true;
     }
