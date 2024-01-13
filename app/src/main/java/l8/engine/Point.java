@@ -33,7 +33,7 @@ public class Point {
     public boolean equals(Point b) {
         if (b == null)
             return false;
-        return x == point.x && y == point.y;
+        return x == b.x && y == b.y;
     }
 
     public String toString() {
