@@ -31,9 +31,8 @@ public class Point {
     }
 
     public boolean equals(Point b) {
-        if (this == b) return true;
-        if (b == null || getClass() != b.getClass()) return false;
-        Point point = (Point) b;
+        if (b == null)
+            return false;
         return x == point.x && y == point.y;
     }
 
