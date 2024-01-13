@@ -3,6 +3,7 @@ package l8.engine.moves;
 import l8.chess.PlayerColor;
 import l8.engine.Board;
 import l8.engine.Point;
+import l8.engine.pieces.King;
 import l8.engine.pieces.Piece;
 
 public class CastleMove extends Move {
@@ -34,9 +35,8 @@ public class CastleMove extends Move {
             return false;
         }
 
-        Board clonedBoard = board.clone();
-        //Vérifie roi pas en échec
-        if (clonedBoard.kingIsInCheck(color)) {
+        Board boardCloned = board.clone();
+        if (boardCloned.isKingInCheck(boardCloned, color)) {
             return false;
         }
 
@@ -54,16 +54,6 @@ public class CastleMove extends Move {
                 return false;
             }
         }
-
-        // Vérifie cases où le roi passent ne sont pas attaquées
-        /*for (int x = king.getPoint().x(); x != to.x(); x += step) {
-            clonedBoard.movePieces(king.getPoint(), new Point(x, king.getPoint().y()));
-            clonedBoard.lookIfKingsInCheck();
-            if (clonedBoard.kingIsInCheck(color)) {
-                return false;
-            }
-        }*/
-
         return true;
     }
 }

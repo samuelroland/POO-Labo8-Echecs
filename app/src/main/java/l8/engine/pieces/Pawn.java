@@ -24,7 +24,7 @@ public class Pawn extends Piece {
         super(board, color, point, PieceType.PAWN);
     }
 
-    boolean checkDestination(Point to) {
+    public boolean checkDestination(Point to) {
         // On veut garder le check que l'autre pièce est bien un ennemi
         if (!super.checkDestination(to))
             return false;

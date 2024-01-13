@@ -31,7 +31,10 @@ public class Point {
     }
 
     public boolean equals(Point b) {
-        return x == b.x && y == b.y;
+        if (this == b) return true;
+        if (b == null || getClass() != b.getClass()) return false;
+        Point point = (Point) b;
+        return x == point.x && y == point.y;
     }
 
     public String toString() {

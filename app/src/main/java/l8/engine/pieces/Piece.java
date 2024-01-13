@@ -82,7 +82,7 @@ abstract public class Piece {
 
     // différent pion s'il y a personne devant il avance sinon sur la diagonale avec
     // pion inverse
-    boolean checkDestination(Point to) {
+    public boolean checkDestination(Point to) {
         // Si la case est occupée et que c'est une pièce de même couleur, on ne peut pas
         // bouger.
         if (!board.isEmpty(to) && !isEnemy(to)) {
@@ -158,10 +158,10 @@ abstract public class Piece {
 
     // Check si après le mouvement donné, notre roi sera en échecs
     // (celui de la pièce qui bouge)
-    boolean ourKingIsInCheckAfterPieceMove(Point to) {
+    public boolean ourKingIsInCheckAfterPieceMove(Point to) {
         var boardCopy = board.clone();
         boardCopy.movePieces(point, to);
-        boardCopy.lookIfKingsInCheck();
+        boardCopy.lookIfKingInCheck();
         if (boardCopy.kingIsInCheck(getColor())) {
             System.out.println("le roi sera en échecs avec ce coup");
             return true;
@@ -208,5 +208,18 @@ abstract public class Piece {
 
     public void setLastMove(Move lastMove) {
         this.lastMove = lastMove;
+    }
+
+    public boolean canMoveTo(Point to) {
+
+        if (!checkFreePath(to) || !checkDestination(to)) {
+            return false;
+        }
+        for (Move move : validMoves()) {
+            if (move.corresponds(board, color, point, to)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

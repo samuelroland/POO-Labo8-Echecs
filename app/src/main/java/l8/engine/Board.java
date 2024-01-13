@@ -2,15 +2,17 @@ package l8.engine;
 
 import java.security.InvalidParameterException;
 
-import l8.chess.PieceType;
 import l8.chess.PlayerColor;
 import l8.engine.moves.Move;
-import l8.engine.pieces.Piece;
+import l8.engine.pieces.*;
 
 public class Board {
     private Piece[][] pieces;
     private boolean blackKingInCheck = false;
     private boolean whiteKingInCheck = false;
+
+    private Point whiteKingPosition;
+    private Point blackKingPosition;
 
     void setLastMove(Move lastMove) {
         this.lastMove = lastMove;
@@ -64,12 +66,71 @@ public class Board {
         piece.setPoint(p);
     }
 
-    // Est-ce qu'un des 2 rois sont en échecs ?
-    // Est normalé appelé sur une copie temporaire du board
-    // Utile pour si une pièce mettrait son roi en échecs ou que
-    // l'autre roi de couleur B sera en échecs
-    // après le déplacement d'une pièce de la couleur A
-    public void lookIfKingsInCheck() {
+    public boolean lookIfKingInCheck() {
+        boolean whiteKingInCheck = false;
+        boolean blackKingInCheck = false;
+
+        for (int i = 0; i < pieces.length; i++) {
+            for (int j = 0; j < pieces[i].length; j++) {
+                if (isEmpty(i, j)) {
+                    continue;
+                }
+
+                Piece p = getPiece(i, j);
+                if (p.getColor() == PlayerColor.WHITE) { //Roi noir en échec
+                    if (p.getValidMove(blackKingPosition) != null) {
+                        blackKingInCheck = true;
+
+                    }
+                } else { //Roi blanc en échec
+                    if (p.getValidMove(whiteKingPosition) != null) {
+                        whiteKingInCheck = true;
+
+                    }
+                }
+            }
+
+            return (whiteKingInCheck || blackKingInCheck) ;
+        }
+        return false;
+    }
+
+    public boolean isKingInCheck(Board board, PlayerColor kingColor) {
+        Point kingPosition = kingPosition(board, kingColor);
+
+        for (int x = 0; x < 8; x++) {
+            for (int y = 0; y < 8; y++) {
+                Piece piece = board.getPiece(x, y);
+                if (piece != null && piece.getColor() != kingColor) {
+                    if (piece.canMoveTo(kingPosition)) {
+                        return true; // Le roi est en échec
+                    }
+                }
+            }
+        }
+
+        return false; // Le roi n'est pas en échec
+    }
+
+    private Point kingPosition(Board board, PlayerColor kingColor) {
+        for (int x = 0; x < 8; x++) {
+            for (int y = 0; y < 8; y++) {
+                Piece piece = board.getPiece(x, y);
+                if (piece instanceof King && piece.getColor() == kingColor) {
+                    return new Point(x, y); // Position du roi trouvé
+                }
+            }
+        }
+        return null; // Le roi n'a pas été trouvé (ne devrait pas arriver)
+    }
+
+
+// Est-ce qu'un des 2 rois sont en échecs ?
+// Est normalé appelé sur une copie temporaire du board
+// Utile pour si une pièce mettrait son roi en échecs ou que
+// l'autre roi de couleur B sera en échecs
+// après le déplacement d'une pièce de la couleur A
+    /*public void lookIfKingsInCheck() {
         // On cherche d'abord la position des 2 rois
         // TODO: devrait-on plutot stocker les positisions des 2 rois ??
         Point blackKingPos = null, whiteKingPos = null;
@@ -124,11 +185,11 @@ public class Board {
         if (!whiteKingInCheck && !blackKingInCheck) {
             System.out.println("Aucun roi en échecs !");
         }
-    }
+    }*/
 
     // Est-ce que le roi de la couleur donnée est en échecs ?
-    // lookIfKingsInCheck() doit être appelé d'abord, les valeurs retournées
-    // viennent de ce dernier calcul
+// lookIfKingsInCheck() doit être appelé d'abord, les valeurs retournées
+// viennent de ce dernier calcul
     public boolean kingIsInCheck(PlayerColor kingColor) {
         if (blackKingInCheck || whiteKingInCheck)
             System.out.println(">> A king is in check !!");
@@ -168,9 +229,11 @@ public class Board {
         }
         return clonedBoard;
     }
+
     public Move getLastMove() {
         return lastMove;
     }
+
     public Piece getLastMovedPiece() {
         return lastMovedPiece;
     }
