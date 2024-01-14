@@ -3,7 +3,6 @@ package l8.engine;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-
 import l8.engine.pieces.Piece;
 import l8.engine.pieces.*;
 
@@ -11,7 +10,6 @@ import l8.engine.moves.*;
 import l8.chess.PlayerColor;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 
 public class CastleMoveTest {
 
@@ -34,7 +32,7 @@ public class CastleMoveTest {
         board.addPiece(blackKing);
     }
 
-    // Test du Petit Roque
+    // Test du Petit Roque sur roi blanc
     @Test
     public void testKingsideCastle() {
         Board board = new Board(new Piece[8][8]);
@@ -42,11 +40,20 @@ public class CastleMoveTest {
         Rook rook = new Rook(board, PlayerColor.WHITE, new Point(7, 0));
         board.addPiece(king);
         board.addPiece(rook);
-        Move move = king.checkMoves(new Point(6, 0));
+        Point dest = new Point(6, 0);
+        Move move = king.checkMoves(dest);
         assertInstanceOf(CastleMove.class, move);
+
+        // La tour et le roi bougent correctement
+        move.applyBoardChanges(board, king, dest);
+        assertEquals(dest, king.getPoint());
+        assertTrue(new Point(dest.x() - 1, dest.y()).equals(rook.getPoint()));
+        // et sont bougés sur le plateau
+        assertEquals(board.getPiece(dest), king);
+        assertEquals(board.getPiece(dest.x() - 1, dest.y()), rook);
     }
 
-    //Test du Grand Roque
+    // Test du Grand Roque sur roi blanc
     @Test
     public void testQueensideCastle() {
         Board board = new Board(new Piece[8][8]);
@@ -54,11 +61,62 @@ public class CastleMoveTest {
         Rook rook = new Rook(board, PlayerColor.WHITE, new Point(0, 0));
         board.addPiece(king);
         board.addPiece(rook);
-        Move move = king.checkMoves(new Point(2, 0));
+        Point dest = new Point(2, 0);
+        Move move = king.checkMoves(dest);
         assertInstanceOf(CastleMove.class, move);
+
+        // La tour et le roi bougent correctement
+        move.applyBoardChanges(board, king, dest);
+        assertEquals(dest, king.getPoint());
+        assertTrue(new Point(dest.x() + 1, dest.y()).equals(rook.getPoint()));
+        // et sont bougés sur le plateau
+        assertEquals(board.getPiece(dest), king);
+        assertEquals(board.getPiece(dest.x() + 1, dest.y()), rook);
     }
 
-    //Test roque avec des pions qui bloquent le chemin
+    // Test du Petit Roque sur roi noir
+    @Test
+    public void testBlackKingsideCastle() {
+        Board board = new Board(new Piece[8][8]);
+        King king = new King(board, PlayerColor.BLACK, new Point(4, 7));
+        Rook rook = new Rook(board, PlayerColor.BLACK, new Point(7, 7));
+        board.addPiece(king);
+        board.addPiece(rook);
+        Point dest = new Point(6, 7);
+        Move move = king.checkMoves(dest);
+        assertInstanceOf(CastleMove.class, move);
+
+        // La tour et le roi bougent correctement
+        move.applyBoardChanges(board, king, dest);
+        assertEquals(dest, king.getPoint());
+        assertTrue(new Point(dest.x() - 1, dest.y()).equals(rook.getPoint()));
+        // et sont bougés sur le plateau
+        assertEquals(board.getPiece(dest), king);
+        assertEquals(board.getPiece(dest.x() - 1, dest.y()), rook);
+    }
+
+    // Test du Grand Roque sur roi noir
+    @Test
+    public void testBlackQueensideCastle() {
+        Board board = new Board(new Piece[8][8]);
+        King king = new King(board, PlayerColor.BLACK, new Point(4, 7));
+        Rook rook = new Rook(board, PlayerColor.BLACK, new Point(0, 7));
+        board.addPiece(king);
+        board.addPiece(rook);
+        Point dest = new Point(2, 7);
+        Move move = king.checkMoves(dest);
+        assertInstanceOf(CastleMove.class, move);
+
+        // La tour et le roi bougent correctement
+        move.applyBoardChanges(board, king, dest);
+        assertEquals(dest, king.getPoint());
+        assertTrue(new Point(dest.x() + 1, dest.y()).equals(rook.getPoint()));
+        // et sont bougés sur le plateau
+        assertEquals(board.getPiece(dest), king);
+        assertEquals(board.getPiece(dest.x() + 1, dest.y()), rook);
+    }
+
+    // Test roque avec des pions qui bloquent le chemin
     @Test
     public void testCastleBlockedPath() {
         Board board = new Board(new Piece[8][8]);
@@ -73,16 +131,16 @@ public class CastleMoveTest {
         assertNull(move, "CastleMove not allowed");
     }
 
-    //Test roque ne se produit pas car le roi a déjà bougé
+    // Test roque ne se produit pas car le roi a déjà bougé
     @Test
     public void testCastleNotAllowedIfKingHasMoved() {
-        whiteKing.setLastMove(new Move(new Point(1,1),1));   //un mouvement random juste pour simuler qu'il a bougé
+        whiteKing.setLastMove(new Move(new Point(1, 1), 1)); // un mouvement random juste pour simuler qu'il a bougé
 
         Move move = whiteKing.checkMoves(new Point(4, 0));
         assertNull(move, "CastleMove not allowed");
     }
 
-    //Test roque ne se produit pas car la tour a déjà bougé
+    // Test roque ne se produit pas car la tour a déjà bougé
     @Test
     public void testCastleNotAllowedIfRookHasMoved() {
         Board board = new Board(new Piece[8][8]);
@@ -91,28 +149,30 @@ public class CastleMoveTest {
         board.addPiece(king);
         board.addPiece(rook);
 
-        rook.setLastMove(new Move(new Point(1,1),1));   //un mouvement random juste pour simuler qu'il a bougé
+        rook.setLastMove(new Move(new Point(1, 1), 1)); // un mouvement random juste pour simuler qu'il a bougé
 
         Move move = king.checkMoves(new Point(7, 0));
         assertNull(move, "CastleMove not allowed");
     }
 
-    //Test roi en échec -> fail
+    // Test roi en échec -> fail
     @Test
     public void testCastleInCheck() {
         Board board = new Board(new Piece[8][8]);
         King king = new King(board, PlayerColor.WHITE, new Point(4, 0));
+        King bking = new King(board, PlayerColor.BLACK, new Point(4, 7));
         Rook rook = new Rook(board, PlayerColor.WHITE, new Point(7, 0));
         Queen enemyQueen = new Queen(board, PlayerColor.BLACK, new Point(4, 1));
         board.addPiece(king);
+        board.addPiece(bking);
         board.addPiece(rook);
         board.addPiece(enemyQueen);
 
         Move move = king.checkMoves(new Point(6, 0));
-        assertNull(move , "King in check");
+        assertNull(move, "King in check");
     }
 
-    //Test que le roi ne soit pas menacé -> fail
+    // Test que le roi ne soit pas menacé -> fail
     @Test
     public void testCastleThroughAttackedSquare() {
         Board board = new Board(new Piece[8][8]);
