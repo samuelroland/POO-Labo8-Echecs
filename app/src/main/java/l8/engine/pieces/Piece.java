@@ -56,7 +56,7 @@ abstract public class Piece {
 
             // Le mouvement est valide, il sera effectué donc on sauve sa future position
             futurePosition = to;
-            System.out.println("getValidMove false");
+            System.out.println("getValidMove true");
             return foundMove;
         }
         System.out.println("getValidMove false");
