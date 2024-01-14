@@ -77,12 +77,12 @@ public class Board {
                 }
 
                 Piece p = getPiece(i, j);
-                if (p.getColor() == PlayerColor.WHITE) { //Roi noir en échec
+                if (p.getColor() == PlayerColor.WHITE) { // Roi noir en échec
                     if (p.getValidMove(blackKingPosition) != null) {
                         blackKingInCheck = true;
 
                     }
-                } else { //Roi blanc en échec
+                } else { // Roi blanc en échec
                     if (p.getValidMove(whiteKingPosition) != null) {
                         whiteKingInCheck = true;
 
@@ -90,7 +90,7 @@ public class Board {
                 }
             }
 
-            return (whiteKingInCheck || blackKingInCheck) ;
+            return (whiteKingInCheck || blackKingInCheck);
         }
         return false;
     }
@@ -124,72 +124,77 @@ public class Board {
         return null; // Le roi n'a pas été trouvé (ne devrait pas arriver)
     }
 
-
-// Est-ce qu'un des 2 rois sont en échecs ?
-// Est normalé appelé sur une copie temporaire du board
-// Utile pour si une pièce mettrait son roi en échecs ou que
-// l'autre roi de couleur B sera en échecs
-// après le déplacement d'une pièce de la couleur A
-    /*public void lookIfKingsInCheck() {
-        // On cherche d'abord la position des 2 rois
-        // TODO: devrait-on plutot stocker les positisions des 2 rois ??
-        Point blackKingPos = null, whiteKingPos = null;
-        for (int i = 0; i < pieces.length; i++) {
-            for (int j = 0; j < pieces[i].length; j++) {
-                if (isEmpty(i, j))
-                    continue;
-                Piece p = getPiece(i, j);
-                if (p.getType().equals(PieceType.KING)) {
-                    if (p.getColor().equals(PlayerColor.BLACK)) {
-                        blackKingPos = p.getPoint();
-                    } else {
-                        whiteKingPos = p.getPoint();
-                    }
-                }
-            }
-            // On a trouvé les 2 rois, on peut s'arrêter de chercher
-            if (blackKingPos != null && whiteKingPos != null) {
-                break;
-            }
-        }
-
-        // Note: On est garanti d'avoir les positions des 2 rois, les pièces ne peuvent
-        // jamais être retirées du plateau
-
-        // On check pour toutes les pièces est-ce que d'aller sur cette position est un
-        // coup valide, si oui, alors une pièce menace le roi de l'autre couleur
-        for (int i = 0; i < pieces.length; i++) {
-            for (int j = 0; j < pieces[i].length; j++) {
-                if (isEmpty(i, j))
-                    continue;
-                Piece p = getPiece(i, j);
-
-                if (p.getColor().equals(PlayerColor.WHITE)) {
-                    // Est-ce que cette pièce blanche menace le roi noir ?
-                    System.out.println(
-                            ">> Looking if " + p.getType() + " on " + p.getPoint() + " is threatening the black king");
-                    if (p.getValidMove(blackKingPos) != null) {
-                        blackKingInCheck = true;
-                    }
-                } else {
-                    // Est-ce que cette pièce noire menace le roi blanc ?
-                    System.out.println(
-                            ">> Looking if " + p.getType() + " on " + p.getPoint() + " is threatening the white king");
-                    if (p.getValidMove(whiteKingPos) != null) {
-                        whiteKingInCheck = true;
-                    }
-                }
-            }
-        }
-
-        if (!whiteKingInCheck && !blackKingInCheck) {
-            System.out.println("Aucun roi en échecs !");
-        }
-    }*/
+    // Est-ce qu'un des 2 rois sont en échecs ?
+    // Est normalé appelé sur une copie temporaire du board
+    // Utile pour si une pièce mettrait son roi en échecs ou que
+    // l'autre roi de couleur B sera en échecs
+    // après le déplacement d'une pièce de la couleur A
+    /*
+     * public void lookIfKingsInCheck() {
+     * // On cherche d'abord la position des 2 rois
+     * // TODO: devrait-on plutot stocker les positisions des 2 rois ??
+     * Point blackKingPos = null, whiteKingPos = null;
+     * for (int i = 0; i < pieces.length; i++) {
+     * for (int j = 0; j < pieces[i].length; j++) {
+     * if (isEmpty(i, j))
+     * continue;
+     * Piece p = getPiece(i, j);
+     * if (p.getType().equals(PieceType.KING)) {
+     * if (p.getColor().equals(PlayerColor.BLACK)) {
+     * blackKingPos = p.getPoint();
+     * } else {
+     * whiteKingPos = p.getPoint();
+     * }
+     * }
+     * }
+     * // On a trouvé les 2 rois, on peut s'arrêter de chercher
+     * if (blackKingPos != null && whiteKingPos != null) {
+     * break;
+     * }
+     * }
+     * 
+     * // Note: On est garanti d'avoir les positions des 2 rois, les pièces ne
+     * peuvent
+     * // jamais être retirées du plateau
+     * 
+     * // On check pour toutes les pièces est-ce que d'aller sur cette position est
+     * un
+     * // coup valide, si oui, alors une pièce menace le roi de l'autre couleur
+     * for (int i = 0; i < pieces.length; i++) {
+     * for (int j = 0; j < pieces[i].length; j++) {
+     * if (isEmpty(i, j))
+     * continue;
+     * Piece p = getPiece(i, j);
+     * 
+     * if (p.getColor().equals(PlayerColor.WHITE)) {
+     * // Est-ce que cette pièce blanche menace le roi noir ?
+     * System.out.println(
+     * ">> Looking if " + p.getType() + " on " + p.getPoint() +
+     * " is threatening the black king");
+     * if (p.getValidMove(blackKingPos) != null) {
+     * blackKingInCheck = true;
+     * }
+     * } else {
+     * // Est-ce que cette pièce noire menace le roi blanc ?
+     * System.out.println(
+     * ">> Looking if " + p.getType() + " on " + p.getPoint() +
+     * " is threatening the white king");
+     * if (p.getValidMove(whiteKingPos) != null) {
+     * whiteKingInCheck = true;
+     * }
+     * }
+     * }
+     * }
+     * 
+     * if (!whiteKingInCheck && !blackKingInCheck) {
+     * System.out.println("Aucun roi en échecs !");
+     * }
+     * }
+     */
 
     // Est-ce que le roi de la couleur donnée est en échecs ?
-// lookIfKingsInCheck() doit être appelé d'abord, les valeurs retournées
-// viennent de ce dernier calcul
+    // lookIfKingsInCheck() doit être appelé d'abord, les valeurs retournées
+    // viennent de ce dernier calcul
     public boolean kingIsInCheck(PlayerColor kingColor) {
         if (blackKingInCheck || whiteKingInCheck)
             System.out.println(">> A king is in check !!");

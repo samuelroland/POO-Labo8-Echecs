@@ -17,7 +17,7 @@ public class ChessGame implements ChessController {
     public ChessGame() {
         Piece[][] pieces = new Piece[8][8];
         this.board = new Board(pieces);
-        //Les blancs commencent
+        // Les blancs commencent
         this.currentPlayer = PlayerColor.WHITE;
     }
 
