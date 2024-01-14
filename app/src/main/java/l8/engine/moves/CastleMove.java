@@ -32,6 +32,7 @@ public class CastleMove extends Move {
         var king = board.getPiece(from);
         // Vérifie si roi a déjà bougé
         if (king.getLastMove() != null) {
+            System.out.println("CastleMove.corresponds false king already moved " + king.getLastMove());
             return false;
         }
 
@@ -39,6 +40,7 @@ public class CastleMove extends Move {
         Point rookStart = new Point(isKingSide ? 7 : 0, king.getPoint().y());
         Piece rook = board.getPiece(rookStart);
         if (rook == null || rook.getLastMove() != null) {
+            System.out.println("CastleMove.corresponds false rook already moved or doesnt not exist");
             return false;
         }
 
@@ -46,23 +48,29 @@ public class CastleMove extends Move {
         int step = isKingSide ? 1 : -1;
         for (int x = king.getPoint().x() + step; x != rookStart.x(); x += step) {
             if (!board.isEmpty(new Point(x, king.getPoint().y()))) {
+                System.out.println("CastleMove.corresponds false some pieces in between");
                 return false;
             }
         }
 
         // Vérifie que le roi n'est pas déjà en échecs (le roque est interdit dans ce
         // cas même si cela lui permet de sortir de son échec)
-        if (board.isKingInCheck(color))
+        if (board.isKingInCheck(color)) {
+            System.out.println("CastleMove.corresponds false king already in check");
             return false;
+        }
 
         // Vérifie que la case intermédiaire n'est pas menacée
         // (en simulant un mouvement du roi sur cette case)
-        if (board.ownKingInCheckAfterMove(new Move(new Point(directionVector.x() < 0 ? -1 : 1, 0), 1), king, to))
+        // TODO: test this
+        if (board.ownKingInCheckAfterMove(new Move(new Point(directionVector.x() < 0 ? -1 : 1, 0), 1), king, to)) {
+            System.out.println("CastleMove.corresponds false king in check in intermediatePoint");
             return false;
+        }
         // Note: pas besoin si le roi sera en échecs sur la case d'arrivée
         // parce que c'est déjà fait par Piece.getValidMove()
 
-        System.out.println("CastleMove corresponds !");
+        System.out.println("CastleMove corresponds true !");
         return true;
     }
 }

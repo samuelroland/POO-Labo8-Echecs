@@ -5,11 +5,13 @@ package l8.engine;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
 import l8.chess.PlayerColor;
+import l8.engine.moves.Move;
 import l8.engine.pieces.Piece;
 
 class KingInCheckTest {
@@ -46,23 +48,33 @@ class KingInCheckTest {
         assertFalse(board.isKingInCheck(PlayerColor.WHITE));
     }
 
-    // @Test
-    // void twoKingsInCheck() {
-    // // Putting black king in check
-    // board.movePieces(new Point(5, 6), new Point(5, 4)); // black pawn out
-    // board.movePieces(new Point(3, 0), new Point(6, 5)); // white queen diag to
-    // put the king in check
-    // assertTrue(board.getPiece(new Point(6, 5)).checkFreePath(new Point(4, 7)));
+    @Test
+    void twoKingsInCheck() {
+        // Putting black king in check
+        board.movePieces(new Point(5, 6), new Point(5, 4)); // black pawn out
+        board.movePieces(new Point(3, 0), new Point(6, 5)); // white queen diag to
+        // put the king in check
+        assertTrue(board.getPiece(new Point(6, 5)).checkFreePath(new Point(4, 7)));
 
-    // // Putting white king in check
-    // board.movePieces(new Point(3, 1), new Point(3, 3)); // white pawn out
-    // board.movePieces(new Point(1, 7), new Point(3, 2)); // knight in near the
-    // king
-    // // bishop move on the king is possible
-    // assertTrue(board.getPiece(new Point(3, 2)).checkFreePath(new Point(4, 0)));
+        // Putting white king in check
+        board.movePieces(new Point(3, 1), new Point(3, 3)); // white pawn out
+        board.movePieces(new Point(1, 7), new Point(3, 2)); // knight in near the king
+        // bishop move on the king is possible
+        assertTrue(board.getPiece(new Point(3, 2)).checkFreePath(new Point(4, 0)));
 
-    // // Only black king in check
-    // assertTrue(board.isKingInCheck(PlayerColor.BLACK));
-    // // assertTrue(board.isKingInCheck(PlayerColor.WHITE));
-    // }
+        // Only black king in check
+        assertTrue(board.isKingInCheck(PlayerColor.BLACK));
+        assertTrue(board.isKingInCheck(PlayerColor.WHITE));
+    }
+
+    @Test
+    void cannotMoveIfItMakesTheKingInCheck() {
+        // Putting black king in check
+        board.movePieces(new Point(3, 0), new Point(6, 5)); // white queen diag to black king (but blocked by pawn)
+        Piece pawn = board.getPiece(new Point(5, 6));
+        Point destination = new Point(5, 4);
+        Move m = pawn.getValidMove(destination);
+        assertNull(m);
+    }
+
 }

@@ -94,6 +94,9 @@ public class Board {
                 if (piece != null && piece.getColor() != kingColor) {
                     System.out.println(">> Looking if " + piece.getType() + " on " + piece.getPoint()
                             + " is threatening the " + kingColor + " king");
+
+                    // Regarder si la pièce peut faire ce mouvement mais ne doit pas checker
+                    // si elle met son camp en échecs car cela reste une pièce menaçante
                     if (piece.getValidMove(kingPosition, true) != null) {
                         System.out.println("La pièce est menacante !!");
                         return true; // Le roi est en échec
