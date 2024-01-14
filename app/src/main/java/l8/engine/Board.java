@@ -45,6 +45,7 @@ public class Board {
             return;
 
         Piece p = getPiece(from);
+        p.setPoint(to);
 
         pieces[to.x()][to.y()] = p;
         pieces[from.x()][from.y()] = null;
@@ -202,7 +203,7 @@ public class Board {
         return (kingColor.equals(PlayerColor.BLACK)) ? blackKingInCheck : whiteKingInCheck;
     }
 
-    void addPiece(Piece piece) {
+    public void addPiece(Piece piece) {
         if (piece == null)
             return;
         pieces[piece.getPoint().x()][piece.getPoint().y()] = piece;

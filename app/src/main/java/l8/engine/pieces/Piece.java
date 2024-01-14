@@ -14,7 +14,6 @@ abstract public class Piece {
     Point point;
     PlayerColor color;
     Board board;
-    private Point futurePosition;
 
     // Dernier mouvement, permet de savoir si on a bougé
     // et check avance de 2 pour En passant.
@@ -28,7 +27,10 @@ abstract public class Piece {
     }
 
     public Move getValidMove(Point to) {
-        boolean result = false;
+        return getValidMove(to, false); // do not skip king in check verif
+    }
+
+    public Move getValidMove(Point to, boolean skipKingInCheckVerification) {
         Move foundMove = checkMoves(to);
         // Check si le move fait partie des moves basiques de la pièce
         // Vérifie s'il y a une pièce sur le chemin, si oui alors on est
@@ -54,8 +56,6 @@ abstract public class Piece {
                 return null;
             }
 
-            // Le mouvement est valide, il sera effectué donc on sauve sa future position
-            futurePosition = to;
             System.out.println("getValidMove true");
             return foundMove;
         }
@@ -64,10 +64,6 @@ abstract public class Piece {
     }
 
     abstract Move[] validMoves();
-
-    public void commitNewPosition() {
-        point = futurePosition;
-    }
 
     public Move checkMoves(Point to) {
         for (var move : validMoves()) {
@@ -148,7 +144,7 @@ abstract public class Piece {
         return enemy.getColor() != this.color;
     }
 
-    public boolean isEnemy(Piece piece){
+    public boolean isEnemy(Piece piece) {
         if (piece == null) {
             return false;
         }
@@ -221,5 +217,9 @@ abstract public class Piece {
             }
         }
         return false;
+    }
+
+    public String toString() {
+        return super.toString() + ": " + color + " " + type + " on " + point;
     }
 }

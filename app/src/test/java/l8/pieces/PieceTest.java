@@ -1,12 +1,17 @@
 package l8.pieces;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import l8.chess.PlayerColor;
 import l8.engine.Board;
 import l8.engine.ChessGame;
 import l8.engine.Point;
+import l8.engine.moves.Move;
+import l8.engine.pieces.Pawn;
 import l8.engine.pieces.Piece;
 
 public class PieceTest {
@@ -34,5 +39,20 @@ public class PieceTest {
     void knightCanFlyOver() {
         assertTrue(board.getPiece(1, 0).checkFreePath(new Point(2, 2)));
         assertTrue(board.getPiece(1, 0).checkFreePath(new Point(0, 2)));
+    }
+
+    @Test
+    void finalPositionIsSetInsidePieceAfterMove() {
+        Point base = new Point(3, 1);
+        Point dest = new Point(3, 3);
+        Pawn pawn = new Pawn(board, PlayerColor.WHITE, base);
+        board.addPiece(pawn);
+        assertEquals(base, pawn.getPoint());
+
+        Move m = pawn.getValidMove(dest);
+        assertNotNull(m);
+        m.applyBoardChanges(board, pawn, dest);
+        assertEquals(dest, pawn.getPoint());
+        assertEquals(pawn, board.getPiece(dest));
     }
 }

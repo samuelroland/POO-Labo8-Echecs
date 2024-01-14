@@ -44,9 +44,10 @@ public class EnPassant extends Move {
     @Override
     public void applyBoardChanges(Board board, Piece p, Point to) {
         // Attacker movement
+        Point start = p.getPoint();
         board.movePieces(p.getPoint(), to);
 
         // Victim's death
-        board.removePiece(getVictimPosition(p.getPoint(), to));
+        board.removePiece(getVictimPosition(start, to));
     }
 }

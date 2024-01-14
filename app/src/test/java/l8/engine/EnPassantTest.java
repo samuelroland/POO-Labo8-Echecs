@@ -8,8 +8,10 @@ import l8.engine.pieces.Pawn;
 import l8.engine.pieces.Piece;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class EnPassantTest {
     // CheckMoves de Pawn
@@ -35,19 +37,18 @@ class EnPassantTest {
         board.addPiece(victim);
     }
 
-    private void setOtherPawn(PlayerColor color, Point to){
+    private void setOtherPawn(PlayerColor color, Point to) {
         otherPawn = new Pawn(board, color, to);
         board.addPiece(otherPawn);
     }
 
     private void moveIfValid(Pawn pawn, Point to) {
         Move move = pawn.getValidMove(to);
-        assertNotNull(move);
+        assertNotNull(move, "Move of pawn on " + pawn.getPoint() + " to " + to + " should be valid...");
 
         // If valid, let apply it
         move.applyBoardChanges(board, pawn, to);
         board.movePieces(pawn.getPoint(), to);
-        pawn.setPoint(to);
         board.setLastMovedPiece(pawn);
         board.setLastMove(move);
     }
@@ -65,6 +66,9 @@ class EnPassantTest {
 
         // Verifies victim was killed
         assertNull(board.getPiece(new Point(4, 4)));
+
+        // Make sure the attacker has the correct position
+        assertTrue(attacker.getPoint().equals(new Point(4, 5)));
     }
 
     @Test
@@ -79,7 +83,11 @@ class EnPassantTest {
         // Attacker going behind victim
         moveIfValid(attacker, new Point(2, 5));
 
+        // Verifies victim was killed
         assertNull(board.getPiece(new Point(2, 4)));
+
+        // Make sure the attacker has the correct position
+        assertTrue(attacker.getPoint().equals(new Point(2, 5)));
     }
 
     @Test
@@ -96,6 +104,9 @@ class EnPassantTest {
         System.out.println("out of move if valid from attacker");
 
         assertNull(board.getPiece(new Point(5, 3)));
+
+        // Make sure the attacker has the correct position
+        assertTrue(attacker.getPoint().equals(new Point(5, 2)));
     }
 
     @Test
@@ -110,6 +121,9 @@ class EnPassantTest {
         moveIfValid(attacker, new Point(3, 2));
 
         assertNull(board.getPiece(new Point(3, 3)));
+
+        // Make sure the attacker has the correct position
+        assertTrue(attacker.getPoint().equals(new Point(3, 2)));
     }
 
     @Test

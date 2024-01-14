@@ -37,7 +37,6 @@ public class Move {
     public void applyBoardChanges(Board board, Piece piece, Point to) {
         System.out.println("Applying board changes in Move....");
         board.movePieces(piece.getPoint(), to);
-        piece.commitNewPosition();
         piece.setLastMove(this);
     }
 
@@ -48,7 +47,8 @@ public class Move {
     public Point getDirectionVector() {
         return directionVector;
     }
-    public boolean moveEquals(Move m){
+
+    public boolean moveEquals(Move m) {
         return this.directionVector.equals(m.getDirectionVector());
     }
 
