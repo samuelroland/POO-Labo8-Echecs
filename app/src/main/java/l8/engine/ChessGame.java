@@ -98,7 +98,7 @@ public class ChessGame implements ChessController {
             default -> null;
         };
 
-        board.putPieceAt(newPiece, to);
+        board.addPiece(newPiece);
     }
 
     static public void setupDefaultBoard(Board board) {

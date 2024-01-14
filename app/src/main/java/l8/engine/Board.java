@@ -60,6 +60,7 @@ public class Board {
         removePiece(p.x(), p.y());
     }
 
+    // TODO: to delete -> unused and unsafe
     public void putPieceAt(Piece piece, Point p) {
         removePiece(piece.getPoint());
         pieces[p.x()][p.y()] = piece;
