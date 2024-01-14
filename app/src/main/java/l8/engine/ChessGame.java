@@ -12,14 +12,7 @@ public class ChessGame implements ChessController {
     private ChessView view;
     private Board board;
 
-    private PlayerColor currentPlayer;
-
-    public ChessGame() {
-        Piece[][] pieces = new Piece[8][8];
-        this.board = new Board(pieces);
-        // Les blancs commencent
-        this.currentPlayer = PlayerColor.WHITE;
-    }
+    private PlayerColor currentPlayerColor;
 
     @Override
     public void start(ChessView view) {
@@ -37,7 +30,7 @@ public class ChessGame implements ChessController {
         var destination = new Point(toX, toY);
         var piece = board.getPiece(fromX, fromY);
 
-        if (piece.getColor() != currentPlayer) {
+        if (piece.getColor() != currentPlayerColor) {
             System.out.println("Autre joueur");
             return false;
         }
@@ -77,7 +70,7 @@ public class ChessGame implements ChessController {
     }
 
     private void nextPlayer() {
-        currentPlayer = (currentPlayer == PlayerColor.WHITE) ? PlayerColor.BLACK : PlayerColor.WHITE;
+        currentPlayerColor = (currentPlayerColor == PlayerColor.WHITE) ? PlayerColor.BLACK : PlayerColor.WHITE;
     }
 
     private void promotion(Point to, PlayerColor color) {
@@ -135,6 +128,9 @@ public class ChessGame implements ChessController {
         Piece[][] pieces = new Piece[8][8];
 
         board = new Board(pieces);
+
+        // Les blancs commencent
+        this.currentPlayerColor = PlayerColor.WHITE;
 
         setupDefaultBoard(board);
 
