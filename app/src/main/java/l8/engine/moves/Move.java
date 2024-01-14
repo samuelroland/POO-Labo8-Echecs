@@ -39,9 +39,11 @@ public class Move {
     }
 
     public void applyBoardChanges(Board board, Piece piece, Point to, boolean isBoardCopy) {
-        System.out.println("Applying board changes in Move....");
+        System.out.println("Applying board changes in Move : " + this);
         board.movePieces(piece.getPoint(), to, isBoardCopy);
-        piece.setLastMove(this);
+        if (!isBoardCopy) {
+            piece.setLastMove(this);// TODO: move this to movePieces
+        }
     }
 
     boolean collision(Board board, Point from, Point to) {

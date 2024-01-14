@@ -68,11 +68,14 @@ class KingInCheckTest {
     }
 
     @Test
-    void cannotMoveIfItMakesTheKingInCheck() {
+    void cannotMoveIfItMakesOurKingInCheck() {
         // Putting black king in check
         board.movePieces(new Point(3, 0), new Point(6, 5)); // white queen diag to black king (but blocked by pawn)
         Piece pawn = board.getPiece(new Point(5, 6));
-        Point destination = new Point(5, 4);
+        Point destination = new Point(5, 5);
+
+        assertTrue(board.ownKingInCheckAfterMove(new Move(new Point(0, 1), 1), pawn, destination));
+
         Move m = pawn.getValidMove(destination);
         assertNull(m);
     }

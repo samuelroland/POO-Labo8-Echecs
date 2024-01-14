@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class EnPassantTest {
     // CheckMoves de Pawn
@@ -43,7 +42,7 @@ class EnPassantTest {
     }
 
     private void moveIfValid(Pawn pawn, Point to) {
-        Move move = pawn.getValidMove(to, true);
+        Move move = pawn.getValidMove(to, null, true);
         assertNotNull(move, "Move of pawn on " + pawn.getPoint() + " to " + to + " should be valid...");
 
         // If valid, let apply it

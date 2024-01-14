@@ -14,6 +14,7 @@ abstract public class Piece {
     Point point;
     PlayerColor color;
     Board board;
+    Board alternativeBoard = null;
 
     // Dernier mouvement, permet de savoir si on a bougé
     // et check avance de 2 pour En passant.
@@ -26,11 +27,23 @@ abstract public class Piece {
         this.type = type;
     }
 
-    public Move getValidMove(Point to) {
-        return getValidMove(to, false); // do not skip king in check verif
+    // Retourne le board à utiliser pour cette validation de mouvement
+    // permet de se baser sur le board temporaire si besoin
+    private Board board() {
+        return alternativeBoard == null ? board : alternativeBoard;
     }
 
-    public Move getValidMove(Point to, boolean skipKingInCheckVerification) {
+    public Move getValidMove(Point to) {
+        return getValidMove(to, null);
+    }
+
+    public Move getValidMove(Point to, Board boardCopyToUse) {
+        return getValidMove(to, boardCopyToUse, false); // do not skip king in check verif
+    }
+
+    public Move getValidMove(Point to, Board alternativeBoard, boolean skipKingInCheckVerification) {
+        this.alternativeBoard = alternativeBoard;
+
         Move foundMove = checkMoves(to);
         // Check si le move fait partie des moves basiques de la pièce
         // Vérifie s'il y a une pièce sur le chemin, si oui alors on est
@@ -52,7 +65,7 @@ abstract public class Piece {
             // après le mouvement il ne doit plus être en échec)
             // le mouvement n'est pas valide
             if (!skipKingInCheckVerification) {
-                if (board.ownKingInCheckAfterMove(foundMove, this, to)) {
+                if (board().ownKingInCheckAfterMove(foundMove, this, to)) {
                     System.out.println("Mouvement invalide car le roi tjrs en échecs");
                     return null;
                 }
@@ -85,7 +98,7 @@ abstract public class Piece {
     public boolean checkDestination(Point to) {
         // Si la case est occupée et que c'est une pièce de même couleur, on ne peut pas
         // bouger.
-        if (!board.isEmpty(to) && !isEnemy(to)) {
+        if (!board().isEmpty(to) && !isEnemy(to)) {
             System.out.println("checkDestination false");
             return false;
         }
@@ -129,9 +142,9 @@ abstract public class Piece {
         }
 
         for (Point intermediatePoint : intermediatePoints) {
-            if (!board.isEmpty(intermediatePoint)) {
+            if (!board().isEmpty(intermediatePoint)) {
                 System.out.println("checkFreePath false on " + intermediatePoint);
-                System.out.println("actual piece is " + board.getPiece(intermediatePoint));
+                System.out.println("actual piece is " + board().getPiece(intermediatePoint));
                 return false;
             }
         }
@@ -141,11 +154,11 @@ abstract public class Piece {
     }
 
     public boolean isEnemy(Point to) {
-        var enemy = board.getPiece(to);
+        var enemy = board().getPiece(to);
         if (enemy == null) {
             return false;
         }
-        System.out.println("isEnemy " + (board.getPiece(to).getColor() != this.color));
+        System.out.println("isEnemy " + (board().getPiece(to).getColor() != this.color));
         return enemy.getColor() != this.color;
     }
 

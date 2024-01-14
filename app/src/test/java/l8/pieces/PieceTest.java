@@ -55,4 +55,25 @@ public class PieceTest {
         assertEquals(dest, pawn.getPoint());
         assertEquals(pawn, board.getPiece(dest));
     }
+
+    @Test
+    void testSomeBasicMoves() {
+        // White left bottom
+        assertNotNull(board.getPiece(1, 0).getValidMove(new Point(0, 2)));
+        assertNotNull(board.getPiece(1, 0).getValidMove(new Point(2, 2)));
+
+        // Bishop left bottom
+        board.removePiece(1, 1);
+        assertNotNull(board.getPiece(2, 0).getValidMove(new Point(1, 1)));
+        assertNotNull(board.getPiece(2, 0).getValidMove(new Point(0, 2)));
+
+        // Rook left bottom
+        board.removePiece(0, 1);
+        assertNotNull(board.getPiece(0, 0).getValidMove(new Point(0, 6)));
+        assertNotNull(board.getPiece(0, 0).getValidMove(new Point(0, 4)));
+
+        // 3rd Pawn bottom left
+        assertNotNull(board.getPiece(2, 1).getValidMove(new Point(2, 2)));
+        assertNotNull(board.getPiece(2, 1).getValidMove(new Point(2, 3)));
+    }
 }
