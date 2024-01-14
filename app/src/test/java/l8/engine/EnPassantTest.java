@@ -43,7 +43,7 @@ class EnPassantTest {
     }
 
     private void moveIfValid(Pawn pawn, Point to) {
-        Move move = pawn.getValidMove(to);
+        Move move = pawn.getValidMove(to, true);
         assertNotNull(move, "Move of pawn on " + pawn.getPoint() + " to " + to + " should be valid...");
 
         // If valid, let apply it

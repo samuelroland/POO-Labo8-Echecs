@@ -51,9 +51,13 @@ abstract public class Piece {
             // (cela inclus de le fait de sortir de l'échec,
             // après le mouvement il ne doit plus être en échec)
             // le mouvement n'est pas valide
-            if (ourKingIsInCheckAfterPieceMove(to)) {
-                System.out.println("Mouvement invalide car le roi tjrs en échecs");
-                return null;
+            if (!skipKingInCheckVerification) {
+                if (board.ownKingInCheckAfterMove(foundMove, this, to)) {
+                    System.out.println("Mouvement invalide car le roi tjrs en échecs");
+                    return null;
+                }
+            } else {
+                System.out.println("skipKingInCheckVerification for Piece.getValidMove " + this);
             }
 
             System.out.println("getValidMove true");
@@ -126,7 +130,8 @@ abstract public class Piece {
 
         for (Point intermediatePoint : intermediatePoints) {
             if (!board.isEmpty(intermediatePoint)) {
-                System.out.println("checkFreePath false");
+                System.out.println("checkFreePath false on " + intermediatePoint);
+                System.out.println("actual piece is " + board.getPiece(intermediatePoint));
                 return false;
             }
         }
@@ -150,22 +155,6 @@ abstract public class Piece {
         }
         System.out.println("isEnemy " + (piece.getColor() != this.color));
         return piece.getColor() != this.color;
-    }
-
-    // Check si après le mouvement donné, notre roi sera en échecs
-    // (celui de la pièce qui bouge)
-    public boolean ourKingIsInCheckAfterPieceMove(Point to) {
-        var boardCopy = board.clone();
-        boardCopy.movePieces(point, to);
-        boardCopy.lookIfKingInCheck();
-        if (boardCopy.kingIsInCheck(getColor())) {
-            System.out.println("le roi sera en échecs avec ce coup");
-            return true;
-        }
-        // Mettre à jour le status de l'autre roi dans le board réel
-        // TODO: ici si c'est vrm le bon endroit...
-
-        return false;
     }
 
     // Recevoir le numéro de ligne relatif à la couleur (de 0 à 7

@@ -2,6 +2,7 @@ package l8.engine;
 
 import java.security.InvalidParameterException;
 
+import l8.chess.PieceType;
 import l8.chess.PlayerColor;
 import l8.engine.moves.Move;
 import l8.engine.pieces.*;
@@ -45,12 +46,11 @@ public class Board {
             return;
 
         Piece p = getPiece(from);
-        p.setPoint(to);
 
         pieces[to.x()][to.y()] = p;
         pieces[from.x()][from.y()] = null;
 
-        // how can we do multiple pieces moves ?
+        p.setPoint(to);
     }
 
     public void removePiece(int x, int y) {
@@ -61,63 +61,44 @@ public class Board {
         removePiece(p.x(), p.y());
     }
 
-    // TODO: to delete -> unused and unsafe
-    public void putPieceAt(Piece piece, Point p) {
-        removePiece(piece.getPoint());
-        pieces[p.x()][p.y()] = piece;
-        piece.setPoint(p);
-    }
-
-    public boolean lookIfKingInCheck() {
-        boolean whiteKingInCheck = false;
-        boolean blackKingInCheck = false;
-
-        for (int i = 0; i < pieces.length; i++) {
-            for (int j = 0; j < pieces[i].length; j++) {
-                if (isEmpty(i, j)) {
-                    continue;
-                }
-
-                Piece p = getPiece(i, j);
-                if (p.getColor() == PlayerColor.WHITE) { // Roi noir en échec
-                    if (p.getValidMove(blackKingPosition) != null) {
-                        blackKingInCheck = true;
-
-                    }
-                } else { // Roi blanc en échec
-                    if (p.getValidMove(whiteKingPosition) != null) {
-                        whiteKingInCheck = true;
-
-                    }
-                }
-            }
-
-            return (whiteKingInCheck || blackKingInCheck);
+    // Check si après le mouvement donné, le roi sera en échecs
+    // (celui de la pièce qui bouge)
+    public boolean ownKingInCheckAfterMove(Move move, Piece piece, Point to) {
+        var boardCopy = clone();
+        move.applyBoardChanges(boardCopy, piece, to);
+        if (boardCopy.isKingInCheck(piece.getColor())) {
+            System.out.println("le roi " + piece.getColor() + " sera en échec avec ce coup");
+            return true;
         }
+        System.out.println("le roi " + piece.getColor() + " ne sera PAS en échec avec ce coup");
         return false;
+
     }
 
-    public boolean isKingInCheck(Board board, PlayerColor kingColor) {
-        Point kingPosition = kingPosition(board, kingColor);
+    public boolean isKingInCheck(PlayerColor kingColor) {
+        Point kingPosition = kingPosition(kingColor);
 
         for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
-                Piece piece = board.getPiece(x, y);
+                Piece piece = getPiece(x, y);
                 if (piece != null && piece.getColor() != kingColor) {
-                    if (piece.canMoveTo(kingPosition)) {
+                    System.out.println(">> Looking if " + piece.getType() + " on " + piece.getPoint()
+                            + " is threatening the " + kingColor + " king");
+                    if (piece.getValidMove(kingPosition, true) != null) {
+                        System.out.println("La pièce est menacante !!");
                         return true; // Le roi est en échec
                     }
                 }
             }
         }
-
+        System.out.println("Aucune pièce menacante...");
         return false; // Le roi n'est pas en échec
     }
 
-    private Point kingPosition(Board board, PlayerColor kingColor) {
+    Point kingPosition(PlayerColor kingColor) {
         for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
-                Piece piece = board.getPiece(x, y);
+                Piece piece = getPiece(x, y);
                 if (piece instanceof King && piece.getColor() == kingColor) {
                     return new Point(x, y); // Position du roi trouvé
                 }
@@ -126,82 +107,15 @@ public class Board {
         return null; // Le roi n'a pas été trouvé (ne devrait pas arriver)
     }
 
-    // Est-ce qu'un des 2 rois sont en échecs ?
-    // Est normalé appelé sur une copie temporaire du board
-    // Utile pour si une pièce mettrait son roi en échecs ou que
-    // l'autre roi de couleur B sera en échecs
-    // après le déplacement d'une pièce de la couleur A
-    /*
-     * public void lookIfKingsInCheck() {
-     * // On cherche d'abord la position des 2 rois
-     * // TODO: devrait-on plutot stocker les positisions des 2 rois ??
-     * Point blackKingPos = null, whiteKingPos = null;
-     * for (int i = 0; i < pieces.length; i++) {
-     * for (int j = 0; j < pieces[i].length; j++) {
-     * if (isEmpty(i, j))
-     * continue;
-     * Piece p = getPiece(i, j);
-     * if (p.getType().equals(PieceType.KING)) {
-     * if (p.getColor().equals(PlayerColor.BLACK)) {
-     * blackKingPos = p.getPoint();
-     * } else {
-     * whiteKingPos = p.getPoint();
-     * }
-     * }
-     * }
-     * // On a trouvé les 2 rois, on peut s'arrêter de chercher
-     * if (blackKingPos != null && whiteKingPos != null) {
-     * break;
-     * }
-     * }
-     * 
-     * // Note: On est garanti d'avoir les positions des 2 rois, les pièces ne
-     * peuvent
-     * // jamais être retirées du plateau
-     * 
-     * // On check pour toutes les pièces est-ce que d'aller sur cette position est
-     * un
-     * // coup valide, si oui, alors une pièce menace le roi de l'autre couleur
-     * for (int i = 0; i < pieces.length; i++) {
-     * for (int j = 0; j < pieces[i].length; j++) {
-     * if (isEmpty(i, j))
-     * continue;
-     * Piece p = getPiece(i, j);
-     * 
-     * if (p.getColor().equals(PlayerColor.WHITE)) {
-     * // Est-ce que cette pièce blanche menace le roi noir ?
-     * System.out.println(
-     * ">> Looking if " + p.getType() + " on " + p.getPoint() +
-     * " is threatening the black king");
-     * if (p.getValidMove(blackKingPos) != null) {
-     * blackKingInCheck = true;
-     * }
-     * } else {
-     * // Est-ce que cette pièce noire menace le roi blanc ?
-     * System.out.println(
-     * ">> Looking if " + p.getType() + " on " + p.getPoint() +
-     * " is threatening the white king");
-     * if (p.getValidMove(whiteKingPos) != null) {
-     * whiteKingInCheck = true;
-     * }
-     * }
-     * }
-     * }
-     * 
-     * if (!whiteKingInCheck && !blackKingInCheck) {
-     * System.out.println("Aucun roi en échecs !");
-     * }
-     * }
-     */
-
     // Est-ce que le roi de la couleur donnée est en échecs ?
     // lookIfKingsInCheck() doit être appelé d'abord, les valeurs retournées
     // viennent de ce dernier calcul
-    public boolean kingIsInCheck(PlayerColor kingColor) {
-        if (blackKingInCheck || whiteKingInCheck)
-            System.out.println(">> A king is in check !!");
-        return (kingColor.equals(PlayerColor.BLACK)) ? blackKingInCheck : whiteKingInCheck;
-    }
+    // public boolean kingIsInCheck(PlayerColor kingColor) {
+    // if (blackKingInCheck || whiteKingInCheck)
+    // System.out.println(">> A king is in check !!");
+    // return (kingColor.equals(PlayerColor.BLACK)) ? blackKingInCheck :
+    // whiteKingInCheck;
+    // }
 
     public void addPiece(Piece piece) {
         if (piece == null)
@@ -210,7 +124,8 @@ public class Board {
     }
 
     public Piece getPiece(int x, int y) {
-        // TODO: check boundaries
+        if (x >= 8 || y >= 8)
+            return null;
         return pieces[x][y];
     }
 

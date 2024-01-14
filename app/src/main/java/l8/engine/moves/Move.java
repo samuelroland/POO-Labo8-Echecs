@@ -22,7 +22,7 @@ public class Move {
 
         for (int i = 1; i <= max; i++) {
             if (from.getAdded(vector.getMultiplied(i)).equals(to)) {
-                System.out.println("Move.corresponds true");
+                System.out.println("Move.corresponds true " + this);
                 return true;
             }
         }
