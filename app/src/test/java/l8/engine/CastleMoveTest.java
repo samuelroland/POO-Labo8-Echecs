@@ -149,10 +149,27 @@ public class CastleMoveTest {
         board.addPiece(king);
         board.addPiece(rook);
 
+        //TODO: replace with applyboardchanges
         rook.setLastMove(new Move(new Point(1, 1), 1)); // un mouvement random juste pour simuler qu'il a bougé
 
-        Move move = king.checkMoves(new Point(7, 0));
-        assertNull(move, "CastleMove not allowed");
+        Move move = king.checkMoves(new Point(6, 0));
+        assertNull(move, "CastleMove shuold not be allowed");
+    }
+
+    // Test grand roque blanc ne se produit pas si on tente de bouger le roi de 3
+    // cases à gauche
+    @Test
+    public void testCastleNotAllowedIf3Cases() {
+        Board board = new Board(new Piece[8][8]);
+        King king = new King(board, PlayerColor.WHITE, new Point(4, 0));
+        Rook rook = new Rook(board, PlayerColor.WHITE, new Point(7, 0));
+        Rook rook2 = new Rook(board, PlayerColor.WHITE, new Point(0, 0));
+        board.addPiece(king);
+        board.addPiece(rook);
+        board.addPiece(rook2);
+
+        Move move = king.checkMoves(new Point(1, 0));
+        assertNull(move, "CastleMove should not be allowed");
     }
 
     // Test roi en échec -> fail
@@ -169,8 +186,11 @@ public class CastleMoveTest {
         board.addPiece(enemyQueen);
 
         Move move = king.checkMoves(new Point(6, 0));
-        assertNull(move, "King in check");
+        assertNull(move, "King in check should have stopped the castle move");
     }
+
+    // TODO: test roi en échec sur la case intermédiaire
+    // TODO: test roi en échec sur la case finale
 
     // Test que le roi ne soit pas menacé -> fail
     @Test
