@@ -13,8 +13,8 @@ abstract public class Piece {
     PieceType type; // okay to be defined by subclasses only ?
     Point point;
     PlayerColor color;
-    Board board;
-    Board alternativeBoard = null;
+    private Board board;
+    private Board alternativeBoard = null;
 
     // Dernier mouvement, permet de savoir si on a bougé
     // et check avance de 2 pour En passant.
@@ -29,7 +29,7 @@ abstract public class Piece {
 
     // Retourne le board à utiliser pour cette validation de mouvement
     // permet de se baser sur le board temporaire si besoin
-    private Board board() {
+    protected Board board() {
         return alternativeBoard == null ? board : alternativeBoard;
     }
 

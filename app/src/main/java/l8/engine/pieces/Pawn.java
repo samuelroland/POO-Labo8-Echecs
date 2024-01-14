@@ -34,7 +34,7 @@ public class Pawn extends Piece {
         // Note: Les mouvements sur une case vide, ainsi que les mouvements pour manger
         // en diagonales
         // ne seront ainsi pas annulés
-        if (!board.isEmpty(to) && to.x() - point.x() == 0) {
+        if (!board().isEmpty(to) && to.x() - point.x() == 0) {
             return false;
         }
 
