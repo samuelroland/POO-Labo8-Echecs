@@ -42,6 +42,10 @@ public class Board {
     }
 
     public void movePieces(Point from, Point to) {
+        movePieces(from, to, false);
+    }
+
+    public void movePieces(Point from, Point to, boolean isBoardCopy) {
         if (isEmpty(from) || from.equals(to))
             return;
 
@@ -50,7 +54,12 @@ public class Board {
         pieces[to.x()][to.y()] = p;
         pieces[from.x()][from.y()] = null;
 
-        p.setPoint(to);
+        // Ne pas modifier le point si ce n'est qu'une copie du board
+        // la position interne n'est pas utilisée et la pièce n'est pas dupliquée durant
+        // le clone du board, c'est donc la pièce réel
+        if (!isBoardCopy) {
+            p.setPoint(to);
+        }
     }
 
     public void removePiece(int x, int y) {
@@ -65,7 +74,8 @@ public class Board {
     // (celui de la pièce qui bouge)
     public boolean ownKingInCheckAfterMove(Move move, Piece piece, Point to) {
         var boardCopy = clone();
-        move.applyBoardChanges(boardCopy, piece, to);
+        move.applyBoardChanges(boardCopy, piece, to, true); // apply changes but do not change pieces as the boardCopy
+                                                            // is a shallow copy
         if (boardCopy.isKingInCheck(piece.getColor())) {
             System.out.println("le roi " + piece.getColor() + " sera en échec avec ce coup");
             return true;
