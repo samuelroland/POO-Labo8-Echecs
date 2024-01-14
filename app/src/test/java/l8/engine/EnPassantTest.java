@@ -68,7 +68,7 @@ class EnPassantTest {
         assertNull(board.getPiece(new Point(4, 4)));
 
         // Make sure the attacker has the correct position
-        assertTrue(attacker.getPoint().equals(new Point(4, 5)));
+        assertEquals(attacker.getPoint(), new Point(4, 5));
     }
 
     @Test
@@ -87,7 +87,7 @@ class EnPassantTest {
         assertNull(board.getPiece(new Point(2, 4)));
 
         // Make sure the attacker has the correct position
-        assertTrue(attacker.getPoint().equals(new Point(2, 5)));
+        assertEquals(attacker.getPoint(), new Point(2, 5));
     }
 
     @Test
@@ -106,7 +106,7 @@ class EnPassantTest {
         assertNull(board.getPiece(new Point(5, 3)));
 
         // Make sure the attacker has the correct position
-        assertTrue(attacker.getPoint().equals(new Point(5, 2)));
+        assertEquals(attacker.getPoint(), new Point(5, 2));
     }
 
     @Test
@@ -123,7 +123,7 @@ class EnPassantTest {
         assertNull(board.getPiece(new Point(3, 3)));
 
         // Make sure the attacker has the correct position
-        assertTrue(attacker.getPoint().equals(new Point(3, 2)));
+        assertEquals(attacker.getPoint(), new Point(3, 2));
     }
 
     @Test

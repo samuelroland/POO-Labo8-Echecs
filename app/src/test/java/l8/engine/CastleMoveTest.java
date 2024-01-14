@@ -47,7 +47,7 @@ public class CastleMoveTest {
         // La tour et le roi bougent correctement
         move.applyBoardChanges(board, king, dest);
         assertEquals(dest, king.getPoint());
-        assertTrue(new Point(dest.x() - 1, dest.y()).equals(rook.getPoint()));
+        assertEquals(new Point(dest.x() - 1, dest.y()), rook.getPoint());
         // et sont bougés sur le plateau
         assertEquals(board.getPiece(dest), king);
         assertEquals(board.getPiece(dest.x() - 1, dest.y()), rook);
@@ -68,7 +68,7 @@ public class CastleMoveTest {
         // La tour et le roi bougent correctement
         move.applyBoardChanges(board, king, dest);
         assertEquals(dest, king.getPoint());
-        assertTrue(new Point(dest.x() + 1, dest.y()).equals(rook.getPoint()));
+        assertEquals(new Point(dest.x() + 1, dest.y()), rook.getPoint());
         // et sont bougés sur le plateau
         assertEquals(board.getPiece(dest), king);
         assertEquals(board.getPiece(dest.x() + 1, dest.y()), rook);
@@ -89,7 +89,7 @@ public class CastleMoveTest {
         // La tour et le roi bougent correctement
         move.applyBoardChanges(board, king, dest);
         assertEquals(dest, king.getPoint());
-        assertTrue(new Point(dest.x() - 1, dest.y()).equals(rook.getPoint()));
+        assertEquals(new Point(dest.x() - 1, dest.y()), rook.getPoint());
         // et sont bougés sur le plateau
         assertEquals(board.getPiece(dest), king);
         assertEquals(board.getPiece(dest.x() - 1, dest.y()), rook);
@@ -110,7 +110,7 @@ public class CastleMoveTest {
         // La tour et le roi bougent correctement
         move.applyBoardChanges(board, king, dest);
         assertEquals(dest, king.getPoint());
-        assertTrue(new Point(dest.x() + 1, dest.y()).equals(rook.getPoint()));
+        assertEquals(new Point(dest.x() + 1, dest.y()), rook.getPoint());
         // et sont bougés sur le plateau
         assertEquals(board.getPiece(dest), king);
         assertEquals(board.getPiece(dest.x() + 1, dest.y()), rook);

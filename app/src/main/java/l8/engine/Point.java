@@ -30,10 +30,10 @@ public class Point {
         return new Point(x + vector.x, y + vector.y);
     }
 
-    public boolean equals(Point b) {
-        if (b == null)
-            return false;
-        return x == b.x && y == b.y;
+    public boolean equals(Object b) {
+        return b != null
+                && b.getClass() == getClass()
+                && (x == ((Point) b).x && y == ((Point) b).y);
     }
 
     public String toString() {
