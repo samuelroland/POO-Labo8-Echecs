@@ -46,7 +46,7 @@ class EnPassantTest {
         assertNotNull(move, "Move of pawn on " + pawn.getPoint() + " to " + to + " should be valid...");
 
         // If valid, let apply it
-        move.applyBoardChanges(board, pawn, to);
+        move.applyBoardChanges(board, pawn, to, false);
         board.movePieces(pawn.getPoint(), to);
         board.setLastMovedPiece(pawn);
         board.setLastMove(move);

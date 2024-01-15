@@ -41,7 +41,8 @@ public class ChessGame implements ChessController {
         // Si le mouvement est valide, alors on le fait
         var validMoveFound = piece.getValidMove(destination);
         if (validMoveFound != null) {
-            validMoveFound.applyBoardChanges(board, piece, destination);
+            validMoveFound.applyBoardChanges(board, piece, destination, false);
+            validMoveFound.postBoardChangeActions(piece, false);
 
             // Le mouvement a été fait, peut-être que c'est un pion sur la dernière ligne
             // il faut gérer la promotion de pion.
@@ -50,7 +51,6 @@ public class ChessGame implements ChessController {
             }
 
             // Afficher un message en cas d'échec
-            // TODO: not working because 2 boolean are not replicated in the real board
             if (board.isKingInCheck(PlayerColor.WHITE) || board.isKingInCheck(PlayerColor.BLACK)) {
                 view.displayMessage("Check !");
             }
@@ -138,7 +138,6 @@ public class ChessGame implements ChessController {
     }
 
     public void updateView() {
-        // TODO: magic values of 8 ??
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if (!board.isEmpty(i, j)) {

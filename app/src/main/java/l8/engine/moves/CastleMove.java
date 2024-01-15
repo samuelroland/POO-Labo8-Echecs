@@ -3,7 +3,6 @@ package l8.engine.moves;
 import l8.chess.PlayerColor;
 import l8.engine.Board;
 import l8.engine.Point;
-import l8.engine.pieces.King;
 import l8.engine.pieces.Piece;
 
 public class CastleMove extends Move {
@@ -16,15 +15,15 @@ public class CastleMove extends Move {
     }
 
     @Override
-    public void applyBoardChanges(Board board, Piece king, Point to) {
+    public void applyBoardChanges(Board board, Piece king, Point to, boolean isBoardCopy) {
 
         // Déplacement tour en fonction du roque choisi
         Point rookStart = new Point(castleIsOnRight ? 7 : 0, king.getPoint().y());
         Point rookEnd = new Point(castleIsOnRight ? 5 : 3, king.getPoint().y());
-        board.movePieces(rookStart, rookEnd);
+        board.movePieces(rookStart, rookEnd, isBoardCopy);
 
         // Déplacement roi
-        board.movePieces(king.getPoint(), to);
+        board.movePieces(king.getPoint(), to, isBoardCopy);
 
         System.out.println("CastleMove done");
     }
@@ -54,15 +53,8 @@ public class CastleMove extends Move {
             return false;
         }
 
-        // Vérifie aucune pièce entre roi et tour
-        // TODO: refactor with checkfreepath
-        int step = castleIsOnRight ? 1 : -1;
-        for (int x = king.getPoint().x() + step; x != rookStart.x(); x += step) {
-            if (!board.isEmpty(new Point(x, king.getPoint().y()))) {
-                System.out.println("CastleMove.corresponds false some pieces in between");
-                return false;
-            }
-        }
+        // Note: pas besoin de vérifier qu'il n'y a aucune pièce entre roi et tour car
+        // cela est déjà fait par Piece.checkFreePath()
 
         // Vérifie que le roi n'est pas déjà en échecs (le roque est interdit dans ce
         // cas même si cela lui permet de sortir de son échec)

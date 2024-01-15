@@ -45,7 +45,7 @@ public class CastleMoveTest {
         assertInstanceOf(CastleMove.class, move);
 
         // La tour et le roi bougent correctement
-        move.applyBoardChanges(board, king, dest);
+        move.applyBoardChanges(board, king, dest, false);
         assertEquals(dest, king.getPoint());
         assertEquals(new Point(dest.x() - 1, dest.y()), rook.getPoint());
         // et sont bougés sur le plateau
@@ -66,7 +66,7 @@ public class CastleMoveTest {
         assertInstanceOf(CastleMove.class, move);
 
         // La tour et le roi bougent correctement
-        move.applyBoardChanges(board, king, dest);
+        move.applyBoardChanges(board, king, dest, false);
         assertEquals(dest, king.getPoint());
         assertEquals(new Point(dest.x() + 1, dest.y()), rook.getPoint());
         // et sont bougés sur le plateau
@@ -87,7 +87,7 @@ public class CastleMoveTest {
         assertInstanceOf(CastleMove.class, move);
 
         // La tour et le roi bougent correctement
-        move.applyBoardChanges(board, king, dest);
+        move.applyBoardChanges(board, king, dest, false);
         assertEquals(dest, king.getPoint());
         assertEquals(new Point(dest.x() - 1, dest.y()), rook.getPoint());
         // et sont bougés sur le plateau
@@ -108,7 +108,7 @@ public class CastleMoveTest {
         assertInstanceOf(CastleMove.class, move);
 
         // La tour et le roi bougent correctement
-        move.applyBoardChanges(board, king, dest);
+        move.applyBoardChanges(board, king, dest, false);
         assertEquals(dest, king.getPoint());
         assertEquals(new Point(dest.x() + 1, dest.y()), rook.getPoint());
         // et sont bougés sur le plateau
@@ -127,7 +127,7 @@ public class CastleMoveTest {
         board.addPiece(rook);
         board.addPiece(blockingPawn);
 
-        Move move = king.getValidMove(new Point(4, 0));
+        Move move = king.getValidMove(new Point(6, 0));
         assertNull(move, "CastleMove not allowed");
     }
 
@@ -149,7 +149,6 @@ public class CastleMoveTest {
         board.addPiece(king);
         board.addPiece(rook);
 
-        // TODO: replace with applyboardchanges
         rook.setLastMove(new Move(new Point(1, 1), 1)); // un mouvement random juste pour simuler qu'il a bougé
 
         Move move = king.getValidMove(new Point(6, 0));

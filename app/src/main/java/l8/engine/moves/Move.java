@@ -34,15 +34,14 @@ public class Move {
         return "vect" + directionVector + " * " + max;
     }
 
-    public void applyBoardChanges(Board board, Piece piece, Point to) {
-        applyBoardChanges(board, piece, to, false);
-    }
-
     public void applyBoardChanges(Board board, Piece piece, Point to, boolean isBoardCopy) {
         System.out.println("Applying board changes in Move : " + this);
         board.movePieces(piece.getPoint(), to, isBoardCopy);
+    }
+
+    public void postBoardChangeActions(Piece piece, boolean isBoardCopy) {
         if (!isBoardCopy) {
-            piece.setLastMove(this);// TODO: move this to movePieces
+            piece.setLastMove(this);
         }
     }
 

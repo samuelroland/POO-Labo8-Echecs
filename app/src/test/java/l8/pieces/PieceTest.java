@@ -51,7 +51,7 @@ public class PieceTest {
 
         Move m = pawn.getValidMove(dest);
         assertNotNull(m);
-        m.applyBoardChanges(board, pawn, dest);
+        m.applyBoardChanges(board, pawn, dest, false);
         assertEquals(dest, pawn.getPoint());
         assertEquals(pawn, board.getPiece(dest));
     }
