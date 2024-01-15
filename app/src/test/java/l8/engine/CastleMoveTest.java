@@ -41,7 +41,7 @@ public class CastleMoveTest {
         board.addPiece(king);
         board.addPiece(rook);
         Point dest = new Point(6, 0);
-        Move move = king.checkMoves(dest);
+        Move move = king.getValidMove(dest);
         assertInstanceOf(CastleMove.class, move);
 
         // La tour et le roi bougent correctement
@@ -62,7 +62,7 @@ public class CastleMoveTest {
         board.addPiece(king);
         board.addPiece(rook);
         Point dest = new Point(2, 0);
-        Move move = king.checkMoves(dest);
+        Move move = king.getValidMove(dest);
         assertInstanceOf(CastleMove.class, move);
 
         // La tour et le roi bougent correctement
@@ -83,7 +83,7 @@ public class CastleMoveTest {
         board.addPiece(king);
         board.addPiece(rook);
         Point dest = new Point(6, 7);
-        Move move = king.checkMoves(dest);
+        Move move = king.getValidMove(dest);
         assertInstanceOf(CastleMove.class, move);
 
         // La tour et le roi bougent correctement
@@ -104,7 +104,7 @@ public class CastleMoveTest {
         board.addPiece(king);
         board.addPiece(rook);
         Point dest = new Point(2, 7);
-        Move move = king.checkMoves(dest);
+        Move move = king.getValidMove(dest);
         assertInstanceOf(CastleMove.class, move);
 
         // La tour et le roi bougent correctement
@@ -127,7 +127,7 @@ public class CastleMoveTest {
         board.addPiece(rook);
         board.addPiece(blockingPawn);
 
-        Move move = king.checkMoves(new Point(4, 0));
+        Move move = king.getValidMove(new Point(4, 0));
         assertNull(move, "CastleMove not allowed");
     }
 
@@ -149,10 +149,10 @@ public class CastleMoveTest {
         board.addPiece(king);
         board.addPiece(rook);
 
-        //TODO: replace with applyboardchanges
+        // TODO: replace with applyboardchanges
         rook.setLastMove(new Move(new Point(1, 1), 1)); // un mouvement random juste pour simuler qu'il a bougé
 
-        Move move = king.checkMoves(new Point(6, 0));
+        Move move = king.getValidMove(new Point(6, 0));
         assertNull(move, "CastleMove shuold not be allowed");
     }
 
@@ -168,7 +168,7 @@ public class CastleMoveTest {
         board.addPiece(rook);
         board.addPiece(rook2);
 
-        Move move = king.checkMoves(new Point(1, 0));
+        Move move = king.getValidMove(new Point(1, 0));
         assertNull(move, "CastleMove should not be allowed");
     }
 
@@ -177,33 +177,43 @@ public class CastleMoveTest {
     public void testCastleInCheck() {
         Board board = new Board(new Piece[8][8]);
         King king = new King(board, PlayerColor.WHITE, new Point(4, 0));
-        King bking = new King(board, PlayerColor.BLACK, new Point(4, 7));
         Rook rook = new Rook(board, PlayerColor.WHITE, new Point(7, 0));
         Queen enemyQueen = new Queen(board, PlayerColor.BLACK, new Point(4, 1));
         board.addPiece(king);
-        board.addPiece(bking);
         board.addPiece(rook);
         board.addPiece(enemyQueen);
 
-        Move move = king.checkMoves(new Point(6, 0));
+        Move move = king.getValidMove(new Point(6, 0));
         assertNull(move, "King in check should have stopped the castle move");
     }
 
-    // TODO: test roi en échec sur la case intermédiaire
-    // TODO: test roi en échec sur la case finale
+    // Test roi en échec sur la case intermédiaire -> fail
+    @Test
+    public void testCastleInCheckInIntermediatePoint() {
+        Board board = new Board(new Piece[8][8]);
+        King king = new King(board, PlayerColor.WHITE, new Point(4, 0));
+        Rook rook = new Rook(board, PlayerColor.WHITE, new Point(7, 0));
+        Pawn enemyPawn = new Pawn(board, PlayerColor.BLACK, new Point(4, 1));
+        board.addPiece(king);
+        board.addPiece(rook);
+        board.addPiece(enemyPawn);
 
-    // Test que le roi ne soit pas menacé -> fail
+        Move move = king.getValidMove(new Point(6, 0));
+        assertNull(move, "King in check should have stopped the castle move");
+    }
+
+    // Test que le roi ne soit pas menacé sur la case d'arrivée -> fail
     @Test
     public void testCastleThroughAttackedSquare() {
         Board board = new Board(new Piece[8][8]);
         King king = new King(board, PlayerColor.WHITE, new Point(4, 0));
         Rook rook = new Rook(board, PlayerColor.WHITE, new Point(7, 0));
-        Queen enemyQueen = new Queen(board, PlayerColor.BLACK, new Point(5, 1));
+        Queen enemyQueen = new Queen(board, PlayerColor.BLACK, new Point(7, 1));
         board.addPiece(king);
         board.addPiece(rook);
         board.addPiece(enemyQueen);
 
-        Move move = king.checkMoves(new Point(6, 0));
+        Move move = king.getValidMove(new Point(6, 0));
         assertNull(move);
     }
 }

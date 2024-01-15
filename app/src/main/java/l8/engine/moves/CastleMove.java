@@ -73,8 +73,8 @@ public class CastleMove extends Move {
 
         // Vérifie que la case intermédiaire n'est pas menacée
         // (en simulant un mouvement du roi sur cette case)
-        // TODO: test this
-        if (board.ownKingInCheckAfterMove(new Move(new Point(directionVector.x() < 0 ? -1 : 1, 0), 1), king, to)) {
+        Point moveOneCell = new Point(castleIsOnRight ? 1 : -1, 0);
+        if (board.ownKingInCheckAfterMove(new Move(moveOneCell, 1), king, from.getAdded(moveOneCell))) {
             System.out.println("CastleMove.corresponds false king in check in intermediatePoint");
             return false;
         }
