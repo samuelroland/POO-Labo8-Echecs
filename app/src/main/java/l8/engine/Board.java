@@ -60,9 +60,7 @@ public class Board {
         pieces[to.x()][to.y()] = p;
         pieces[from.x()][from.y()] = null;
 
-        // Ne pas modifier le point si ce n'est qu'une copie du board
-        // la position interne n'est pas utilisée et la pièce n'est pas dupliquée durant
-        // le clone du board, c'est donc la pièce réel
+        // Do not modify the piece's point if it's only a copy of the board, as the internal position is not used and the piece is not duplicated during the board clone.
         if (!isBoardCopy) {
             p.setPoint(to);
         }
@@ -120,18 +118,16 @@ public class Board {
                     System.out.println(">> Looking if " + piece.getType() + " on " + piece.getPoint()
                             + " is threatening the " + kingColor + " king");
 
-                    // Regarder si la pièce peut faire ce mouvement mais ne doit pas checker
-                    // si elle met son camp en échecs car cela reste une pièce menaçante
-                    // On passe en copie de plateau soit même (cela pourrait être une copie ou non)
+                    // Check if the piece can make this move but don't need to check if it puts its own side in check as it still remains a threatening piece Passing a copy of the board (could be a copy or not)
                     if (piece.getValidMove(kingPosition, this, true) != null) {
                         System.out.println("La pièce est menacante !!");
-                        return true; // Le roi est en échec
+                        return true; // king is in check
                     }
                 }
             }
         }
         System.out.println("Aucune pièce menacante...");
-        return false; // Le roi n'est pas en échec
+        return false; // king is not in check
     }
 
     /**
@@ -144,11 +140,11 @@ public class Board {
             for (int y = 0; y < 8; y++) {
                 Piece piece = getPiece(x, y);
                 if (piece instanceof King && piece.getColor() == kingColor) {
-                    return new Point(x, y); // Position du roi trouvé
+                    return new Point(x, y); // Position of the king
                 }
             }
         }
-        return null; // Le roi n'a pas été trouvé (ne devrait pas arriver)
+        return null; // king not found
     }
 
     /**

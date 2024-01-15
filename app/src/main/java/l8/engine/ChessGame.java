@@ -20,19 +20,30 @@ public class ChessGame implements ChessController {
 
     private ChessView view;
     private Board board;
-
     private PlayerColor currentPlayerColor;
 
+    /**
+     * Constructor of ChessGame
+     * @param view the view
+     */
     @Override
     public void start(ChessView view) {
         this.view = view;
         view.startView();
     }
 
+    /**
+     * Determines if the move corresponds to the board, the color, the point from and the point to.
+     * @param fromX the x coordinate of the point from
+     * @param fromY the y coordinate of the point from
+     * @param toX the x coordinate of the point to
+     * @param toY the y coordinate of the point to
+     * @return true if the move corresponds, false otherwise
+     */
     @Override
     public boolean move(int fromX, int fromY, int toX, int toY) {
 
-        // Aucune pièce à déplacer
+        // No piece to move
         if (board.isEmpty(fromX, fromY))
             return false;
 
@@ -47,25 +58,23 @@ public class ChessGame implements ChessController {
         System.out.println(String.format("\n >>>> Mouvement de %s de (%d, %d) à (%d, %d)",
                 piece.getType().name(), fromX, fromY, toX, toY));
 
-        // Si le mouvement est valide, alors on le fait
+        // If the move is valid, then execute it
         var validMoveFound = piece.getValidMove(destination);
         if (validMoveFound != null) {
             validMoveFound.applyBoardChanges(board, piece, destination, false);
             validMoveFound.postBoardChangeActions(piece, false);
 
-            // Le mouvement a été fait, peut-être que c'est un pion sur la dernière ligne
-            // il faut gérer la promotion de pion.
+            // The move has been made, perhaps it's a pawn on the last row Pawn promotion needs to be handled.
             if (piece.getType().equals(PieceType.PAWN) && ((Pawn) piece).checkPromotion()) {
                 promotion(destination, piece.getColor());
             }
 
-            // Afficher un message en cas d'échec
+            // Display a message in case of failure
             if (board.isKingInCheck(PlayerColor.WHITE) || board.isKingInCheck(PlayerColor.BLACK)) {
                 view.displayMessage("Check !");
             }
 
-            // Regénérer la vue pour qu'elles y affichent la dernière version
-            // du board avec tous les derniers mouvements
+            // Regenerate the view to display the latest version of the board with all the recent moves
             updateView();
             nextPlayer();
 
@@ -78,10 +87,18 @@ public class ChessGame implements ChessController {
         return false;
     }
 
+    /**
+     * Passes the turn to the next player.
+     */
     private void nextPlayer() {
         currentPlayerColor = (currentPlayerColor == PlayerColor.WHITE) ? PlayerColor.BLACK : PlayerColor.WHITE;
     }
 
+    /**
+     * Promotes a pawn to a piece.
+     * @param to the point to
+     * @param color the color
+     */
     private void promotion(Point to, PlayerColor color) {
         PromotionChoice answer = view.askUser("Promotion de pions",
                 "Par quelle pièce souhaitez-vous promouvoir ce pion ?",
@@ -103,8 +120,12 @@ public class ChessGame implements ChessController {
         board.addPiece(newPiece);
     }
 
+    /**
+     * Sets up the default board.
+     * @param board the board
+     */
     static public void setupDefaultBoard(Board board) {
-        // BLANC
+        // white
         board.addPiece(new Rook(board, PlayerColor.WHITE, new Point(0, 0)));
         board.addPiece(new Knight(board, PlayerColor.WHITE, new Point(1, 0)));
         board.addPiece(new Bishop(board, PlayerColor.WHITE, new Point(2, 0)));
@@ -117,7 +138,7 @@ public class ChessGame implements ChessController {
             board.addPiece(new Pawn(board, PlayerColor.WHITE, new Point(i, 1)));
         }
 
-        // NOIR
+        // black
         board.addPiece(new Rook(board, PlayerColor.BLACK, new Point(0, 7)));
         board.addPiece(new Knight(board, PlayerColor.BLACK, new Point(1, 7)));
         board.addPiece(new Bishop(board, PlayerColor.BLACK, new Point(2, 7)));
@@ -131,6 +152,9 @@ public class ChessGame implements ChessController {
         }
     }
 
+    /**
+     * Starts a new game.
+     */
     @Override
     public void newGame() {
         view.displayMessage("Start new game");
@@ -138,7 +162,7 @@ public class ChessGame implements ChessController {
 
         board = new Board(pieces);
 
-        // Les blancs commencent
+        // white starts
         this.currentPlayerColor = PlayerColor.WHITE;
 
         setupDefaultBoard(board);
@@ -146,6 +170,9 @@ public class ChessGame implements ChessController {
         updateView();
     }
 
+    /**
+     * Loads a game.
+     */
     public void updateView() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {

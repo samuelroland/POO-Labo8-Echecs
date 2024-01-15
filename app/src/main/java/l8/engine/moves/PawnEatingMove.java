@@ -30,7 +30,7 @@ public class PawnEatingMove extends Move {
      * @return
      */
     public boolean corresponds(Board board, PlayerColor color, Point from, Point to) {
-        // Le mouvement doit correspondre et la destination doit être un ennemi
+        // The move must match and the destination must be an enemy
         return super.corresponds(board, color, from, to)
                 && board.getPiece(from).isEnemy(to);
     }

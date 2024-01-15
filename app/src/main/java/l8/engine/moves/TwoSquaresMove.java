@@ -29,7 +29,7 @@ public class TwoSquaresMove extends Move {
      * @return
      */
     public boolean corresponds(Board board, PlayerColor color, Point from, Point to) {
-        // Le mouvement doit correspondre et être le premier pour être valide
+        // The move must match and be the first one to be valid
         return super.corresponds(board, color, from, to)
                 && board.getPiece(from).getLastMove() == null;
     }

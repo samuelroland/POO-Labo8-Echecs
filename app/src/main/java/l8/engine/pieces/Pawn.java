@@ -48,15 +48,13 @@ public class Pawn extends Piece {
      * @return true if the destination is valid
      */
     public boolean checkDestination(Point to) {
-        // On veut garder le check que l'autre pièce est bien un ennemi
+        // We want to maintain the check that the other piece is indeed an enemy
         if (!super.checkDestination(to))
             return false;
 
-        // Par contre, même si c'est un ennemi on veut invalider le mouvement tout droit
-        // car les pions ne peuvent pas manger une pièce en face
-        // Note: Les mouvements sur une case vide, ainsi que les mouvements pour manger
-        // en diagonales
-        // ne seront ainsi pas annulés
+        // However, even if it's an enemy, we want to invalidate the straight move because pawns cannot capture a piece directly in front of them.
+        // Note: Moves to an empty square, as well as moves to capture diagonally will not be cancelled.
+
         if (!board().isEmpty(to) && to.x() - point.x() == 0) {
             return false;
         }

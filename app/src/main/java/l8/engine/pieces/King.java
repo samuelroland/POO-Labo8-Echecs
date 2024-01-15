@@ -40,8 +40,8 @@ public class King extends Piece {
                 new Move(new Point(1, -1), 1),
                 new Move(new Point(-1, 1), 1),
                 new Move(new Point(-1, -1), 1),
-                new CastleMove(true), // petit roque
-                new CastleMove(false) // grand roque
+                new CastleMove(true), // king side castle
+                new CastleMove(false) // queen side castle
         };
     }
 }

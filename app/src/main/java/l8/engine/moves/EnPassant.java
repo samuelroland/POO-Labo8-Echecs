@@ -52,10 +52,12 @@ public class EnPassant extends Move {
         return false;
     }
 
-    // Récuperer la position de la victime, sur la même colonne que la destination
-    // de l'attaquant et la même ligne que sa position de départ
-    // -> on trouve la position en dessous à droite ou en dessous à gauche,
-    // de la destination
+    /**
+     * Retrieve the position of the victim, on the same column as the destination of the attacker and the same row as its starting position -> we find the position below to the right or below to the left, of the destination
+     * @param from
+     * @param to
+     * @return
+     */
     private Point getVictimPosition(Point from, Point to) {
         return new Point(to.x(), from.y());
     }

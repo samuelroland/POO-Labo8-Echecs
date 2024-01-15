@@ -23,15 +23,17 @@ abstract public class Piece {
     PlayerColor color;
     private Board board;
     private Board alternativeBoard = null;
-    Move lastMove = null; // Dernier mouvement, permet de savoir si on a bougé et check avance de 2 pour En passant.
+    Move lastMove = null; // Last move, used to determine if a move has been made and checks for a two-square advance for En passant.
+
     abstract Move[] validMoves();
 
     /**
      * Constructor of Piece
+     *
      * @param board the board
      * @param color the color of the piece
      * @param point the point of the piece
-     * @param type the type of the piece
+     * @param type  the type of the piece
      */
     public Piece(Board board, PlayerColor color, Point point, PieceType type) {
         this.board = board;
@@ -42,6 +44,7 @@ abstract public class Piece {
 
     /**
      * Determines the board to use for validating movements. Can use an alternative board if needed for temporary or hypothetical move validations.
+     *
      * @return the board
      */
     protected Board board() {
@@ -50,6 +53,7 @@ abstract public class Piece {
 
     /**
      * Gets a valid move for the piece to a specified position.
+     *
      * @param to the position
      * @return the valid move, or null
      */
@@ -59,7 +63,8 @@ abstract public class Piece {
 
     /**
      * Gets a valid move for the piece to a specified position.
-     * @param to the target position
+     *
+     * @param to             the target position
      * @param boardCopyToUse the board to use for validating the move
      * @return the valid move, or null
      */
@@ -69,8 +74,9 @@ abstract public class Piece {
 
     /**
      * Gets a valid move for the piece to a specified position.
-     * @param to the target position
-     * @param alternativeBoard the board to use for validating the move
+     *
+     * @param to                          the target position
+     * @param alternativeBoard            the board to use for validating the move
      * @param skipKingInCheckVerification if true, skips the king in check verification
      * @return
      */
@@ -78,24 +84,19 @@ abstract public class Piece {
         this.alternativeBoard = alternativeBoard;
 
         Move foundMove = checkMoves(to);
-        // Check si le move fait partie des moves basiques de la pièce
-        // Vérifie s'il y a une pièce sur le chemin, si oui alors on est
-        // bloqué et ne
-        // peut pas avancer.
+        // Check if the move is part of the piece's basic moves
+        // Verify if there is a piece on the path, if yes then we are blocked and cannot proceed.
         if (foundMove != null && checkFreePath(to)) {
-            // Si occupé, il faut check si c'est un ennemi, dans ce cas on peut bouger.
-            // Sinon, on ne peut pas bouger
-            // Vérifie si la destination est occupé ou pas
-            // Si la pièce à la destination est un ennemi, alors on la mange.
+            // If occupied, check if it's an enemy piece, in which case movement is possible.
+            // Otherwise, movement is not allowed.
+            // Verify if the destination is occupied or not.
+            // If the piece at the destination is an enemy, then capture it.
             if (!checkDestination(to)) {
                 System.out.println("checkDestination fails..");
                 return null;
             }
 
-            // Check si cela met notre roi est en échecs
-            // (cela inclus de le fait de sortir de l'échec,
-            // après le mouvement il ne doit plus être en échec)
-            // le mouvement n'est pas valide
+            // Check if this puts our king in check (this includes getting out of check, after the move, the king must not be in check) the move is not valid
             System.out.println("Check finale de mise en échecs " + !skipKingInCheckVerification);
             if (!skipKingInCheckVerification) {
                 if (board().ownKingInCheckAfterMove(foundMove, this, to)) {
@@ -124,8 +125,11 @@ abstract public class Piece {
         return null;
     }
 
-    // différent pion s'il y a personne devant il avance sinon sur la diagonale avec
-    // pion inverse
+    /**
+     * Checks if the destination is valid.
+     * @param to the point to check
+     * @return true if the destination is valid, false otherwise
+     */
     public boolean checkDestination(Point to) {
         // Si la case est occupée et que c'est une pièce de même couleur, on ne peut pas
         // bouger.
@@ -138,29 +142,29 @@ abstract public class Piece {
         return true;
     }
 
-    // différent cavalier parce qu'il peut sauter par dessus
+    /**
+     * Checks if the path is free.
+     * @param to the point to check
+     * @return true if the path is free, false otherwise
+     */
     public boolean checkFreePath(Point to) {
-        // Pour chaque case entre Point Piece.point et Point to, checker si la case est
-        // vide.
-        // Si les cases sont vides, la pièce peut se déplacer donc retourner true.
-        // Sinon, la pièce ne peut pas se déplacer donc retourner false.
-        // Cas spécial pour le cavalier: si les cases ne sont pas vides, il peut quand
-        // même se déplacer, donc retourner true.
+        // For each square between Point Piece.point and Point to, check if the square is empty.
+        // If the squares are empty, the piece can move, so return true.
+        // Otherwise, the piece cannot move, so return false.
+        // Special case for the knight: if the squares are not empty, it can still move, so return true.
 
-        // Génération d'une liste contenant les points intermédiaires entre from et to
-        // qu'on veut checker.
+        // Generating a list containing the intermediate points between from and to that we want to check.
 
-        // 1. Détermination de la direction du déplacement (pour savoir comment
-        // incrémenter les points dans le vecteur)
-        // Détermination du vecteur de déplacement
+        // 1. Determining the direction of the movement (to know how to increment the points in the vector)
+        // Determining the movement vector
         int deltaX = to.x() - point.x();
         int deltaY = to.y() - point.y();
 
         int directionX = Integer.compare(deltaX, 0);
-        // équivaut: int directionX = deltaX == 0 ? 0 : deltaX > 0 ? 1 : -1;
+        // Equivalent to: int directionX = deltaX == 0 ? 0 : deltaX > 0 ? 1 : -1;
         int directionY = Integer.compare(deltaY, 0);
 
-        // 2. Liste des points
+        // 2. List of intermediate points
         List<Point> intermediatePoints = new ArrayList<>();
 
         for (int i = 1; i < Math.max(Math.abs(deltaX), Math.abs(deltaY)); i++) {
@@ -183,6 +187,7 @@ abstract public class Piece {
 
     /**
      * Checks if the piece is an enemy
+     *
      * @param to the point to check
      * @return true if the piece is an enemy, false otherwise
      */
@@ -197,6 +202,7 @@ abstract public class Piece {
 
     /**
      * Checks if the piece is an enemy
+     *
      * @param piece the piece to check
      * @return true if the piece is an enemy, false otherwise
      */
@@ -228,6 +234,7 @@ abstract public class Piece {
 
     /**
      * Retrieves the type of the piece.
+     *
      * @return the type of the piece
      */
     public PieceType getType() {
@@ -236,6 +243,7 @@ abstract public class Piece {
 
     /**
      * Retrieves the color of the piece.
+     *
      * @return the color of the piece
      */
     public PlayerColor getColor() {
@@ -244,6 +252,7 @@ abstract public class Piece {
 
     /**
      * Sets the point (position) of the piece on the board.
+     *
      * @param p the point
      */
     public void setPoint(Point p) {
@@ -252,6 +261,7 @@ abstract public class Piece {
 
     /**
      * Retrieves the point of the piece on the board.
+     *
      * @return the point
      */
     public Point getPoint() {
@@ -260,6 +270,7 @@ abstract public class Piece {
 
     /**
      * Retrieves the last move of the piece.
+     *
      * @return the last move
      */
     public Move getLastMove() {
@@ -268,6 +279,7 @@ abstract public class Piece {
 
     /**
      * Sets the last move of the piece.
+     *
      * @param lastMove the last move
      */
     public void setLastMove(Move lastMove) {

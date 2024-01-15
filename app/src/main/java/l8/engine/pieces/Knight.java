@@ -47,7 +47,7 @@ public class Knight extends Piece {
      * @return true if the path is free
      */
     public boolean checkFreePath(Point to) {
-        // Le cavalier peut passer par dessus n'importe quelle pièce
+        // The knight can jump over any piece
         return true;
     }
 

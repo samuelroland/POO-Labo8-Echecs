@@ -15,13 +15,12 @@ import l8.engine.pieces.Piece;
  */
 public class CastleMove extends Move {
     private final boolean isKingSide; // true king castlemove, false queen castlemove
-    private boolean castleIsOnRight; // le roque se fait à droite logique du roi
+    private boolean castleIsOnRight; // Castling is done to the logical right of the king
 
     /**
      * Constructeur de CastleMove
      * @param isKingSide true si roque du roi, false si roque de la reine
      */
-
     public CastleMove(boolean isKingSide) {
         super(new Point(isKingSide ? 2 : -2, 0), 1);
         this.isKingSide = isKingSide;
@@ -37,12 +36,12 @@ public class CastleMove extends Move {
     @Override
     public void applyBoardChanges(Board board, Piece king, Point to, boolean isBoardCopy) {
 
-        // Déplacement tour en fonction du roque choisi
+        // Movement of the rook
         Point rookStart = new Point(castleIsOnRight ? 7 : 0, king.getPoint().y());
         Point rookEnd = new Point(castleIsOnRight ? 5 : 3, king.getPoint().y());
         board.movePieces(rookStart, rookEnd, isBoardCopy);
 
-        // Déplacement roi
+        // Movement of the king
         board.movePieces(king.getPoint(), to, isBoardCopy);
 
         System.out.println("CastleMove done");
@@ -58,22 +57,21 @@ public class CastleMove extends Move {
      */
     public boolean corresponds(Board board, PlayerColor color, Point from, Point to) {
 
-        // Vérification que le mouvement correspond au vecteur défini
+        // check if the move is valid
         if (!super.corresponds(board, color, from, to))
             return false;
 
-        // Le vecteurs étant inversés dans super.corresponds() pour les noirs, on doit
-        // également inversé le concept de droite
+        // Since the vectors are inverted in super.corresponds() for the black pieces, we must also invert the concept of right
         castleIsOnRight = color == PlayerColor.BLACK ? !isKingSide : isKingSide;
 
-        // Vérifie si roi a déjà bougé
+        // check if the king is in the right position
         var king = board.getPiece(from);
         if (king.getLastMove() != null) {
             System.out.println("CastleMove.corresponds false king already moved " + king.getLastMove());
             return false;
         }
 
-        // Vérifie si tour a déjà bougé
+        // check if the rook is in the right position
         Point rookStart = new Point(castleIsOnRight ? 7 : 0, king.getPoint().y());
         Piece rook = board.getPiece(rookStart);
         if (rook == null || rook.getLastMove() != null) {
@@ -81,26 +79,21 @@ public class CastleMove extends Move {
             return false;
         }
 
-        // Note: pas besoin de vérifier qu'il n'y a aucune pièce entre roi et tour car
-        // cela est déjà fait par Piece.checkFreePath()
+        // Note: no need to check if there are no pieces between the king and the rook because this is already done by Piece.checkFreePath()
 
-        // Vérifie que le roi n'est pas déjà en échecs (le roque est interdit dans ce
-        // cas même si cela lui permet de sortir de son échec)
+        // Verify that the king is not already in check (castling is not allowed in this case even if it would allow the king to get out of check)
         if (board.isKingInCheck(color)) {
             System.out.println("CastleMove.corresponds false king already in check");
             return false;
         }
 
-        // Vérifie que la case intermédiaire n'est pas menacée
-        // (en simulant un mouvement du roi sur cette case)
+        // Verify that the intermediate square is not threatened (by simulating a move of the king to this square)
         Point moveOneCell = new Point(castleIsOnRight ? 1 : -1, 0);
         if (board.ownKingInCheckAfterMove(new Move(moveOneCell, 1), king, from.getAdded(moveOneCell))) {
             System.out.println("CastleMove.corresponds false king in check in intermediatePoint");
             return false;
         }
-        // Note: pas besoin de vérifier que le roi ne sera pas en échecs sur la case
-        // d'arrivée parce que c'est déjà fait par Piece.getValidMove()
-
+        // Note: no need to check if the king will be in check on the destination square because that is already done by Piece.getValidMove()
         System.out.println("CastleMove corresponds true !");
         return true;
     }
