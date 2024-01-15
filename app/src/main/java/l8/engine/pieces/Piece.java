@@ -58,12 +58,12 @@ abstract public class Piece {
                 System.out.println("checkDestination fails..");
                 return null;
             }
-            // TODO: check le roi pas en échecs
 
             // Check si cela met notre roi est en échecs
             // (cela inclus de le fait de sortir de l'échec,
             // après le mouvement il ne doit plus être en échec)
             // le mouvement n'est pas valide
+            System.out.println("Check finale de mise en échecs " + !skipKingInCheckVerification);
             if (!skipKingInCheckVerification) {
                 if (board().ownKingInCheckAfterMove(foundMove, this, to)) {
                     System.out.println("Mouvement invalide car le roi tjrs en échecs");
@@ -206,19 +206,6 @@ abstract public class Piece {
 
     public void setLastMove(Move lastMove) {
         this.lastMove = lastMove;
-    }
-
-    public boolean canMoveTo(Point to) {
-
-        if (!checkFreePath(to) || !checkDestination(to)) {
-            return false;
-        }
-        for (Move move : validMoves()) {
-            if (move.corresponds(board, color, point, to)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public String toString() {
