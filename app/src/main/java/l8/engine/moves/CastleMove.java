@@ -5,15 +5,35 @@ import l8.engine.Board;
 import l8.engine.Point;
 import l8.engine.pieces.Piece;
 
+/**
+ * CastleMove class represents a castle move.
+ *
+ * @autor : Cosmo de Oliveira Maria Vitoria
+ * @autor : Koestli Camille
+ * @autor : Roland Samuel
+ * @date : 17.01.2024
+ */
 public class CastleMove extends Move {
-    private final boolean isKingSide; // true petit roque, false grand roque
+    private final boolean isKingSide; // true king castlemove, false queen castlemove
     private boolean castleIsOnRight; // le roque se fait à droite logique du roi
+
+    /**
+     * Constructeur de CastleMove
+     * @param isKingSide true si roque du roi, false si roque de la reine
+     */
 
     public CastleMove(boolean isKingSide) {
         super(new Point(isKingSide ? 2 : -2, 0), 1);
         this.isKingSide = isKingSide;
     }
 
+    /**
+     * Applies the board changes in the board, the piece, the point to and if the board is a copy.
+     * @param board the board
+     * @param king the piece
+     * @param to the point to
+     * @param isBoardCopy if the board is a copy
+     */
     @Override
     public void applyBoardChanges(Board board, Piece king, Point to, boolean isBoardCopy) {
 
@@ -28,6 +48,14 @@ public class CastleMove extends Move {
         System.out.println("CastleMove done");
     }
 
+    /**
+     * Determines if the move corresponds to the board, the color, the point from and the point to.
+     * @param board the board
+     * @param color the color
+     * @param from the point from
+     * @param to the point to
+     * @return
+     */
     public boolean corresponds(Board board, PlayerColor color, Point from, Point to) {
 
         // Vérification que le mouvement correspond au vecteur défini

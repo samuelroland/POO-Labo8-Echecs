@@ -7,6 +7,14 @@ import l8.engine.moves.CastleMove;
 import l8.engine.moves.Move;
 import l8.engine.Point;
 
+/**
+ * King class
+ *
+ * @autor : Cosmo de Oliveira Maria Vitoria
+ * @autor : Koestli Camille
+ * @autor : Roland Samuel
+ * @date : 17.01.2024
+ */
 public class King extends Piece {
     /**
      * Constructor for King

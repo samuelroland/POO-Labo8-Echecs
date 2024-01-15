@@ -6,6 +6,14 @@ import l8.engine.Board;
 import l8.engine.moves.Move;
 import l8.engine.Point;
 
+/**
+ * Knight class
+ *
+ * @autor : Cosmo de Oliveira Maria Vitoria
+ * @autor : Koestli Camille
+ * @autor : Roland Samuel
+ * @date : 17.01.2024
+ */
 public class Knight extends Piece {
     /**
      * Array of valid moves for the chess piece.

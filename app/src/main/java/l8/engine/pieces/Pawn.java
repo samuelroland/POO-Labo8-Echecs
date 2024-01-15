@@ -9,6 +9,14 @@ import l8.engine.moves.PawnEatingMove;
 import l8.engine.moves.TwoSquaresMove;
 import l8.engine.Point;
 
+/**
+ * Pawn class
+ *
+ * @autor : Cosmo de Oliveira Maria Vitoria
+ * @autor : Koestli Camille
+ * @autor : Roland Samuel
+ * @date : 17.01.2024
+ */
 public class Pawn extends Piece {
 
     /**
