@@ -7,11 +7,21 @@ import l8.engine.moves.CastleMove;
 import l8.engine.moves.Move;
 import l8.engine.Point;
 
-public class King extends Queen {
+public class King extends Piece {
+    /**
+     * Constructor for King
+     * @param board the board
+     * @param color the color
+     * @param point the point
+     */
     public King(Board board, PlayerColor color, Point point) {
         super(board, color, point, PieceType.KING);
     }
 
+    /**
+     * Array of valid moves for the chess piece.
+     * @return valid moves for King
+     */
     Move[] validMoves() {
         return new Move[] {
                 new Move(new Point(0, 1), 1),

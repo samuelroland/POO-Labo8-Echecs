@@ -11,6 +11,10 @@ import l8.engine.Point;
 
 public class Pawn extends Piece {
 
+    /**
+     * Array of valid moves for the chess piece.
+     * @return valid moves for Pawn
+     */
     Move[] validMoves() {
         return new Move[] { new Move(new Point(0, 1), 1), new TwoSquaresMove(),
                 new EnPassant(true),
@@ -20,10 +24,21 @@ public class Pawn extends Piece {
         };
     }
 
+    /**
+     * Constructor for Pawn
+     * @param board the board
+     * @param color the color
+     * @param point the point
+     */
     public Pawn(Board board, PlayerColor color, Point point) {
         super(board, color, point, PieceType.PAWN);
     }
 
+    /**
+     * Check if the destination is valid for the piece.
+     * @param to the destination
+     * @return true if the destination is valid
+     */
     public boolean checkDestination(Point to) {
         // On veut garder le check que l'autre pièce est bien un ennemi
         if (!super.checkDestination(to))
@@ -41,7 +56,10 @@ public class Pawn extends Piece {
         return true;
     }
 
-    // Verification de la promotion
+    /**
+     * Check the promotion
+     * @return true if the pawn can be promoted
+     */
     public boolean checkPromotion() {
         return getLine() == 7;
     }

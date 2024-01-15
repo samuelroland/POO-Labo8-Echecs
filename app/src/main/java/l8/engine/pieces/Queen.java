@@ -11,10 +11,21 @@ public class Queen extends Piece {
         super(board, color, point, PieceType.QUEEN);
     }
 
+    /**
+     * Constructor for Queen
+     * @param board the board
+     * @param color the color
+     * @param point the point
+     * @param type the type of the piece
+     */
     protected Queen(Board board, PlayerColor color, Point point, PieceType type) {
         super(board, color, point, type);
     }
 
+    /**
+     * Array of valid moves for the chess piece.
+     * @return valid moves for Queen
+     */
     Move[] validMoves() {
         return new Move[] {
                 new Move(new Point(0, 1), 7),
