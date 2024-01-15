@@ -1,5 +1,13 @@
 package l8.engine;
 
+/**
+ * Point class, contains the point.
+ *
+ * @autor : Cosmo de Oliveira Maria Vitoria
+ * @autor : Koestli Camille
+ * @autor : Roland Samuel
+ * @date : 17.01.2024
+ */
 public class Point {
     int x;
     int y;

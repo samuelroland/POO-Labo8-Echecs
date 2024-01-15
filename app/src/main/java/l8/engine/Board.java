@@ -6,6 +6,14 @@ import l8.chess.PlayerColor;
 import l8.engine.moves.Move;
 import l8.engine.pieces.*;
 
+/**
+ * Board class, contains the board and the pieces.
+ *
+ * @autor : Cosmo de Oliveira Maria Vitoria
+ * @autor : Koestli Camille
+ * @autor : Roland Samuel
+ * @date : 17.01.2024
+ */
 public class Board {
     private Piece[][] pieces;
 

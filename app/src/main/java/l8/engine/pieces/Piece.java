@@ -9,6 +9,14 @@ import l8.engine.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Piece class serves as an abstract base for different types of chess pieces.
+ *
+ * @autor : Cosmo de Oliveira Maria Vitoria
+ * @autor : Koestli Camille
+ * @autor : Roland Samuel
+ * @date : 17.01.2024
+ */
 abstract public class Piece {
     PieceType type; // okay to be defined by subclasses only ?
     Point point;

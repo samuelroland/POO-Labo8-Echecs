@@ -7,6 +7,15 @@ import l8.chess.PlayerColor;
 import l8.chess.PromotionChoice;
 import l8.engine.pieces.*;
 
+/**
+ * ChessGame class represents the main control structure for a chess game.
+ *
+ * @autor : Cosmo de Oliveira Maria Vitoria
+ * @autor : Koestli Camille
+ * @autor : Roland Samuel
+ * @date : 17.01.2024
+ */
+
 public class ChessGame implements ChessController {
 
     private ChessView view;

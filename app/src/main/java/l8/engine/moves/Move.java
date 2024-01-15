@@ -4,7 +4,14 @@ import l8.chess.PlayerColor;
 import l8.engine.Board;
 import l8.engine.Point;
 import l8.engine.pieces.Piece;
-
+/**
+ * Move class, contains the move.
+ *
+ * @autor : Cosmo de Oliveira Maria Vitoria
+ * @autor : Koestli Camille
+ * @autor : Roland Samuel
+ * @date : 17.01.2024
+ */
 public class Move {
     Point directionVector;
     int max;

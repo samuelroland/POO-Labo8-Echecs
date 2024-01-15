@@ -5,6 +5,14 @@ import l8.chess.ChessView;
 import l8.chess.views.console.ConsoleView;
 import l8.chess.views.gui.GUIView;
 
+/**
+ * Main class of the program, allows to launch the chess game.
+ *
+ * @autor : Cosmo de Oliveira Maria Vitoria
+ * @autor : Koestli Camille
+ * @autor : Roland Samuel
+ * @date : 17.01.2024
+ */
 public class Chess {
     public static void main(String... args) {
 
