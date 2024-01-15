@@ -52,11 +52,11 @@ test {
 }
 
 
-gradle.addListener new BuildAdapter() {
+/*gradle.addListener new BuildAdapter() {
     void projectsEvaluated(Gradle gradle) {
         exec { commandLine 'clear' }
     }
-}
+}*/
 
 run {
     standardInput = System.in
