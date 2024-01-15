@@ -102,8 +102,6 @@ abstract public class Piece {
             System.out.println("checkDestination false");
             return false;
         }
-
-        // TODO Pion: effectuer la promotion ici?
         System.out.println("checkDestination true");
 
         return true;
@@ -118,7 +116,6 @@ abstract public class Piece {
         // Cas spécial pour le cavalier: si les cases ne sont pas vides, il peut quand
         // même se déplacer, donc retourner true.
 
-        // TODO mettre cette méthode dans la classe Move?
         // Génération d'une liste contenant les points intermédiaires entre from et to
         // qu'on veut checker.
 

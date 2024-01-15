@@ -66,7 +66,7 @@ public class ChessGame implements ChessController {
             return true;
         }
 
-        return false; // TODO
+        return false;
     }
 
     private void nextPlayer() {
@@ -124,7 +124,7 @@ public class ChessGame implements ChessController {
 
     @Override
     public void newGame() {
-        view.displayMessage("Start new game"); // TODO
+        view.displayMessage("Start new game");
         Piece[][] pieces = new Piece[8][8];
 
         board = new Board(pieces);

@@ -1,7 +1,5 @@
 package l8;
 
-import java.util.Scanner;
-
 import l8.chess.ChessController;
 import l8.chess.ChessView;
 import l8.chess.views.console.ConsoleView;

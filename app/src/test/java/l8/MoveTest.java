@@ -3,7 +3,6 @@
  */
 package l8;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -126,15 +125,17 @@ class MoveTest {
     };
 
     @Test
-    void runCases() {
+    void runBasicMoveCorresponds() {
         for (MoveCase c : tests) {
             for (Point to : c.okayTos) {
                 assertTrue(c.m.corresponds(null, c.color, c.from, to),
-                        "Move from:" + c.from + " -> to:" + to + " should correspond to move " + c.m);
+                        c.title + " failed: Move from:" + c.from + " -> to:" + to + " should correspond to move "
+                                + c.m);
             }
             for (Point to : c.koTos) {
                 assertFalse(c.m.corresponds(null, c.color, c.from, to),
-                        "Move from:" + c.from + " -> to:" + to + " should NOT correspond to move " + c.m);
+                        c.title + " failed: Move from:" + c.from + " -> to:" + to + " should NOT correspond to move "
+                                + c.m);
             }
         }
     }

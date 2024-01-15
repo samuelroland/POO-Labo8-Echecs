@@ -45,10 +45,6 @@ public class Move {
         }
     }
 
-    boolean collision(Board board, Point from, Point to) {
-        return true;// TODO
-    }
-
     public Point getDirectionVector() {
         return directionVector;
     }
