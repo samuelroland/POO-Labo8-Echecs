@@ -18,16 +18,21 @@ import java.util.List;
  * @date : 17.01.2024
  */
 abstract public class Piece {
-    PieceType type; // okay to be defined by subclasses only ?
+    PieceType type;
     Point point;
     PlayerColor color;
     private Board board;
     private Board alternativeBoard = null;
+    Move lastMove = null; // Dernier mouvement, permet de savoir si on a bougé et check avance de 2 pour En passant.
+    abstract Move[] validMoves();
 
-    // Dernier mouvement, permet de savoir si on a bougé
-    // et check avance de 2 pour En passant.
-    Move lastMove = null;
-
+    /**
+     * Constructor of Piece
+     * @param board the board
+     * @param color the color of the piece
+     * @param point the point of the piece
+     * @param type the type of the piece
+     */
     public Piece(Board board, PlayerColor color, Point point, PieceType type) {
         this.board = board;
         this.color = color;
@@ -35,20 +40,40 @@ abstract public class Piece {
         this.type = type;
     }
 
-    // Retourne le board à utiliser pour cette validation de mouvement
-    // permet de se baser sur le board temporaire si besoin
+    /**
+     * Determines the board to use for validating movements. Can use an alternative board if needed for temporary or hypothetical move validations.
+     * @return the board
+     */
     protected Board board() {
         return alternativeBoard == null ? board : alternativeBoard;
     }
 
+    /**
+     * Gets a valid move for the piece to a specified position.
+     * @param to the position
+     * @return the valid move, or null
+     */
     public Move getValidMove(Point to) {
         return getValidMove(to, null);
     }
 
+    /**
+     * Gets a valid move for the piece to a specified position.
+     * @param to the target position
+     * @param boardCopyToUse the board to use for validating the move
+     * @return the valid move, or null
+     */
     public Move getValidMove(Point to, Board boardCopyToUse) {
         return getValidMove(to, boardCopyToUse, false); // do not skip king in check verif
     }
 
+    /**
+     * Gets a valid move for the piece to a specified position.
+     * @param to the target position
+     * @param alternativeBoard the board to use for validating the move
+     * @param skipKingInCheckVerification if true, skips the king in check verification
+     * @return
+     */
     public Move getValidMove(Point to, Board alternativeBoard, boolean skipKingInCheckVerification) {
         this.alternativeBoard = alternativeBoard;
 
@@ -87,8 +112,6 @@ abstract public class Piece {
         System.out.println("getValidMove false");
         return null;
     }
-
-    abstract Move[] validMoves();
 
     public Move checkMoves(Point to) {
         for (var move : validMoves()) {
@@ -158,6 +181,11 @@ abstract public class Piece {
         return true;
     }
 
+    /**
+     * Checks if the piece is an enemy
+     * @param to the point to check
+     * @return true if the piece is an enemy, false otherwise
+     */
     public boolean isEnemy(Point to) {
         var enemy = board().getPiece(to);
         if (enemy == null) {
@@ -167,6 +195,11 @@ abstract public class Piece {
         return enemy.getColor() != this.color;
     }
 
+    /**
+     * Checks if the piece is an enemy
+     * @param piece the piece to check
+     * @return true if the piece is an enemy, false otherwise
+     */
     public boolean isEnemy(Piece piece) {
         if (piece == null) {
             return false;
@@ -175,44 +208,77 @@ abstract public class Piece {
         return piece.getColor() != this.color;
     }
 
-    // Recevoir le numéro de ligne relatif à la couleur (de 0 à 7
-    // le 0 étant en la première ligne en bas pour les blancs)
-    // en considérant que les blancs sont toujours en bas
+    /**
+     * Gets the relative line number of the piece based on its color. For white pieces, line numbers start from 0 at the bottom. For black pieces, line numbers are inverted with 0 at the top.
+     *
+     * @return int The line number (0-7) relative to the piece's color.
+     */
     public int getLine() {
         return color == PlayerColor.WHITE ? point.y() : 7 - point.y();
     }
 
-    // Recevoir le numéro de colonne relatif à la couleur (de 0 à 7,
-    // le 0 étant la colonne tout à gauche pour les blancs)
-    // en considérant que les blancs sont toujours en bas
+    /**
+     * Gets the relative column number of the piece based on its color. For white pieces, column numbers start from 0 on the left. For black pieces, column numbers are inverted with 0 on the right.
+     *
+     * @return int The column number (0-7) relative to the piece's color.
+     */
     public int getColumn() {
         return color == PlayerColor.WHITE ? point.x() : 7 - point.x();
     }
 
+    /**
+     * Retrieves the type of the piece.
+     * @return the type of the piece
+     */
     public PieceType getType() {
         return type;
     }
 
+    /**
+     * Retrieves the color of the piece.
+     * @return the color of the piece
+     */
     public PlayerColor getColor() {
         return color;
     }
 
+    /**
+     * Sets the point (position) of the piece on the board.
+     * @param p the point
+     */
     public void setPoint(Point p) {
         point = p;
     }
 
+    /**
+     * Retrieves the point of the piece on the board.
+     * @return the point
+     */
     public Point getPoint() {
         return point;
     }
 
+    /**
+     * Retrieves the last move of the piece.
+     * @return the last move
+     */
     public Move getLastMove() {
         return lastMove;
     }
 
+    /**
+     * Sets the last move of the piece.
+     * @param lastMove the last move
+     */
     public void setLastMove(Move lastMove) {
         this.lastMove = lastMove;
     }
 
+    /**
+     * Returns a string representation of the piece, including its color, type, and current position.
+     *
+     * @return String A string representing the piece's attributes.
+     */
     public String toString() {
         return super.toString() + ": " + color + " " + type + " on " + point;
     }
