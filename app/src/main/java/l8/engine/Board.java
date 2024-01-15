@@ -2,18 +2,12 @@ package l8.engine;
 
 import java.security.InvalidParameterException;
 
-import l8.chess.PieceType;
 import l8.chess.PlayerColor;
 import l8.engine.moves.Move;
 import l8.engine.pieces.*;
 
 public class Board {
     private Piece[][] pieces;
-    private boolean blackKingInCheck = false;
-    private boolean whiteKingInCheck = false;
-
-    private Point whiteKingPosition;
-    private Point blackKingPosition;
 
     void setLastMove(Move lastMove) {
         this.lastMove = lastMove;
@@ -97,7 +91,7 @@ public class Board {
 
                     // Regarder si la pièce peut faire ce mouvement mais ne doit pas checker
                     // si elle met son camp en échecs car cela reste une pièce menaçante
-                    //On passe en copie de plateau soit même (cela pourrait être une copie ou non)
+                    // On passe en copie de plateau soit même (cela pourrait être une copie ou non)
                     if (piece.getValidMove(kingPosition, this, true) != null) {
                         System.out.println("La pièce est menacante !!");
                         return true; // Le roi est en échec
@@ -120,16 +114,6 @@ public class Board {
         }
         return null; // Le roi n'a pas été trouvé (ne devrait pas arriver)
     }
-
-    // Est-ce que le roi de la couleur donnée est en échecs ?
-    // lookIfKingsInCheck() doit être appelé d'abord, les valeurs retournées
-    // viennent de ce dernier calcul
-    // public boolean kingIsInCheck(PlayerColor kingColor) {
-    // if (blackKingInCheck || whiteKingInCheck)
-    // System.out.println(">> A king is in check !!");
-    // return (kingColor.equals(PlayerColor.BLACK)) ? blackKingInCheck :
-    // whiteKingInCheck;
-    // }
 
     public void addPiece(Piece piece) {
         if (piece == null)
