@@ -1,6 +1,6 @@
 \documentclass[12pt]{article}
 \usepackage[utf8]{inputenc}
-\usepackage{geometry}
+\usepackage[left=1.5cm, right=1.5cm, top=2.8cm, bottom=2cm]{geometry}
 \geometry{a4paper}
 \usepackage{fancyhdr}
 \usepackage{pdflscape}
@@ -47,6 +47,16 @@
 \section{Introduction}
 
 L'objectif de ce laboratoire est de créer un jeu d'échecs, en respectant certaines règles de bases et sur un interface de jeu. Le jeu est conçu pour être joué en mode console ou avec une interface graphique utilisateur (GUI).
+
+\section{Exécution}
+	
+Nous avons migré le projet vers Gradle afin de pouvoir écrire des tests automatisés avec Junit et les lancer en mode continu. Pour lancer le projet, il est possible d'utiliser Gradle.
+
+Pour lancer le mode graphique \texttt{gradle run}
+
+Pour lancer le mode console: \texttt{gradle run --args="-c" --console plain -q}
+
+Si vous préférez ne pas installer Gradle, il y a également le wrapper disponible à la racine du dossier. Il suffit de remplacer dans les commandes ci-dessus \texttt{gradle} par \texttt{./gradlew} Linux/Mac ou \texttt{.\textbackslash gradlew} sous Windows.
 
 \section{Explication du Code}
 
