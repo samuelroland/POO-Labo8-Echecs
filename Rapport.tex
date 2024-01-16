@@ -163,7 +163,7 @@ Note: nous n'imprimons pas les tests, car cela n'était pas utile et par économ
 
 \begin{table}[h!]
 \caption{Tests Move()}
-\begin{tabular}{lllll}
+\begin{tabular}{lll}
 \textbf{Pièce}                         & \textbf{Peut aller vers}& \textbf{Et pas vers}                          \\
 Move de Pion Blanc (1, 1)              & (1, 2)                 & (1, 4), (0, 3), (0, 1), (0, 2), (2, 2), (2, 1) \\
 Move de Pion Noir (1, 6),              & (1, 5)                 & (2, 5), (2, 4), (3, 4), (1, 3), (0, 5), (1, 7) \\
@@ -175,8 +175,8 @@ Move de Knight Blanc (6,0)             & (7, 2)                 & (7, 1), (7, 3)
 
 \begin{table}[h!]
 \caption{Tests CastleMove()}
-\begin{tabular}{lllll}
-\textbf{Nom}                                                                           & \textbf{OK} \\
+\begin{tabular}{ll}
+\textbf{Nom}                                                                                    & \textbf{OK} \\
 Test du Petit Roque sur roi blanc                                                               & OK \\
 Test du Grand Roque sur roi blanc                                                               & OK \\
 Test du Petit Roque sur roi noir                                                                & OK \\
@@ -191,7 +191,7 @@ Test de faire un roque alors que le roi est menacé sur la case d'arrivée -\tex
 \end{tabular}
 \end{table}
 
-\begin{table}[]
+\begin{table}[h!]
 \caption{Tests EnPassant()}
 \begin{tabular}{ll}
 \textbf{Nom}                                                                                      & \textbf{OK }\\
@@ -201,6 +201,32 @@ En passant à droite avec pion attaquant noir                                   
 En passant à gauche avec pion attaquant noir                                                      & OK \\
 En passant avec la victime qui a bougé d'une case -\textgreater invalide                          & OK \\
 En passant avec l'attaquant qui n'a pas fait son En passant tout de suite. -\textgreater invalide & OK
+\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+\caption{Tests KingInCheck()}
+\begin{tabular}{ll}
+\textbf{Nom}                                                     & \textbf{OK }\\
+Les positions des 2 rois peuvent être trouvées                   & OK \\
+Les positions des 2 rois sont safe sur le plateau par défaut     & OK \\
+Le roi noir est en échecs quand la dame blanche le menace        & OK \\
+Les 2 rois peuvent être en échecs en même temps                  & OK \\
+On ne peut pas faire un mouvement si cela met notre roi en échec &
+\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+\caption{Tests Move()}
+\begin{tabular}{ll}
+\textbf{Nom}                                                                                             & \textbf{OK }\\
+Le chemin libre d'un pion est bien checké                                                                & OK \\
+Le cavalier a toujours le chemin libre                                                                   & OK \\
+La position interne de la pièce est modifiée après le mouvement                                          & OK \\
+Test que la position interne n'est pas modifiée si le mouvement est annulé (car roi en échecs)           & OK \\
+Le pion peut avancer de 1 case en avant et de 2 cases seulement la première fois.                        & OK \\
+Le fou blanc en bas à gauche peut bouger en diagonale à droite et à gauche si pas de pion sur le chemin. & OK \\
+La tour blanche peut bouger en avant de 1 case ou plus en avant si pas de pion devant                    &
 \end{tabular}
 \end{table}
 
