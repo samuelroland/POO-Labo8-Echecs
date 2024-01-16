@@ -164,30 +164,43 @@ Note: nous n'imprimons pas les tests, car cela n'était pas utile et par économ
 \begin{table}[h!]
 \caption{Tests Move()}
 \begin{tabular}{lllll}
-\textbf{Pièce}                         & \textbf{Peut aller vers}& \textbf{Et pas vers}                          &  \\
-Move de Pion Blanc (1, 1)              & (1, 2)                 & (1, 4), (0, 3), (0, 1), (0, 2), (2, 2), (2, 1) &  \\
-Move de Pion Noir (1, 6),              & (1, 5)                 & (2, 5), (2, 4), (3, 4), (1, 3), (0, 5), (1, 7) &  \\
-new Move(new Point(2, 1), 3) de (0, 0) & (2, 1), (4, 2), (6, 3) &                                                &  \\
-new Move(new Point(0, 1), 1)           & (0, 2),(0, 3),(0, 4)   &                                                &  \\
-Move de Knight Blanc (6,0)             & (7, 2)                 & (7, 1), (7, 3)                                 &
+\textbf{Pièce}                         & \textbf{Peut aller vers}& \textbf{Et pas vers}                          \\
+Move de Pion Blanc (1, 1)              & (1, 2)                 & (1, 4), (0, 3), (0, 1), (0, 2), (2, 2), (2, 1) \\
+Move de Pion Noir (1, 6),              & (1, 5)                 & (2, 5), (2, 4), (3, 4), (1, 3), (0, 5), (1, 7) \\
+new Move(new Point(2, 1), 3) de (0, 0) & (2, 1), (4, 2), (6, 3) &                                                \\
+new Move(new Point(0, 1), 1)           & (0, 2),(0, 3),(0, 4)   &                                                \\
+Move de Knight Blanc (6,0)             & (7, 2)                 & (7, 1), (7, 3)
 \end{tabular}
 \end{table}
 
 \begin{table}[h!]
 \caption{Tests CastleMove()}
 \begin{tabular}{lllll}
-\textbf{Nom}                                                                           & \textbf{OK} &  \\
-Test du Petit Roque sur roi blanc                                                               & OK &  \\
-Test du Grand Roque sur roi blanc                                                               & OK &  \\
-Test du Petit Roque sur roi noir                                                                & OK &  \\
-Test du Grand Roque sur roi noir                                                                & OK &  \\
-Test roque avec des pions qui bloquent le chemin -\textgreater invalide                         & OK &  \\
-Test roque ne se produit pas quand le roi a déjà bougé                                          & OK &   \\
-Test roque ne se produit pas quand la tour a déjà bougé                                         & OK &   \\
-Test grand roque blanc ne se produit pas si on tente de bouger le roi de 3 cases                & OK &  \\
-Test de faire un roque avec le roi en échec -\textgreater invalide                              & OK &   \\
-Test de faire un roque avec la case intermédiaire menaçée -\textgreater invalide                & OK &   \\
-Test de faire un roque alors que le roi est menacé sur la case d'arrivée -\textgreater invalide & OK &
+\textbf{Nom}                                                                           & \textbf{OK} \\
+Test du Petit Roque sur roi blanc                                                               & OK \\
+Test du Grand Roque sur roi blanc                                                               & OK \\
+Test du Petit Roque sur roi noir                                                                & OK \\
+Test du Grand Roque sur roi noir                                                                & OK \\
+Test roque avec des pions qui bloquent le chemin -\textgreater invalide                         & OK \\
+Test roque ne se produit pas quand le roi a déjà bougé                                          & OK \\
+Test roque ne se produit pas quand la tour a déjà bougé                                         & OK \\
+Test grand roque blanc ne se produit pas si on tente de bouger le roi de 3 cases                & OK \\
+Test de faire un roque avec le roi en échec -\textgreater invalide                              & OK \\
+Test de faire un roque avec la case intermédiaire menaçée -\textgreater invalide                & OK \\
+Test de faire un roque alors que le roi est menacé sur la case d'arrivée -\textgreater invalide & OK
+\end{tabular}
+\end{table}
+
+\begin{table}[]
+\caption{Tests EnPassant()}
+\begin{tabular}{ll}
+\textbf{Nom}                                                                                      & \textbf{OK }\\
+En passant à droite avec pion attaquant blanc                                                     & OK \\
+En passant à gauche avec pion attaquant blanc                                                     & OK \\
+En passant à droite avec pion attaquant noir                                                      & OK \\
+En passant à gauche avec pion attaquant noir                                                      & OK \\
+En passant avec la victime qui a bougé d'une case -\textgreater invalide                          & OK \\
+En passant avec l'attaquant qui n'a pas fait son En passant tout de suite. -\textgreater invalide & OK
 \end{tabular}
 \end{table}
 
