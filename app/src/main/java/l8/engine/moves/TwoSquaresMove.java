@@ -21,7 +21,7 @@ public class TwoSquaresMove extends Move {
     }
 
     /**
-     * Determines if the move corresponds to the board, the color, the point from and the point to.
+     * Determines if the move corresponds to the vector, and if this is the first move
      * @param board the board
      * @param color the color
      * @param from the point from

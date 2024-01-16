@@ -46,7 +46,7 @@ public class CastleMove extends Move {
     }
 
     /**
-     * Determines if the move corresponds to the board, the color, the point from and the point to.
+     * Determines if the move corresponds to the vector, if the king and rook have not found, that king is not in check and not threatened on next piece
      * @param board the board
      * @param color the color
      * @param from the point from

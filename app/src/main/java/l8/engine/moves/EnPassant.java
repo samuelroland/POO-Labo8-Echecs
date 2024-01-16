@@ -25,7 +25,7 @@ public class EnPassant extends Move {
     }
 
     /**
-     * Determines if the move corresponds to the board, the color, the point from and the point to.
+     * Determines if the move corresponds to the vector, if the destination is empty, if victim is ennemy, if the victim just moved of 2 squares the last turn
      * @param board the board
      * @param color the color
      * @param from the point from
