@@ -63,7 +63,6 @@ public class Move {
      * @param isBoardCopy if the board is a copy
      */
     public void applyBoardChanges(Board board, Piece piece, Point to, boolean isBoardCopy) {
-        System.out.println("Applying board changes in Move : " + this);
         board.movePieces(piece.getPoint(), to, isBoardCopy);
     }
 

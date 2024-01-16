@@ -92,36 +92,28 @@ abstract public class Piece {
             // Verify if the destination is occupied or not.
             // If the piece at the destination is an enemy, then capture it.
             if (!checkDestination(to)) {
-                System.out.println("checkDestination fails..");
                 return null;
             }
 
             // Check if this puts our king in check (this includes getting out of check, after the move, the king must not be in check) the move is not valid
-            System.out.println("Check finale de mise en échecs " + !skipKingInCheckVerification);
             if (!skipKingInCheckVerification) {
                 if (board().ownKingInCheckAfterMove(foundMove, this, to)) {
-                    System.out.println("Mouvement invalide car le roi tjrs en échecs");
+                    System.out.println("Mouvement invalide car le roi est toujours en échecs");
                     return null;
                 }
-            } else {
-                System.out.println("skipKingInCheckVerification for Piece.getValidMove " + this);
             }
 
-            System.out.println("getValidMove true");
             return foundMove;
         }
-        System.out.println("getValidMove false");
         return null;
     }
 
     public Move checkMoves(Point to) {
         for (var move : validMoves()) {
             if (move.corresponds(board, color, point, to)) {
-                System.out.println("checkMoves true");
                 return move;
             }
         }
-        System.out.println("checkMoves false");
         return null;
     }
 
@@ -134,10 +126,8 @@ abstract public class Piece {
         // Si la case est occupée et que c'est une pièce de même couleur, on ne peut pas
         // bouger.
         if (!board().isEmpty(to) && !isEnemy(to)) {
-            System.out.println("checkDestination false");
             return false;
         }
-        System.out.println("checkDestination true");
 
         return true;
     }
@@ -175,13 +165,10 @@ abstract public class Piece {
 
         for (Point intermediatePoint : intermediatePoints) {
             if (!board().isEmpty(intermediatePoint)) {
-                System.out.println("checkFreePath false on " + intermediatePoint);
-                System.out.println("actual piece is " + board().getPiece(intermediatePoint));
                 return false;
             }
         }
 
-        System.out.println("checkFreePath true");
         return true;
     }
 
@@ -196,7 +183,6 @@ abstract public class Piece {
         if (enemy == null) {
             return false;
         }
-        System.out.println("isEnemy " + (board().getPiece(to).getColor() != this.color));
         return enemy.getColor() != this.color;
     }
 
@@ -210,7 +196,6 @@ abstract public class Piece {
         if (piece == null) {
             return false;
         }
-        System.out.println("isEnemy " + (piece.getColor() != this.color));
         return piece.getColor() != this.color;
     }
 

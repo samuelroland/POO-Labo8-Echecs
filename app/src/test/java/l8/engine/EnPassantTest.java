@@ -96,11 +96,9 @@ class EnPassantTest {
 
         // Move 2 cases forward
         moveIfValid(victim, new Point(5, 3));
-        System.out.println("out of move if valid from victim");
 
         // Attacker going behind victim
         moveIfValid(attacker, new Point(5, 2));
-        System.out.println("out of move if valid from attacker");
 
         assertNull(board.getPiece(new Point(5, 3)));
 

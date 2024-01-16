@@ -46,7 +46,6 @@ public class EnPassant extends Move {
                 victim == board.getLastMovedPiece() &&
                 board.getLastMove().moveEquals(new TwoSquaresMove()) &&
                 victim == board.getLastMovedPiece()) {
-            System.out.println("Checkmoves in Pawn en passant move");
             return true;
         }
         return false;

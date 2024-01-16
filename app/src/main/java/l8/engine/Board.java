@@ -94,13 +94,7 @@ public class Board {
         var boardCopy = clone();
         move.applyBoardChanges(boardCopy, piece, to, true); // apply changes but do not change pieces as the boardCopy
                                                             // is a shallow copy
-        if (boardCopy.isKingInCheck(piece.getColor())) {
-            System.out.println("le roi " + piece.getColor() + " sera en échec avec ce coup");
-            return true;
-        }
-        System.out.println("le roi " + piece.getColor() + " ne sera PAS en échec avec ce coup");
-        return false;
-
+        return boardCopy.isKingInCheck(piece.getColor());
     }
 
     /**
@@ -115,18 +109,14 @@ public class Board {
             for (int y = 0; y < 8; y++) {
                 Piece piece = getPiece(x, y);
                 if (piece != null && piece.getColor() != kingColor) {
-                    System.out.println(">> Looking if " + piece.getType() + " on " + piece.getPoint()
-                            + " is threatening the " + kingColor + " king");
 
                     // Check if the piece can make this move but don't need to check if it puts its own side in check as it still remains a threatening piece Passing a copy of the board (could be a copy or not)
                     if (piece.getValidMove(kingPosition, this, true) != null) {
-                        System.out.println("La pièce est menacante !!");
                         return true; // king is in check
                     }
                 }
             }
         }
-        System.out.println("Aucune pièce menacante...");
         return false; // king is not in check
     }
 

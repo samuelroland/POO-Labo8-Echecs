@@ -51,12 +51,9 @@ public class ChessGame implements ChessController {
         var piece = board.getPiece(fromX, fromY);
 
         if (piece.getColor() != currentPlayerColor) {
-            System.out.println("Autre joueur");
+            System.out.println("C'est au tour de l'autre joueur...");
             return false;
         }
-
-        System.out.println(String.format("\n >>>> Mouvement de %s de (%d, %d) à (%d, %d)",
-                piece.getType().name(), fromX, fromY, toX, toY));
 
         // If the move is valid, then execute it
         var validMoveFound = piece.getValidMove(destination);

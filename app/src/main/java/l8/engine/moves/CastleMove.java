@@ -43,8 +43,6 @@ public class CastleMove extends Move {
 
         // Movement of the king
         board.movePieces(king.getPoint(), to, isBoardCopy);
-
-        System.out.println("CastleMove done");
     }
 
     /**
@@ -67,7 +65,6 @@ public class CastleMove extends Move {
         // check if the king is in the right position
         var king = board.getPiece(from);
         if (king.getLastMove() != null) {
-            System.out.println("CastleMove.corresponds false king already moved " + king.getLastMove());
             return false;
         }
 
@@ -75,7 +72,6 @@ public class CastleMove extends Move {
         Point rookStart = new Point(castleIsOnRight ? 7 : 0, king.getPoint().y());
         Piece rook = board.getPiece(rookStart);
         if (rook == null || rook.getLastMove() != null) {
-            System.out.println("CastleMove.corresponds false rook already moved or doesnt not exist");
             return false;
         }
 
@@ -83,18 +79,15 @@ public class CastleMove extends Move {
 
         // Verify that the king is not already in check (castling is not allowed in this case even if it would allow the king to get out of check)
         if (board.isKingInCheck(color)) {
-            System.out.println("CastleMove.corresponds false king already in check");
             return false;
         }
 
         // Verify that the intermediate square is not threatened (by simulating a move of the king to this square)
         Point moveOneCell = new Point(castleIsOnRight ? 1 : -1, 0);
         if (board.ownKingInCheckAfterMove(new Move(moveOneCell, 1), king, from.getAdded(moveOneCell))) {
-            System.out.println("CastleMove.corresponds false king in check in intermediatePoint");
             return false;
         }
         // Note: no need to check if the king will be in check on the destination square because that is already done by Piece.getValidMove()
-        System.out.println("CastleMove corresponds true !");
         return true;
     }
 }
