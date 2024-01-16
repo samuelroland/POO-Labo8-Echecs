@@ -49,14 +49,11 @@
 L'objectif de ce laboratoire est de créer un jeu d'échecs, en respectant certaines règles de bases et sur un interface de jeu. Le jeu est conçu pour être joué en mode console ou avec une interface graphique utilisateur (GUI).
 
 \section{Exécution}
-	
-Nous avons migré le projet vers Gradle afin de pouvoir écrire des tests automatisés avec Junit et les lancer en mode continu. Pour lancer le projet, il est possible d'utiliser Gradle.
 
-Pour lancer le mode graphique \texttt{gradle run}
-
-Pour lancer le mode console: \texttt{gradle run --args="-c" --console plain -q}
-
-Si vous préférez ne pas installer Gradle, il y a également le wrapper disponible à la racine du dossier. Il suffit de remplacer dans les commandes ci-dessus \texttt{gradle} par \texttt{./gradlew} Linux/Mac ou \texttt{.\textbackslash gradlew} sous Windows.
+Nous avons migré le projet vers Gradle afin de pouvoir écrire des tests automatisés avec Junit et les lancer en mode continu. Pour lancer le projet, il est possible d'utiliser Gradle.\\
+Pour lancer le mode graphique \texttt{gradle run}\\
+Pour lancer le mode console: \texttt{gradle run --args="-c" --console plain -q}\\
+\\Si vous préférez ne pas installer Gradle, il y a également le wrapper disponible à la racine du dossier. Il suffit de remplacer dans les commandes ci-dessus \texttt{gradle} par \texttt{./gradlew} Linux/Mac ou \texttt{.\textbackslash gradlew} sous Windows.
 
 \section{Explication du Code}
 
@@ -83,11 +80,122 @@ Nous avons souhaité réaliser une série de tests qui permettent de vérifier q
 
 \end{itemize}
 
+\subsection{Tests console}
+\paragraph{Méthode:}
+Exécution en mode console avec la commande suivante :
+\texttt{gradle run --args="-c" --console plain -q}
+\\
+
+     \begin{verbatim}
+     Start new game
+     8 |R N B Q K B N R
+     7 |P P P P P P P P
+     6 |
+     5 |
+     4 |
+     3 |
+     2 |P P P P P P P P
+     1 |R N B Q K B N R
+     -------------------
+        A B C D E F G H
+     Next move?
+     e2e3
+     e2e3
+     8 |R N B Q K B N R
+     7 |P P P P P P P P
+     6 |
+     5 |
+     4 |
+     3 |        P
+     2 |P P P P   P P P
+     1 |R N B Q K B N R
+     -------------------
+        A B C D E F G H
+
+     Next move?
+     a2a4
+     a2a4
+     C'est au tour de l'autre joueur...
+     Invalid move
+     8 |R N B Q K B N R
+     7 |P P P P P P P P
+     6 |
+     5 |
+     4 |
+     3 |        P
+     2 |P P P P   P P P
+     1 |R N B Q K B N R
+     -------------------
+        A B C D E F G H
+     Next move?
+     a8a6
+     a8a6
+     Invalid move
+     8 |R N B Q K B N R
+     7 |P P P P P P P P
+     6 |
+     5 |
+     4 |
+     3 |        P
+     2 |P P P P   P P P
+     1 |R N B Q K B N R
+     -------------------
+        A B C D E F G H
+     Next move?
+     a7a5
+     a7a5
+     8 |R N B Q K B N R
+     7 |  P P P P P P P
+     6 |
+     5 |P
+     4 |
+     3 |        P
+     2 |P P P P   P P P
+     1 |R N B Q K B N R
+     -------------------
+        A B C D E F G H
+     Next move?
+     \end{verbatim}
+Note: nous n'imprimons pas les tests, car cela n'était pas utile et par économie de papiers. Il est bien sûr possible de voir le détail dans le code des tests si besoin dans le rendu Cyberlearn.
+
+\newpage
+\subsection{Tests sur les Mouvements}
+
+\begin{table}[h!]
+\caption{Tests Move()}
+\begin{tabular}{lllll}
+\textbf{Pièce}                         & \textbf{Peut aller vers}& \textbf{Et pas vers}                          &  \\
+Move de Pion Blanc (1, 1)              & (1, 2)                 & (1, 4), (0, 3), (0, 1), (0, 2), (2, 2), (2, 1) &  \\
+Move de Pion Noir (1, 6),              & (1, 5)                 & (2, 5), (2, 4), (3, 4), (1, 3), (0, 5), (1, 7) &  \\
+new Move(new Point(2, 1), 3) de (0, 0) & (2, 1), (4, 2), (6, 3) &                                                &  \\
+new Move(new Point(0, 1), 1)           & (0, 2),(0, 3),(0, 4)   &                                                &  \\
+Move de Knight Blanc (6,0)             & (7, 2)                 & (7, 1), (7, 3)                                 &
+\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+\caption{Tests CastleMove()}
+\begin{tabular}{lllll}
+\textbf{Nom}                                                                           & \textbf{OK} &  \\
+Test du Petit Roque sur roi blanc                                                               & OK &  \\
+Test du Grand Roque sur roi blanc                                                               & OK &  \\
+Test du Petit Roque sur roi noir                                                                & OK &  \\
+Test du Grand Roque sur roi noir                                                                & OK &  \\
+Test roque avec des pions qui bloquent le chemin -\textgreater invalide                         & OK &  \\
+Test roque ne se produit pas quand le roi a déjà bougé                                          & OK &   \\
+Test roque ne se produit pas quand la tour a déjà bougé                                         & OK &   \\
+Test grand roque blanc ne se produit pas si on tente de bouger le roi de 3 cases                & OK &  \\
+Test de faire un roque avec le roi en échec -\textgreater invalide                              & OK &   \\
+Test de faire un roque avec la case intermédiaire menaçée -\textgreater invalide                & OK &   \\
+Test de faire un roque alors que le roi est menacé sur la case d'arrivée -\textgreater invalide & OK &
+\end{tabular}
+\end{table}
+
 \begin{landscape}
 \thispagestyle{empty}
 \newpage
 \section{Diagramme UML}
-\includegraphics[width=20cm]{uml.svg}
+\includegraphics[width=25cm]{uml.png}
 \newpage
 \end{landscape}
 
