@@ -17,7 +17,6 @@ import l8.engine.pieces.*;
  */
 
 public class ChessGame implements ChessController {
-
     private ChessView view;
     private Board board;
     private PlayerColor currentPlayerColor;
