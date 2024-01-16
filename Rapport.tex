@@ -66,16 +66,16 @@ Nous avons construit notre jeu autour de plusieurs classes clés :
 
 \begin{itemize}
     \item \textbf{Chess}: La classe principale qui lance le jeu. Elle crée le contrôleur (\texttt{ChessController}) et la vue (\texttt{ChessView}), soit en mode console (\texttt{ConsoleView}) soit en mode GUI (\texttt{GUIView}).
-    \item \textbf{Board}: Classe qui représente le plateau de jeu. Il gère les pièces sur le plateau, leurs mouvements, et vérifie si un roi est en échec. Nous avons aussi choisir de traiter si le roi est en échec dans cette classe. Le jeu vérifie après chaque mouvement si un roi est en échec, ce qui est crucial pour respecter les règles des échecs.
-    \item \textbf{Piece}: Il s'agit d'une classe abstraite représentant les différentes pièces d'échecs. Chaque type de pièce est une sous-classe de \texttt{Piece}. Cette classe gère les mouvements valides, les collisions, et si une pièce a déjà été déplacée.
-    \item \textbf{Move}: Cette classe représente un mouvement sur le plateau. Il contient la logique pour vérifier si un mouvement est valide et pour appliquer les changements sur le plateau. Les mouvements spéciaux sont aussi pris en compte. Nous avons créé différentes sous-classes de \texttt{Move} afin d'y implémenter leur particularité. 
+    \item \textbf{Board}: Classe qui représente le plateau de jeu. Il gère les pièces sur le plateau, leurs mouvements, et vérifie si un roi est en échec. Nous avons aussi choisir de traiter si le roi est en échec dans cette classe. Le jeu vérifie après chaque mouvement si un roi est en échec, ce qui est crucial pour respecter les règles des échecs. En plus de la liste des pièces dans un tableau 2 dimensions, nous stockons le dernier mouvement et la dernière pièce déplacée afin de valider certaines contraintes de la prise en passant.
+    \item \textbf{Piece}: Il s'agit d'une classe abstraite représentant les différentes pièces d'échecs. Chaque type de pièce est une sous-classe de \texttt{Piece}. Cette classe gère les mouvements valides, les collisions, et si une pièce a déjà été déplacée. La pièce connait sa position sur le plateau, cette position est tenue à jour via la méthode \texttt{Piece.setPoint()}, ainsi que son dernier mouvement défini via \texttt{Piece.setLastMove()} permettant de savoir si elle a bougé.
+    \item \textbf{Move}: Cette classe représente un mouvement sur le plateau par un vecteur (x,y) et un maximum de fois que l'opération peut être faite, ce qui permet de décrire n'importe quel mouvement. Il contient la logique pour vérifier si un mouvement est valide et pour appliquer les changements sur le plateau. Pour les mouvements spéciaux, nous avons créé différentes sous-classes de \texttt{Move} afin d'y implémenter leurs particularités.
 \end{itemize}
 
 \section{Tests réalisés}
 Nous avons souhaité réaliser une série de tests qui permettent de vérifier que chaque élément du jeu fonctionne comme prévu. Les tests touchent différents éléments :
 
 \begin{itemize}
-    \item \textbf{Tests des mouvements}: Ces tests vérifient la validité des mouvements des pièces sur le plateau. Ils contrôlent que chaque déplacement est conforme aux rèfles.
+    \item \textbf{Tests des mouvements}: Ces tests vérifient la validité des mouvements des pièces sur le plateau. Ils contrôlent que chaque déplacement est conforme aux règles.
     \item \textbf{Tests des conditions d'échec}: Ces tests vont contrôler si le jeu détecte correctement les situations d'échec, c'est-à-dire quand le roi est menacé et empêche tout autre mouvement.
     \item \textbf{Tests du roque}: Ces tests permettent de contrôler que le grand et petit roque ne se produit que lorsque toutes les conditions sont remplies (ni le roi ni la tour n'ont bougé, les cases entre eux sont libres, etc.).
     \item \textbf{Tests de la prise en passant}: Ces tests vérifient que ce mouvement se réalise lorsque le pion adverse a avancé de 2 cases depuis sa position de départ et se trouve à côté du pion attaquant.
@@ -87,11 +87,15 @@ Nous avons souhaité réaliser une série de tests qui permettent de vérifier q
 \thispagestyle{empty}
 \newpage
 \section{Diagramme UML}
-\includegraphics[width=20cm]{uml.png}
+\includegraphics[width=20cm]{uml.svg}
 \newpage
 \end{landscape}
 
 \section{Conclusion}
 
-En conclusion, notre objectif a été de créer un jeu d'échecs en essayant d'être le plus optimisé et complet possible, tout en intégrant les règles de bases. La construction de nos classes a été pensée pour permettre le plus de flexibilité possible. Par exemple, permettant l'ajout de nouvelles pièces inexistantes (comme un troubadour) ou de fonctionnalités supplémentaires. Nous avons essayé de garantir que notre implémentation puisse s'adapter au maximum à des modifications de règles. 
+En conclusion, notre objectif a été de créer un jeu d'échecs en essayant d'être le plus optimisé et complet possible, tout en intégrant les règles de bases. La construction de nos classes a été pensée pour permettre le plus de flexibilité possible. 
+
+Si on imaginait un instant de devoir définir une nouvelle pièce troubadour se déplaçant de 2 cases à gauche ou à droite (une fois sur deux de chaque côté), et qui mange toutes les pièces qu'il touche, il suffirait de créer une classe \texttt{Troubadour} héritant de \texttt{Piece}, de créer un mouvement particulier \texttt{StrangeMove} héritant de \texttt{Move} permettant de détecter la valider que le mouvement droite ou gauche est valide en fonction du dernier mouvement. Une fois le mouvement validé, il reste à implémenter dans \texttt{StrangeMove.applyBoardChanges()} les modifications du plateau à faire en plus du déplacement du troubadourd, c'est à dire de supprimer les pièces qui auraient touchées.
+
+Finalement, nous avons essayé de garantir que notre implémentation puisse s'adapter à certaines modifications de règles restant dans l'esprit du jeu.
 \end{document}
