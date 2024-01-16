@@ -163,7 +163,7 @@ Note: nous n'imprimons pas les tests, car cela n'était pas utile et par économ
 
 \begin{table}[h!]
 \caption{Tests Move()}
-\begin{tabular}{lll}
+\begin{tabular}{|l|l|l|}
 \textbf{Pièce}                         & \textbf{Peut aller vers}& \textbf{Et pas vers}                          \\
 Move de Pion Blanc (1, 1)              & (1, 2)                 & (1, 4), (0, 3), (0, 1), (0, 2), (2, 2), (2, 1) \\
 Move de Pion Noir (1, 6),              & (1, 5)                 & (2, 5), (2, 4), (3, 4), (1, 3), (0, 5), (1, 7) \\
@@ -175,7 +175,7 @@ Move de Knight Blanc (6,0)             & (7, 2)                 & (7, 1), (7, 3)
 
 \begin{table}[h!]
 \caption{Tests CastleMove()}
-\begin{tabular}{ll}
+\begin{tabular}{p{15cm}||p{2cm}}
 \textbf{Nom}                                                                                    & \textbf{OK} \\
 Test du Petit Roque sur roi blanc                                                               & OK \\
 Test du Grand Roque sur roi blanc                                                               & OK \\
@@ -193,7 +193,7 @@ Test de faire un roque alors que le roi est menacé sur la case d'arrivée -\tex
 
 \begin{table}[h!]
 \caption{Tests EnPassant()}
-\begin{tabular}{ll}
+\begin{tabular}{p{15cm}||p{2cm}}
 \textbf{Nom}                                                                                      & \textbf{OK }\\
 En passant à droite avec pion attaquant blanc                                                     & OK \\
 En passant à gauche avec pion attaquant blanc                                                     & OK \\
@@ -206,7 +206,7 @@ En passant avec l'attaquant qui n'a pas fait son En passant tout de suite. -\tex
 
 \begin{table}[h!]
 \caption{Tests KingInCheck()}
-\begin{tabular}{ll}
+\begin{tabular}{p{15cm}||p{2cm}}
 \textbf{Nom}                                                     & \textbf{OK }\\
 Les positions des 2 rois peuvent être trouvées                   & OK \\
 Les positions des 2 rois sont safe sur le plateau par défaut     & OK \\
@@ -216,9 +216,9 @@ On ne peut pas faire un mouvement si cela met notre roi en échec & OK
 \end{tabular}
 \end{table}
 
-\begin{table}[h!]
+\begin{table}[]
 \caption{Tests Move()}
-\begin{tabular}{ll}
+\begin{tabular}{p{15cm}||p{2cm}}
 \textbf{Nom}                                                                                             & \textbf{OK }\\
 Le chemin libre d'un pion est bien checké                                                                & OK \\
 Le cavalier a toujours le chemin libre                                                                   & OK \\
@@ -234,15 +234,13 @@ La tour blanche peut bouger en avant de 1 case ou plus en avant si pas de pion d
 \thispagestyle{empty}
 \newpage
 \section{Diagramme UML}
-\includegraphics[width=25cm]{uml.svg}
+\includegraphics[width=27cm]{uml.png}
 \newpage
 \end{landscape}
 
 \section{Conclusion}
 
-En conclusion, notre objectif a été de créer un jeu d'échecs en essayant d'être le plus optimisé et complet possible, tout en intégrant les règles de bases. La construction de nos classes a été pensée pour permettre le plus de flexibilité possible. 
-
-Si on imaginait un instant de devoir définir une nouvelle pièce troubadour se déplaçant de 2 cases à gauche ou à droite (une fois sur deux de chaque côté), et qui mange toutes les pièces qu'il touche, il suffirait de créer une classe \texttt{Troubadour} héritant de \texttt{Piece}, de créer un mouvement particulier \texttt{StrangeMove} héritant de \texttt{Move} permettant de détecter la valider que le mouvement droite ou gauche est valide en fonction du dernier mouvement. Une fois le mouvement validé, il reste à implémenter dans \texttt{StrangeMove.applyBoardChanges()} les modifications du plateau à faire en plus du déplacement du troubadourd, c'est à dire de supprimer les pièces qui auraient touchées.
-
-Finalement, nous avons essayé de garantir que notre implémentation puisse s'adapter à certaines modifications de règles restant dans l'esprit du jeu.
+En conclusion, notre objectif a été de créer un jeu d'échecs en essayant d'être le plus optimisé et complet possible, tout en intégrant les règles de bases. La construction de nos classes a été pensée pour permettre le plus de flexibilité possible. \\
+\\Si on imaginait un instant de devoir définir une nouvelle pièce troubadour se déplaçant de 2 cases à gauche ou à droite (une fois sur deux de chaque côté), et qui mange toutes les pièces qu'il touche, il suffirait de créer une classe \texttt{Troubadour} héritant de \texttt{Piece}, de créer un mouvement particulier \texttt{StrangeMove} héritant de \texttt{Move} permettant de détecter la valider que le mouvement droite ou gauche est valide en fonction du dernier mouvement. Une fois le mouvement validé, il reste à implémenter dans \texttt{StrangeMove.applyBoardChanges()} les modifications du plateau à faire en plus du déplacement du troubadourd, c'est à dire de supprimer les pièces qui auraient touchées.\\
+\\Finalement, nous avons essayé de garantir que notre implémentation puisse s'adapter à certaines modifications de règles restant dans l'esprit du jeu.
 \end{document}
