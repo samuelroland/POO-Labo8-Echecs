@@ -35,3 +35,5 @@ out
 # Ignore Gradle build output directory
 build
 app/bin
+Rapport.pdf
+Rapport.*
