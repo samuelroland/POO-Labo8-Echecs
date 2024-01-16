@@ -120,6 +120,8 @@ class MoveTest {
                             new Point(7, 2),
                     },
                     new Point[] {
+                            new Point(7, 1),
+                            new Point(7, 3),
                     },
                     PlayerColor.WHITE),
     };
