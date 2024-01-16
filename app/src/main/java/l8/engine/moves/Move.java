@@ -27,7 +27,7 @@ public class Move {
     }
 
     /**
-     * Determines if the move corresponds to the board, the color, the point from and the point to.
+     * Determines if the move described by the direction vector and a maximum, corresponds to the given from-to deplacement
      * @param board the board
      * @param color the color
      * @param from the point from
